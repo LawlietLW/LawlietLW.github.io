@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hexo</title>
+  
+  
+  <link href="/LawlietLW.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://lawlietlw.github.io/"/>
+  <updated>2019-12-21T03:25:25.672Z</updated>
+  <id>http://lawlietlw.github.io/</id>
+  
+  <author>
+    <name>John Doe</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>BUUCTF warmup</title>
+    <link href="http://lawlietlw.github.io/2019/12/21/BUUCTF-warmup/"/>
+    <id>http://lawlietlw.github.io/2019/12/21/BUUCTF-warmup/</id>
+    <published>2019-12-21T02:40:39.000Z</published>
+    <updated>2019-12-21T03:25:25.672Z</updated>
+    
+    <content type="html"><![CDATA[<p>代码审计题目<br>查看源代码，发现提示<br><!DOCTYPE html></p><html lang="en"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <meta http-equiv="X-UA-Compatible" content="ie=edge">    <title>Document</title><meta name="generator" content="Hexo 4.1.1"><link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="Hexo" type="application/atom+xml"></head><body>    <!--source.php--><pre><code>&lt;br&gt;&lt;img src=&quot;https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg&quot; /&gt;&lt;/body&gt;</code></pre></html>访问source.php<a id="more"></a> <?php    highlight_file(__FILE__);    class emmm    {        public static function checkFile(&$page)        {            $whitelist = ["source"=>"source.php","hint"=>"hint.php"];            if (! isset($page) || !is_string($page)) {                echo "you can't see it";                return false;            }<pre><code>        if (in_array($page, $whitelist)) {            return true;        }        $_page = mb_substr(            $page,            0,            mb_strpos($page . &apos;?&apos;, &apos;?&apos;)        );        if (in_array($_page, $whitelist)) {            return true;        }        $_page = urldecode($page);        $_page = mb_substr(            $_page,            0,            mb_strpos($_page . &apos;?&apos;, &apos;?&apos;)        );        if (in_array($_page, $whitelist)) {            return true;        }        echo &quot;you can&apos;t see it&quot;;        return false;    }}if (! empty($_REQUEST[&apos;file&apos;])    &amp;&amp; is_string($_REQUEST[&apos;file&apos;])    &amp;&amp; emmm::checkFile($_REQUEST[&apos;file&apos;])) {    include $_REQUEST[&apos;file&apos;];    exit;} else {    echo &quot;&lt;br&gt;&lt;img src=\&quot;https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\&quot; /&gt;&quot;;}  </code></pre><p>?&gt; </p><p>代码审计<br>有一个checkFile方法，规定了白名单<br>$whitelist = [“source”=&gt;”source.php”,”hint”=&gt;”hint.php”];<br>白名单内有一个hint.php，访问一下<br>flag not here, and flag in ffffllllaaaagggg<br>得到这样的提示，再继续审计代码</p><p>if (! isset($page) || !is_string($page))<br>需要设定page参数并且page要是字符</p><p>$_page = mb_substr(<br>                $page,<br>                0,<br>                mb_strpos($page . ‘?’, ‘?’)<br>            );<br>mb_substr是截取字符串的函数，mb_strpos函数则找出字符第一次出现的地方<br>所以上面代码的作用就是，截取page到？第一次出现的地方<br>if (in_array($_page, $whitelist)) {<br>                return true;<br>            }<br>如果截取之后的_page在白名单内则返回真<br>第一次截取之后再对page进行一次url解码<br>$_page = urldecode($page);<br>解码之后在对其进行同样的截取操作<br>同样的，如果截取到的_page在白名单内则返回真<br>if (! empty($_REQUEST[‘file’])<br>        &amp;&amp; is_string($_REQUEST[‘file’])<br>        &amp;&amp; emmm::checkFile($_REQUEST[‘file’])<br>    ) {<br>        include $_REQUEST[‘file’];<br>        exit;<br>    } else {<br>        echo “<br>&lt;img src=&quot;<a href="https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\&quot;" target="_blank" rel="noopener">https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\&quot;</a> /&gt;”;<br>    }<br>这一块代码的含义是，如果我们设定了file参数，并且满足file参数是字符串和checkfile方法，就进行文件包含，否则就返回一开始我们见到的那个滑稽<br>审计完了代码，我们需要理清思路<br>1.flag在ffffllllaaaagggg里面<br>2.我们的file要有白名单内的文件<br>3.两次解码(服务器本身就会进行一次url解码，后端又进行一次解码)后依然要满足checkfile方法<br>基于这些要求，我们就能够造出payload<br><a href="http://2bd8af98-1fcf-46ca-9780-c09e216ffb5e.node3.buuoj.cn/?file=source.php%253f../../../../../../../../../../../../../../../../../ffffllllaaaagggg" target="_blank" rel="noopener">http://2bd8af98-1fcf-46ca-9780-c09e216ffb5e.node3.buuoj.cn/?file=source.php%253f../../../../../../../../../../../../../../../../../ffffllllaaaagggg</a><br>?经过两次url编码之后是%253f，后面的../是用来进行目录穿越的<br>访问一下就能得到flag<br>flag{540b1ff4-daf1-472a-8d21-0a0c9a36884b} </p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;代码审计题目&lt;br&gt;查看源代码，发现提示&lt;br&gt;&lt;!DOCTYPE html&gt;&lt;/p&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;meta name=&quot;generator&quot; content=&quot;Hexo 4.1.1&quot;&gt;&lt;link rel=&quot;alternate&quot; href=&quot;/LawlietLW.github.io/atom.xml&quot; title=&quot;Hexo&quot; type=&quot;application/atom+xml&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!--source.php--&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;br&amp;gt;&amp;lt;img src=&amp;quot;https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg&amp;quot; /&amp;gt;&amp;lt;/body&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;/html&gt;
+访问source.php
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://LawlietLW.github.io/categories/CTF/"/>
+    
+    
+      <category term="Web" scheme="http://LawlietLW.github.io/tags/Web/"/>
+    
+  </entry>
+  
+</feed>
