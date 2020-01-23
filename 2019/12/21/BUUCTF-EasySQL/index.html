@@ -501,9 +501,9 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-EasySQL/1.jpg" alt=""></p>
+                <p><img src="/LawlietLW.github.io/2019/12/21/buuctf-easysql/1.jpg" alt=""></p>
 <a id="more"></a>
-<p>这题和强网杯随便注一样，都是堆叠注入<br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-EasySQL/2.jpg" alt=""><br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-EasySQL/3.jpg" alt=""><br>通过show tables可以看到Flag表<br>但想要看到列就不行了<br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-EasySQL/4.jpg" alt=""><br>通过burpfuzz一下，能看到过滤了挺多关键字的</p>
+<p>这题和强网杯随便注一样，都是堆叠注入<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-easysql/2.jpg" alt=""><br><img src="/LawlietLW.github.io/2019/12/21/buuctf-easysql/3.jpg" alt=""><br>通过show tables可以看到Flag表<br>但想要看到列就不行了<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-easysql/4.jpg" alt=""><br>通过burpfuzz一下，能看到过滤了挺多关键字的</p>
 <hr>
 <p>有点难顶，只能看wp了</p>
 <pre class=" language-sql"><code class="language-sql">官方解:<span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">set</span> sql_mode<span class="token operator">=</span>pipes_as_concat<span class="token punctuation">;</span><span class="token keyword">select</span> <span class="token number">1</span></code></pre>

