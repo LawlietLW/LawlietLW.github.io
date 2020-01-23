@@ -524,6 +524,64 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/LawlietLW.github.io/2020/01/23/buuctf-rip/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="BUUCTF rip">
+                            
+                            <span class="card-title">BUUCTF rip</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-23
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/pwn/">
+                            <span class="chip bg-color">pwn</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">
+                            <span class="chip bg-color">栈溢出</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/rip/">
+                            <span class="chip bg-color">rip</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
                     <a href="/LawlietLW.github.io/2019/12/23/buuctf-checkin/">
                         <div class="card-image">
                             
@@ -540,7 +598,10 @@
                                 打开环境，是一个文件上传页面
 
 先查看一下源代码，看看有没有客户端校验显然没有客户端校验首先上传一个图片，检查上传功能图片正常上传接下来再上传一个php文件
-123&lt;?php @eval($_POST['shell']); ?&gt;
+&lt;?php 
+@eval($_POST['shell']);
+ ?>
+提示非
                             
                         </div>
                         <div class="publish-info">
@@ -594,7 +655,10 @@
                                 打开环境
 
 查看源代码
-123456789101112131415161718&lt;!--I've set up WAF to ensure security.--&gt;&lt;script&gt;    $('#calc').subm
+&lt;!--I've set up WAF to ensure security.-->
+&lt;script>
+    $('#calc').submit(function(){
+        $.ajax({
                             
                         </div>
                         <div class="publish-info">
@@ -707,7 +771,7 @@
 这题和强网杯随便注一样，都是堆叠注入通过show tables可以看到Flag表但想要看到列就不行了通过burpfuzz一下，能看到过滤了挺多关键字的
 
 有点难顶，只能看wp了
-1官方解:1;set sql_mode=pipes_as_
+官方解:1;set sql_mode=pipes_as_c
                             
                         </div>
                         <div class="publish-info">
@@ -765,13 +829,13 @@
                                 打开环境
 
 有三个页面，挨个访问看看
-1/flag.txt
+/flag.txt
 
-1/welcome.txt
+/welcome.txt
 
-1/hints.txt
+/hints.txt
 开始分析第一个页面告诉我们flag in /fllllllllllllaghint告诉我们
-1md5(cookie_secr
+md5(cookie_secret+m
                             
                         </div>
                         <div class="publish-info">
@@ -881,7 +945,11 @@
                         <div class="summary block-with-text">
                             
                                 代码审计题目查看源代码，发现提示
-12345678910111213&lt;!DOCTYPE html&gt;&lt;html lang="en"&gt;&lt;head&gt;    &lt;meta charset="UTF-8"&gt
+&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewp
                             
                         </div>
                         <div class="publish-info">

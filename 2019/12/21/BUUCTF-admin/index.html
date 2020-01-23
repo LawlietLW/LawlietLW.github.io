@@ -471,7 +471,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    553
+                    549
                 </div>
                 
 
@@ -497,15 +497,53 @@
                 <p>打开环境，有注册和登录两个功能<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/1.jpg" alt=""></p>
 <a id="more"></a>
 <p>查看源代码，看到提示<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/2.jpg" alt=""><br>猜测需要以admin账号登陆才能拿到flag<br>那么先注册一个账号看看(admin账号已被注册)<br>注册账号后一共有四个选项<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/3.jpg" alt=""><br>首先看到post功能<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/4.jpg" alt=""><br>一个编辑留言的地方，可能会有xss之类的漏洞？我不太清楚，因为我目前并不会xss<br>再看到change password功能，查看源代码<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/5.jpg" alt=""><br>给出了源代码的GitHub地址<br>那就过去看看<br>分析routes.py<br>路由的功能不多，注册，登录，登出，编辑和修改密码</p>
-<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route('/register', methods = ['GET', 'POST'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/login', methods = ['GET', 'POST'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/logout')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logout</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/change', methods = ['GET', 'POST'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">change</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/edit', methods = ['GET', 'POST'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span><span class="params">()</span>:</span></span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-python"><code class="language-python">@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">'/register'</span><span class="token punctuation">,</span> methods <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'GET'</span><span class="token punctuation">,</span> <span class="token string">'POST'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">register</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">'/login'</span><span class="token punctuation">,</span> methods <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'GET'</span><span class="token punctuation">,</span> <span class="token string">'POST'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">login</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">'/logout'</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">logout</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">'/change'</span><span class="token punctuation">,</span> methods <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'GET'</span><span class="token punctuation">,</span> <span class="token string">'POST'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">change</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">'/edit'</span><span class="token punctuation">,</span> methods <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'GET'</span><span class="token punctuation">,</span> <span class="token string">'POST'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">edit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span></code></pre>
 <p>从注册开始分析<br>注意到接收username这里使用了一个<code>strlower</code>函数<br>看起来是使字符串小写的函数，但python内置<code>lower()</code>函数，为什么要自己写一个函数</p>
-<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">register</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> current_user.is_authenticated:</span><br><span class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">'index'</span>))</span><br><span class="line"></span><br><span class="line">    form = RegisterForm()</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">'POST'</span>:</span><br><span class="line">        name = strlower(form.username.data)</span><br><span class="line">        ............</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">register</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    <span class="token keyword">if</span> current_user<span class="token punctuation">.</span>is_authenticated<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> redirect<span class="token punctuation">(</span>url_for<span class="token punctuation">(</span><span class="token string">'index'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    form <span class="token operator">=</span> RegisterForm<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> request<span class="token punctuation">.</span>method <span class="token operator">==</span> <span class="token string">'POST'</span><span class="token punctuation">:</span>
+        name <span class="token operator">=</span> strlower<span class="token punctuation">(</span>form<span class="token punctuation">.</span>username<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span></code></pre>
 <p>事实上，不止注册这里，登录和修改密码处同样使用了<code>strlower</code>函数</p>
-<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">if</span> current_user.is_authenticated:</span><br><span class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">'index'</span>))</span><br><span class="line"></span><br><span class="line">    form = LoginForm()</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">'POST'</span>:</span><br><span class="line">        name = strlower(form.username.data)</span><br><span class="line">        ............</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">change</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> current_user.is_authenticated:</span><br><span class="line">        <span class="keyword">return</span> redirect(url_for(<span class="string">'login'</span>))</span><br><span class="line">    form = NewpasswordForm()</span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">'POST'</span>:</span><br><span class="line">        name = strlower(session[<span class="string">'name'</span>])</span><br><span class="line">        ...........</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">login</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> current_user<span class="token punctuation">.</span>is_authenticated<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> redirect<span class="token punctuation">(</span>url_for<span class="token punctuation">(</span><span class="token string">'index'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    form <span class="token operator">=</span> LoginForm<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> request<span class="token punctuation">.</span>method <span class="token operator">==</span> <span class="token string">'POST'</span><span class="token punctuation">:</span>
+        name <span class="token operator">=</span> strlower<span class="token punctuation">(</span>form<span class="token punctuation">.</span>username<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+<span class="token keyword">def</span> <span class="token function">change</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token operator">not</span> current_user<span class="token punctuation">.</span>is_authenticated<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> redirect<span class="token punctuation">(</span>url_for<span class="token punctuation">(</span><span class="token string">'login'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    form <span class="token operator">=</span> NewpasswordForm<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> request<span class="token punctuation">.</span>method <span class="token operator">==</span> <span class="token string">'POST'</span><span class="token punctuation">:</span>
+        name <span class="token operator">=</span> strlower<span class="token punctuation">(</span>session<span class="token punctuation">[</span><span class="token string">'name'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span></code></pre>
 <p>那我们就去看看这个<code>strlower</code>函数是什么样的</p>
-<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">strlower</span><span class="params">(username)</span>:</span></span><br><span class="line">    username = nodeprep.prepare(username)</span><br><span class="line">    <span class="keyword">return</span> username</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">strlower</span><span class="token punctuation">(</span>username<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    username <span class="token operator">=</span> nodeprep<span class="token punctuation">.</span>prepare<span class="token punctuation">(</span>username<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> username</code></pre>
 <p>这里面使用了nodeprep.prepare()函数，这个函数对应的库是twisted<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/6.jpg" alt=""><br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/7.jpg" alt=""><br>这么一对比，发现源码中使用的twisted库的版本实在太低了<br><a href="https://panda1g1.github.io/2018/11/15/HCTF%20admin/" target="_blank" rel="noopener">参考这篇文章</a><br>这样一来我们就能形成一个攻击链<br>登陆时会调用一次<code>strlower</code>，修改密码时又会调用一次<code>strlower</code>，只要我们的用户名经过两次调用后变成了admin，我们就可以修改admin用户的密码然后重新登陆了</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ᴬᴰᴹᴵᴺ -&gt; ADMIN -&gt; admin</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash">ᴬᴰᴹᴵᴺ -<span class="token operator">></span> ADMIN -<span class="token operator">></span> admin</code></pre>
 <p>admin的Unicode编码可以在网上找到<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/8.jpg" alt=""><br>成功拿到flag</p>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -778,7 +816,10 @@
                             打开环境
 
 查看源代码
-123456789101112131415161718&lt;!--I've set up WAF to ensure security.--&gt;&lt;script&gt;    $('#calc').subm
+&lt;!--I've set up WAF to ensure security.-->
+&lt;script>
+    $('#calc').submit(function(){
+        $.ajax({
                         
                     </div>
                     <div class="publish-info">
@@ -840,7 +881,7 @@
 这题和强网杯随便注一样，都是堆叠注入通过show tables可以看到Flag表但想要看到列就不行了通过burpfuzz一下，能看到过滤了挺多关键字的
 
 有点难顶，只能看wp了
-1官方解:1;set sql_mode=pipes_as_
+官方解:1;set sql_mode=pipes_as_c
                         
                     </div>
                     <div class="publish-info">
