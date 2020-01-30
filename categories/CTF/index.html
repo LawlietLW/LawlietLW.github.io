@@ -292,11 +292,11 @@
                 
                 
                 
-                <a href="/LawlietLW.github.io/categories/CTF/" title="CTF: 8">
+                <a href="/LawlietLW.github.io/categories/CTF/" title="CTF: 10">
                     <span class="chip center-align waves-effect waves-light
                              chip-active "
                             style="background-color: #F9EBEA;">CTF
-                        <span class="tag-length">8</span>
+                        <span class="tag-length">10</span>
                     </span>
                 </a>
                 
@@ -313,6 +313,110 @@
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="BUUCTF pwn1_sctf_2016">
+                            
+                            <span class="card-title">BUUCTF pwn1_sctf_2016</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                checksec32位程序，开启栈不可执行IDA分析，vuln函数和后门函数
+vuln函数看起来很大一坨，实际上都是C++的一些东西，函数的真正意思其实就是把I替换成you执行程序试一试如我们所想一样再看向缓冲区gets允许输入32个字节，
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-30
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/pwn/">
+                            <span class="chip bg-color">pwn</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">
+                            <span class="chip bg-color">栈溢出</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="BUUCTF warmup_csaw_2016">
+                            
+                            <span class="card-title">BUUCTF warmup_csaw_2016</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                checksec64位程序，没有保护拖入IDA查看,F5大法同样有一个后门函数，这个后门函数直接读取flag所以做法和rip一样直接贴exp
+from pwn import *
+
+#io = process('./warmup_csaw_2
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-30
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/pwn/">
+                            <span class="chip bg-color">pwn</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">
+                            <span class="chip bg-color">栈溢出</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
                     <a href="/LawlietLW.github.io/2020/01/23/buuctf-rip/">
                         <div class="card-image tag-image">
                             
@@ -325,10 +429,10 @@
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                                入门栈溢出题目，首先checksec一下64位程序，没有任何保护
+
+拖入IDA查看,F5大法好首先是main函数还有一个后门函数fun()很明显,main函数中的gets存在溢出,接下来来确定溢出字节数相对于EIP有23个字节exp如下
+f
                             
                         </div>
                         <div class="publish-info">
@@ -780,7 +884,7 @@ md5(cookie_secret+m
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">3.9k</span>&nbsp;字
+                class="white-color">4.4k</span>&nbsp;字
             
             
             
