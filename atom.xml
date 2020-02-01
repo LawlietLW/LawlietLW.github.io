@@ -6,7 +6,7 @@
   <link href="/LawlietLW.github.io/atom.xml" rel="self"/>
   
   <link href="http://lawlietlw.github.io/"/>
-  <updated>2020-01-30T10:28:09.475Z</updated>
+  <updated>2020-02-01T04:44:13.192Z</updated>
   <id>http://lawlietlw.github.io/</id>
   
   <author>
@@ -15,6 +15,74 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>babyheap_0ctf_2017</title>
+    <link href="http://lawlietlw.github.io/2020/02/01/babyheap-0ctf-2017/"/>
+    <id>http://lawlietlw.github.io/2020/02/01/babyheap-0ctf-2017/</id>
+    <published>2020-02-01T02:17:37.000Z</published>
+    <updated>2020-02-01T04:44:13.192Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;这两天学习了一些堆的知识，趁热记录一下&lt;br&gt;首先还是熟练的checksec&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/1.jpg&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://LawlietLW.github.io/categories/CTF/"/>
+    
+    
+      <category term="pwn" scheme="http://LawlietLW.github.io/tags/pwn/"/>
+    
+      <category term="堆" scheme="http://LawlietLW.github.io/tags/%E5%A0%86/"/>
+    
+      <category term="fastbin attack" scheme="http://LawlietLW.github.io/tags/fastbin-attack/"/>
+    
+      <category term="chunk extend" scheme="http://LawlietLW.github.io/tags/chunk-extend/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>BUUCTF ciscn_2019_c_1</title>
+    <link href="http://lawlietlw.github.io/2020/01/30/buuctf-ciscn-2019-c-1/"/>
+    <id>http://lawlietlw.github.io/2020/01/30/buuctf-ciscn-2019-c-1/</id>
+    <published>2020-01-30T10:32:46.000Z</published>
+    <updated>2020-01-30T10:35:01.011Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;script&gt;
+        document.querySelectorAll(&#39;.github-emoji&#39;)
+          .forEach(el =&gt; {
+            if (!el.dataset.src) { return; }
+       
+        
+      
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://LawlietLW.github.io/categories/CTF/"/>
+    
+    
+      <category term="pwn" scheme="http://LawlietLW.github.io/tags/pwn/"/>
+    
+      <category term="栈溢出" scheme="http://LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/"/>
+    
+      <category term="ret2libc" scheme="http://LawlietLW.github.io/tags/ret2libc/"/>
+    
+  </entry>
   
   <entry>
     <title>BUUCTF pwn1_sctf_2016</title>
@@ -50,7 +118,7 @@
     <link href="http://lawlietlw.github.io/2020/01/30/buuctf-warmup-csaw-2016/"/>
     <id>http://lawlietlw.github.io/2020/01/30/buuctf-warmup-csaw-2016/</id>
     <published>2020-01-30T10:05:47.000Z</published>
-    <updated>2020-01-30T10:13:38.783Z</updated>
+    <updated>2020-01-30T10:31:46.222Z</updated>
     
     <summary type="html">
     
