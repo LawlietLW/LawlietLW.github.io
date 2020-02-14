@@ -439,7 +439,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>打开环境<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/1.jpg" alt></p>
+                <p>打开环境<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/1.jpg" alt=""></p>
 <a id="more"></a>
 <p>查看源代码</p>
 <pre class=" language-javascript"><code class="language-javascript"><span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>I've <span class="token keyword">set</span> up WAF to ensure security<span class="token punctuation">.</span><span class="token operator">--</span><span class="token operator">></span>
@@ -479,7 +479,7 @@
 <p>waf过滤了’ ‘,’\t’,’\r’,’\n’,’'‘,’”‘,’`’,’[‘,’]’,’$’,’'<br>其中以get方式给num传参</p>
 <p>由于前端设置了waf，所以只要我们的访问请求中包含非法字符就会返回403，无法访问到后端<br>在这样的情况下我们就可以使用HTTP走私来绕过前端waf直接访问后端</p>
 <p>关于HTTP走私的介绍网上有许多师傅做了讲解，在这里就不多叙述了<br>(HTTP走私)[<a href="https://xz.aliyun.com/t/6654]" target="_blank" rel="noopener">https://xz.aliyun.com/t/6654]</a><br>(http请求走私(HTTP Request Smuggling))[<a href="https://blog.csdn.net/qq_37865996/article/details/102529396]" target="_blank" rel="noopener">https://blog.csdn.net/qq_37865996/article/details/102529396]</a><br>贴两个链接</p>
-<p>在这里，我们可以使用CL-CL方式来进行http走私，当然其他的方式也一样可以<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/2.jpg" alt><br>前端服务器读取完num=1之后，将数据包原封不动地转发给后端，后端读取到<code>?num=phpinfo()</code>后，返回给我们<code>phpinfo()</code><br>在这一题里有几个PHP函数需要我们注意</p>
+<p>在这里，我们可以使用CL-CL方式来进行http走私，当然其他的方式也一样可以<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/2.jpg" alt=""><br>前端服务器读取完num=1之后，将数据包原封不动地转发给后端，后端读取到<code>?num=phpinfo()</code>后，返回给我们<code>phpinfo()</code><br>在这一题里有几个PHP函数需要我们注意</p>
 <pre class=" language-bash"><code class="language-bash">scandir<span class="token punctuation">(</span><span class="token punctuation">)</span> 函数
 返回指定目录中的文件和目录的数组。
 var_dump<span class="token punctuation">(</span><span class="token punctuation">)</span>函数：var_dump<span class="token punctuation">(</span><span class="token punctuation">)</span> 函数用于输出变量的相关信息。
@@ -491,9 +491,9 @@ readfile<span class="token punctuation">(</span><span class="token punctuation">
 <pre class=" language-bash"><code class="language-bash">chr<span class="token punctuation">(</span><span class="token punctuation">)</span>
 chr<span class="token punctuation">(</span><span class="token punctuation">)</span> 函数从指定的 ASCII 值返回字符。
 ASCII 值可被指定为十进制值、八进制值或十六进制值。八进制值被定义为带前置 0，而十六进制值被定义为带前置 0x。</code></pre>
-<p>所以我们可以构造成<code>scandir(chr(47))</code>来扫描根目录<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/3.jpg" alt><br>找到了flag存放的目录<br>接下来，我们需要从f1agg目录中读取flag<br>构造payload</p>
+<p>所以我们可以构造成<code>scandir(chr(47))</code>来扫描根目录<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/3.jpg" alt=""><br>找到了flag存放的目录<br>接下来，我们需要从f1agg目录中读取flag<br>构造payload</p>
 <pre class=" language-bash"><code class="language-bash">?num<span class="token operator">=</span>var_dump<span class="token punctuation">(</span>readfile<span class="token punctuation">(</span>chr<span class="token punctuation">(</span>47<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>102<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>49<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>97<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>103<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>103<span class="token punctuation">))</span><span class="token punctuation">)</span></code></pre>
-<p><code>chr(47).chr(102).chr(49).chr(97).chr(103).chr(103)</code>就是/f1agg<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/4.jpg" alt><br>flag到手</p>
+<p><code>chr(47).chr(102).chr(49).chr(97).chr(103).chr(103)</code>就是/f1agg<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/4.jpg" alt=""><br>flag到手</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -906,7 +906,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">7.2k</span>&nbsp;字
+                class="white-color">11.9k</span>&nbsp;字
             
             
             

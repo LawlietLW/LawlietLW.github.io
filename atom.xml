@@ -6,7 +6,7 @@
   <link href="/LawlietLW.github.io/atom.xml" rel="self"/>
   
   <link href="http://lawlietlw.github.io/"/>
-  <updated>2020-02-09T09:53:20.735Z</updated>
+  <updated>2020-02-14T05:13:49.890Z</updated>
   <id>http://lawlietlw.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>[网鼎杯 2018]Fakebook</title>
-    <link href="http://lawlietlw.github.io/2020/02/09/wang-ding-bei-2018-fakebook/"/>
-    <id>http://lawlietlw.github.io/2020/02/09/wang-ding-bei-2018-fakebook/</id>
-    <published>2020-02-09T07:26:17.000Z</published>
-    <updated>2020-02-09T09:53:20.735Z</updated>
+    <title>动态规划的背包问题</title>
+    <link href="http://lawlietlw.github.io/2020/02/10/dong-tai-gui-hua/"/>
+    <id>http://lawlietlw.github.io/2020/02/10/dong-tai-gui-hua/</id>
+    <published>2020-02-10T07:09:26.000Z</published>
+    <updated>2020-02-14T05:13:49.890Z</updated>
     
     <summary type="html">
     
@@ -29,7 +29,69 @@
       
         
         
-          &lt;p&gt;打开环境&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/1.jpg&quot; alt&gt;&lt;br&gt;注册一个账号，登陆进去&lt;br&gt;&lt;img
+          &lt;p&gt;#01背包和完全背包&lt;br&gt;记录一下这两天学习的动态规划算法，拖了好久了&lt;br&gt;动态规划可以说是递归的升级版，甚至可以替代BFS和DFS，能熟练掌握的话就不用再就纠结用什么搜索算法好了&lt;br&gt;这两天在洛谷上刷了一下动态规划地背包算法部分，深感DP的便利，用贪心算法的话要写一
+        
+      
+    
+    </summary>
+    
+    
+      <category term="算法" scheme="http://LawlietLW.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="动态规划" scheme="http://LawlietLW.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+    
+      <category term="C" scheme="http://LawlietLW.github.io/tags/C/"/>
+    
+      <category term="背包问题" scheme="http://LawlietLW.github.io/tags/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[CISCN2019 华北赛区 Day1 Web2]ikun</title>
+    <link href="http://lawlietlw.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/"/>
+    <id>http://lawlietlw.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/</id>
+    <published>2020-02-10T05:14:44.000Z</published>
+    <updated>2020-02-10T06:48:58.867Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;打开环境，喜闻乐见&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/1.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;先注册一个账号&lt;br&gt;&lt;img
+        
+      
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://LawlietLW.github.io/categories/CTF/"/>
+    
+    
+      <category term="python反序列化" scheme="http://LawlietLW.github.io/tags/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+      <category term="pickle，Web" scheme="http://LawlietLW.github.io/tags/pickle%EF%BC%8CWeb/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[ZJCTF 2019]NiZhuanSiWei</title>
+    <link href="http://lawlietlw.github.io/2020/02/10/zjctf-2019-nizhuansiwei/"/>
+    <id>http://lawlietlw.github.io/2020/02/10/zjctf-2019-nizhuansiwei/</id>
+    <published>2020-02-10T04:44:25.000Z</published>
+    <updated>2020-02-10T05:13:50.320Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;打开环境，直接给出了源代码&lt;/p&gt;
+&lt;pre class=&quot; language-php&quot;&gt;&lt;code class=&quot;language-php&quot;&gt;&lt;span class=&quot;token delimiter&quot;&gt;&amp;lt;?php&lt;/span&gt;  
+&lt;span
         
       
     
@@ -40,6 +102,102 @@
     
     
       <category term="Web" scheme="http://LawlietLW.github.io/tags/Web/"/>
+    
+      <category term="data伪协议" scheme="http://LawlietLW.github.io/tags/data%E4%BC%AA%E5%8D%8F%E8%AE%AE/"/>
+    
+      <category term="filter伪协议" scheme="http://LawlietLW.github.io/tags/filter%E4%BC%AA%E5%8D%8F%E8%AE%AE/"/>
+    
+      <category term="PHP反序列化" scheme="http://LawlietLW.github.io/tags/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[BUUCTF 2018]Online Tool</title>
+    <link href="http://lawlietlw.github.io/2020/02/09/buuctf-2018-online-tool/"/>
+    <id>http://lawlietlw.github.io/2020/02/09/buuctf-2018-online-tool/</id>
+    <published>2020-02-09T10:55:38.000Z</published>
+    <updated>2020-02-10T03:58:47.670Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;打开环境&lt;br&gt;&lt;a href=&quot;1.jpg&quot;&gt;&lt;/a&gt;&lt;br&gt;直接给出源代码，代码审计&lt;/p&gt;
+&lt;pre class=&quot; language-php&quot;&gt;&lt;code class=&quot;language-php&quot;&gt;&lt;span class=&quot;token
+        
+      
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://LawlietLW.github.io/categories/CTF/"/>
+    
+    
+      <category term="Web" scheme="http://LawlietLW.github.io/tags/Web/"/>
+    
+      <category term="绕过escapeshellarg()+escapeshellcmd()" scheme="http://LawlietLW.github.io/tags/%E7%BB%95%E8%BF%87escapeshellarg-escapeshellcmd/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[极客大挑战 2019]Secret File</title>
+    <link href="http://lawlietlw.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-secret-file/"/>
+    <id>http://lawlietlw.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-secret-file/</id>
+    <published>2020-02-09T10:09:48.000Z</published>
+    <updated>2020-02-09T10:45:20.655Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;打开环境&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-secret-file/1.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;查看源代码，发现一个页面&lt;br&gt;&lt;img
+        
+      
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://LawlietLW.github.io/categories/CTF/"/>
+    
+    
+      <category term="Web" scheme="http://LawlietLW.github.io/tags/Web/"/>
+    
+      <category term="burp" scheme="http://LawlietLW.github.io/tags/burp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[网鼎杯 2018]Fakebook</title>
+    <link href="http://lawlietlw.github.io/2020/02/09/wang-ding-bei-2018-fakebook/"/>
+    <id>http://lawlietlw.github.io/2020/02/09/wang-ding-bei-2018-fakebook/</id>
+    <published>2020-02-09T07:26:17.000Z</published>
+    <updated>2020-02-09T10:30:15.601Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;打开环境&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/1.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;注册一个账号，登陆进去&lt;br&gt;&lt;img
+        
+      
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://LawlietLW.github.io/categories/CTF/"/>
+    
+    
+      <category term="Web" scheme="http://LawlietLW.github.io/tags/Web/"/>
+    
+      <category term="PHP反序列化" scheme="http://LawlietLW.github.io/tags/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+      <category term="报错注入" scheme="http://LawlietLW.github.io/tags/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   
@@ -56,7 +214,7 @@
       
         
         
-          &lt;p&gt;打开环境，登录框&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-easysql/1.jpg&quot; alt&gt;&lt;br&gt;随便登陆测试一下&lt;br&gt;&lt;img
+          &lt;p&gt;打开环境，登录框&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-easysql/1.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;随便登陆测试一下&lt;br&gt;&lt;img
         
       
     
@@ -85,7 +243,7 @@
       
         
         
-          &lt;p&gt;打开环境&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-havefun/1.jpg&quot; alt&gt;&lt;br&gt;查看源代码，在最末端发现提示&lt;br&gt;&lt;img
+          &lt;p&gt;打开环境&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-havefun/1.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;查看源代码，在最末端发现提示&lt;br&gt;&lt;img
         
       
     
@@ -112,7 +270,7 @@
       
         
         
-          &lt;p&gt;打开环境，很明显就是sql注入&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/02/09/hack-world/1.jpg&quot; alt&gt;&lt;br&gt;输入几个数字测试一下&lt;br&gt;&lt;img
+          &lt;p&gt;打开环境，很明显就是sql注入&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/02/09/hack-world/1.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;输入几个数字测试一下&lt;br&gt;&lt;img
         
       
     
@@ -176,7 +334,7 @@
       
         
         
-          &lt;p&gt;checksec&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/1.jpg&quot; alt&gt;&lt;br&gt;32位程序，开启栈不可执行&lt;br&gt;IDA分析，vuln函数和后门函数&lt;br&gt;&lt;img
+          &lt;p&gt;checksec&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/1.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;32位程序，开启栈不可执行&lt;br&gt;IDA分析，vuln函数和后门函数&lt;br&gt;&lt;img
         
       
     
@@ -205,7 +363,7 @@
       
         
         
-          &lt;p&gt;checksec&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/1.jpg&quot; alt&gt;&lt;br&gt;64位程序，没有保护&lt;br&gt;拖入IDA查看,F5大法&lt;br&gt;&lt;img
+          &lt;p&gt;checksec&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/1.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;64位程序，没有保护&lt;br&gt;拖入IDA查看,F5大法&lt;br&gt;&lt;img
         
       
     
@@ -230,7 +388,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;入门栈溢出题目，首先checksec一下&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/01/23/buuctf-rip/1.jpg&quot; alt&gt;&lt;br&gt;64位程序，没有任何保护&lt;/p&gt;
+      &lt;p&gt;入门栈溢出题目，首先checksec一下&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2020/01/23/buuctf-rip/1.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;64位程序，没有任何保护&lt;/p&gt;
     
     </summary>
     
@@ -255,7 +413,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;打开环境，是一个文件上传页面&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2019/12/23/buuctf-checkin/1.jpg&quot; alt&gt;&lt;/p&gt;
+      &lt;p&gt;打开环境，是一个文件上传页面&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2019/12/23/buuctf-checkin/1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -278,7 +436,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;打开环境&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/1.jpg&quot; alt&gt;&lt;/p&gt;
+      &lt;p&gt;打开环境&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -303,7 +461,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;打开环境，有注册和登录两个功能&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2019/12/21/buuctf-admin/1.jpg&quot; alt&gt;&lt;/p&gt;
+      &lt;p&gt;打开环境，有注册和登录两个功能&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2019/12/21/buuctf-admin/1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -326,7 +484,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;&lt;img src=&quot;/LawlietLW.github.io/2019/12/21/buuctf-easy-sql/1.jpg&quot; alt&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;img src=&quot;/LawlietLW.github.io/2019/12/21/buuctf-easy-sql/1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -351,7 +509,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;打开环境&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/1.jpg&quot; alt&gt;&lt;/p&gt;
+      &lt;p&gt;打开环境&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -374,7 +532,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;打开环境，看到这样的页面&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/1.jpg&quot; alt&gt;&lt;/p&gt;
+      &lt;p&gt;打开环境，看到这样的页面&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
     

@@ -433,7 +433,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>打开环境，很明显就是sql注入<br><img src="/LawlietLW.github.io/2020/02/09/hack-world/1.jpg" alt><br>输入几个数字测试一下<br><img src="/LawlietLW.github.io/2020/02/09/hack-world/2.jpg" alt><br><img src="/LawlietLW.github.io/2020/02/09/hack-world/3.jpg" alt><br><img src="/LawlietLW.github.io/2020/02/09/hack-world/4.jpg" alt><br>3以后就没有不同的回显了<br>接着测试单引号，输入1’测试<br><img src="/LawlietLW.github.io/2020/02/09/hack-world/5.jpg" alt><br>回显<code>bool(false)</code><br>看到bool自然就想到bool盲注，不过我们还得fuzz一下过滤了哪些关键字，直接上bp测试<br>长度为472的都是bool，长度为482的都被探测为sql注入<br><img src="/LawlietLW.github.io/2020/02/09/hack-world/6.jpg" alt><br><img src="/LawlietLW.github.io/2020/02/09/hack-world/7.jpg" alt><br><img src="/LawlietLW.github.io/2020/02/09/hack-world/8.jpg" alt><br>可以看到大部分注入需要的函数都没有被过滤<br>接下来就开始构造payload注入<br>题目已经告诉我们flag所在的表和列都为flag<br>我们构造如下payload惊醒测试<br><code>if(ascii(substr((select(flag)from(flag)),1,1))=102,1,2)--+</code><br>如果为真则返回id=1的结果，否则返回id=2的结果<br><img src="/LawlietLW.github.io/2020/02/09/hack-world/9.jpg" alt><br>如预期一样，回显了id=1的结果<br>剩下的就是构造盲注脚本了，脚本可以用二分法，这样快很多<br>不过我懒，选择暴力枚举，脚本如下</p>
+                <p>打开环境，很明显就是sql注入<br><img src="/LawlietLW.github.io/2020/02/09/hack-world/1.jpg" alt=""><br>输入几个数字测试一下<br><img src="/LawlietLW.github.io/2020/02/09/hack-world/2.jpg" alt=""><br><img src="/LawlietLW.github.io/2020/02/09/hack-world/3.jpg" alt=""><br><img src="/LawlietLW.github.io/2020/02/09/hack-world/4.jpg" alt=""><br>3以后就没有不同的回显了<br>接着测试单引号，输入1’测试<br><img src="/LawlietLW.github.io/2020/02/09/hack-world/5.jpg" alt=""><br>回显<code>bool(false)</code><br>看到bool自然就想到bool盲注，不过我们还得fuzz一下过滤了哪些关键字，直接上bp测试<br>长度为472的都是bool，长度为482的都被探测为sql注入<br><img src="/LawlietLW.github.io/2020/02/09/hack-world/6.jpg" alt=""><br><img src="/LawlietLW.github.io/2020/02/09/hack-world/7.jpg" alt=""><br><img src="/LawlietLW.github.io/2020/02/09/hack-world/8.jpg" alt=""><br>可以看到大部分注入需要的函数都没有被过滤<br>接下来就开始构造payload注入<br>题目已经告诉我们flag所在的表和列都为flag<br>我们构造如下payload惊醒测试<br><code>if(ascii(substr((select(flag)from(flag)),1,1))=102,1,2)--+</code><br>如果为真则返回id=1的结果，否则返回id=2的结果<br><img src="/LawlietLW.github.io/2020/02/09/hack-world/9.jpg" alt=""><br>如预期一样，回显了id=1的结果<br>剩下的就是构造盲注脚本了，脚本可以用二分法，这样快很多<br>不过我懒，选择暴力枚举，脚本如下</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
 url<span class="token operator">=</span><span class="token string">"http://8c21b6a5-81a5-4dc0-ac52-8db6ef8583f4.node3.buuoj.cn/index.php"</span>
 flag<span class="token operator">=</span><span class="token string">''</span>
@@ -451,7 +451,7 @@ flag<span class="token operator">=</span><span class="token string">''</span>
             <span class="token keyword">break</span>
 
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"flag为:"</span><span class="token punctuation">,</span>flag<span class="token punctuation">)</span></code></pre>
-<p><img src="/LawlietLW.github.io/2020/02/09/hack-world/10.jpg" alt></p>
+<p><img src="/LawlietLW.github.io/2020/02/09/hack-world/10.jpg" alt=""></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -864,7 +864,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">7.2k</span>&nbsp;字
+                class="white-color">11.9k</span>&nbsp;字
             
             
             

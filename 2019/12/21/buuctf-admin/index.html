@@ -431,9 +431,9 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>打开环境，有注册和登录两个功能<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/1.jpg" alt></p>
+                <p>打开环境，有注册和登录两个功能<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/1.jpg" alt=""></p>
 <a id="more"></a>
-<p>查看源代码，看到提示<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/2.jpg" alt><br>猜测需要以admin账号登陆才能拿到flag<br>那么先注册一个账号看看(admin账号已被注册)<br>注册账号后一共有四个选项<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/3.jpg" alt><br>首先看到post功能<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/4.jpg" alt><br>一个编辑留言的地方，可能会有xss之类的漏洞？我不太清楚，因为我目前并不会xss<br>再看到change password功能，查看源代码<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/5.jpg" alt><br>给出了源代码的GitHub地址<br>那就过去看看<br>分析routes.py<br>路由的功能不多，注册，登录，登出，编辑和修改密码</p>
+<p>查看源代码，看到提示<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/2.jpg" alt=""><br>猜测需要以admin账号登陆才能拿到flag<br>那么先注册一个账号看看(admin账号已被注册)<br>注册账号后一共有四个选项<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/3.jpg" alt=""><br>首先看到post功能<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/4.jpg" alt=""><br>一个编辑留言的地方，可能会有xss之类的漏洞？我不太清楚，因为我目前并不会xss<br>再看到change password功能，查看源代码<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/5.jpg" alt=""><br>给出了源代码的GitHub地址<br>那就过去看看<br>分析routes.py<br>路由的功能不多，注册，登录，登出，编辑和修改密码</p>
 <pre class=" language-python"><code class="language-python">@app<span class="token punctuation">.</span>route<span class="token punctuation">(</span><span class="token string">'/register'</span><span class="token punctuation">,</span> methods <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'GET'</span><span class="token punctuation">,</span> <span class="token string">'POST'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 <span class="token keyword">def</span> <span class="token function">register</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
 
@@ -479,9 +479,9 @@
 <pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">strlower</span><span class="token punctuation">(</span>username<span class="token punctuation">)</span><span class="token punctuation">:</span>
     username <span class="token operator">=</span> nodeprep<span class="token punctuation">.</span>prepare<span class="token punctuation">(</span>username<span class="token punctuation">)</span>
     <span class="token keyword">return</span> username</code></pre>
-<p>这里面使用了nodeprep.prepare()函数，这个函数对应的库是twisted<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/6.jpg" alt><br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/7.jpg" alt><br>这么一对比，发现源码中使用的twisted库的版本实在太低了<br><a href="https://panda1g1.github.io/2018/11/15/HCTF%20admin/" target="_blank" rel="noopener">参考这篇文章</a><br>这样一来我们就能形成一个攻击链<br>登陆时会调用一次<code>strlower</code>，修改密码时又会调用一次<code>strlower</code>，只要我们的用户名经过两次调用后变成了admin，我们就可以修改admin用户的密码然后重新登陆了</p>
+<p>这里面使用了nodeprep.prepare()函数，这个函数对应的库是twisted<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/6.jpg" alt=""><br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/7.jpg" alt=""><br>这么一对比，发现源码中使用的twisted库的版本实在太低了<br><a href="https://panda1g1.github.io/2018/11/15/HCTF%20admin/" target="_blank" rel="noopener">参考这篇文章</a><br>这样一来我们就能形成一个攻击链<br>登陆时会调用一次<code>strlower</code>，修改密码时又会调用一次<code>strlower</code>，只要我们的用户名经过两次调用后变成了admin，我们就可以修改admin用户的密码然后重新登陆了</p>
 <pre class=" language-bash"><code class="language-bash">ᴬᴰᴹᴵᴺ -<span class="token operator">></span> ADMIN -<span class="token operator">></span> admin</code></pre>
-<p>admin的Unicode编码可以在网上找到<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/8.jpg" alt><br>成功拿到flag</p>
+<p>admin的Unicode编码可以在网上找到<br><img src="/LawlietLW.github.io/2019/12/21/buuctf-admin/8.jpg" alt=""><br>成功拿到flag</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -901,7 +901,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">7.2k</span>&nbsp;字
+                class="white-color">11.9k</span>&nbsp;字
             
             
             

