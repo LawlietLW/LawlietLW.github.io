@@ -6,7 +6,7 @@
   <link href="/LawlietLW.github.io/atom.xml" rel="self"/>
   
   <link href="http://lawlietlw.github.io/"/>
-  <updated>2020-02-14T05:13:49.890Z</updated>
+  <updated>2020-02-15T05:28:57.300Z</updated>
   <id>http://lawlietlw.github.io/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL注入</title>
+    <link href="http://lawlietlw.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/"/>
+    <id>http://lawlietlw.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/</id>
+    <published>2020-02-15T04:41:27.000Z</published>
+    <updated>2020-02-15T05:28:57.300Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;复习了一下SQL注入，发觉还很有一部分知识点没掌握，记录一下&lt;br&gt;以2019强网杯随便注为例，之前是用的更改列名和表名来做的，但相对于利用MySQL预处理语句来做要麻烦很多，先了解一下MySQL的预处理语句&lt;/p&gt;
+&lt;pre class=&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="SQL注入" scheme="http://LawlietLW.github.io/categories/SQL%E6%B3%A8%E5%85%A5/"/>
+    
+    
+      <category term="MySQL预处理" scheme="http://LawlietLW.github.io/tags/MySQL%E9%A2%84%E5%A4%84%E7%90%86/"/>
+    
+      <category term="无列名注入" scheme="http://LawlietLW.github.io/tags/%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5/"/>
+    
+      <category term="order by盲注" scheme="http://LawlietLW.github.io/tags/order-by%E7%9B%B2%E6%B3%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>动态规划的背包问题</title>
@@ -545,41 +577,6 @@
       <category term="堆叠注入" scheme="http://LawlietLW.github.io/tags/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5/"/>
     
       <category term="修改表名和列" scheme="http://LawlietLW.github.io/tags/%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%90%8D%E5%92%8C%E5%88%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>BUUCTF warmup</title>
-    <link href="http://lawlietlw.github.io/2019/12/21/buuctf-warmup/"/>
-    <id>http://lawlietlw.github.io/2019/12/21/buuctf-warmup/</id>
-    <published>2019-12-21T02:40:39.000Z</published>
-    <updated>2020-01-23T12:21:39.804Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;代码审计题目&lt;br&gt;查看源代码，发现提示&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;html&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&quot;en&quot;&amp;gt;
-&amp;lt;head&amp;gt;
-    &amp;lt;meta charset=&quot;UTF-8&quot;&amp;gt;
-    &amp;lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&amp;gt;
-    &amp;lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&amp;gt;
-    &amp;lt;title&amp;gt;Document&amp;lt;/title&amp;gt;
-&amp;lt;/head&amp;gt;
-&amp;lt;body&amp;gt;
-    &amp;lt;!--source.php--&amp;gt;
-
-    &amp;lt;br&amp;gt;&amp;lt;img src=&quot;https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg&quot; /&amp;gt;&amp;lt;/body&amp;gt;
-&amp;lt;/html&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;访问source.php&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="CTF" scheme="http://LawlietLW.github.io/categories/CTF/"/>
-    
-    
-      <category term="Web" scheme="http://LawlietLW.github.io/tags/Web/"/>
     
   </entry>
   
