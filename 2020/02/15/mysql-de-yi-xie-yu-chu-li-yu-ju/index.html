@@ -29,8 +29,8 @@ PREPARE">
     
     <script src="/libs/jquery/jquery.min.js"></script>
     
-<meta name="generator" content="Hexo 4.1.1"><link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"><link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="L" type="application/atom+xml">
-</head>
+<meta name="generator" content="Hexo 4.1.1"><link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="L" type="application/atom+xml">
+<link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -413,7 +413,7 @@ PREPARE">
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    535
+                    533
                 </div>
                 
 
@@ -458,7 +458,7 @@ mysql除可使用select查询表中的数据，也可使用handler语句，这�
 <pre class=" language-sql"><code class="language-sql">语法结构
 <span class="token keyword">HANDLER</span> tbl_name <span class="token keyword">OPEN</span> <span class="token punctuation">[</span> <span class="token punctuation">[</span><span class="token keyword">AS</span><span class="token punctuation">]</span> alias<span class="token punctuation">]</span>
 
-<span class="token keyword">HANDLER</span> tbl_name <span class="token keyword">READ</span> index_name { <span class="token operator">=</span> <span class="token operator">|</span> <span class="token operator">&lt;=</span> <span class="token operator">|</span> <span class="token operator">&gt;=</span> <span class="token operator">|</span> <span class="token operator">&lt;</span> <span class="token operator">|</span> <span class="token operator">&gt;</span> } <span class="token punctuation">(</span>value1<span class="token punctuation">,</span>value2<span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+<span class="token keyword">HANDLER</span> tbl_name <span class="token keyword">READ</span> index_name { <span class="token operator">=</span> <span class="token operator">|</span> <span class="token operator">&lt;=</span> <span class="token operator">|</span> <span class="token operator">>=</span> <span class="token operator">|</span> <span class="token operator">&lt;</span> <span class="token operator">|</span> <span class="token operator">></span> } <span class="token punctuation">(</span>value1<span class="token punctuation">,</span>value2<span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
     <span class="token punctuation">[</span> <span class="token keyword">WHERE</span> where_condition <span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">LIMIT</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">]</span>
 <span class="token keyword">HANDLER</span> tbl_name <span class="token keyword">READ</span> index_name { <span class="token keyword">FIRST</span> <span class="token operator">|</span> <span class="token keyword">NEXT</span> <span class="token operator">|</span> <span class="token keyword">PREV</span> <span class="token operator">|</span> <span class="token keyword">LAST</span> }
     <span class="token punctuation">[</span> <span class="token keyword">WHERE</span> where_condition <span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">LIMIT</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">]</span>
@@ -628,59 +628,46 @@ mysql除可使用select查询表中的数据，也可使用handler语句，这�
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/">
+                <a href="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="MySQL注入">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="堆学习记录">
                         
-                        <span class="card-title">MySQL注入</span>
+                        <span class="card-title">堆学习记录</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            复习了一下SQL注入，发觉还很有一部分知识点没掌握，记录一下以2019强网杯随便注为例，之前是用的更改列名和表名来做的，但相对于利用MySQL预处理语句来做要麻烦很多，先了解一下MySQL的预处理语句
-语法：
-定义预处理语句
-PREPARE
+                            大部分题目都选自HITCON Training#UAF漏洞(use after free)顾名思义，UAF漏洞的意思就是在chunk被free之后依然能够使用，产生的原因在于使用过堆块之后没有及时将堆块的指针置null，导致下次申请内存的时
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-15
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-24
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/LawlietLW.github.io/categories/SQL%E6%B3%A8%E5%85%A5/" class="post-category">
-                                    SQL注入
+                            <a href="/LawlietLW.github.io/categories/%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/" class="post-category">
+                                    漏洞学习
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/LawlietLW.github.io/tags/MySQL%E9%A2%84%E5%A4%84%E7%90%86/">
-                        <span class="chip bg-color">MySQL预处理</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5/">
-                        <span class="chip bg-color">无列名注入</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/order-by%E7%9B%B2%E6%B3%A8/">
-                        <span class="chip bg-color">order by盲注</span>
+                    <a href="/LawlietLW.github.io/tags/%E5%A0%86%E6%BC%8F%E6%B4%9E/">
+                        <span class="chip bg-color">堆漏洞</span>
                     </a>
                     
                 </div>
@@ -888,7 +875,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">13.1k</span>&nbsp;字
+                class="white-color">15.6k</span>&nbsp;字
             
             
             
