@@ -6,7 +6,7 @@
   <link href="/LawlietLW.github.io/atom.xml" rel="self"/>
   
   <link href="http://lawlietlw.github.io/"/>
-  <updated>2020-02-27T11:31:22.378Z</updated>
+  <updated>2020-03-08T06:06:45.412Z</updated>
   <id>http://lawlietlw.github.io/</id>
   
   <author>
@@ -21,18 +21,12 @@
     <link href="http://lawlietlw.github.io/2020/02/24/dui-xue-xi-ji-lu/"/>
     <id>http://lawlietlw.github.io/2020/02/24/dui-xue-xi-ji-lu/</id>
     <published>2020-02-24T08:02:11.000Z</published>
-    <updated>2020-02-27T11:31:22.378Z</updated>
+    <updated>2020-03-08T06:06:45.412Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;p&gt;大部分题目都选自HITCON Training&lt;/p&gt;
-&lt;h2 id=&quot;UAF漏洞-use-after-free&quot;&gt;&lt;a href=&quot;#UAF漏洞-use-after-free&quot; class=&quot;headerlink&quot; title=&quot;UAF漏洞(use after
-        
-      
+      &lt;p&gt;大部分题目都选自HITCON Training&lt;/p&gt;
+&lt;h2 id=&quot;UAF漏洞-use-after-free&quot;&gt;&lt;a href=&quot;#UAF漏洞-use-after-free&quot; class=&quot;headerlink&quot; title=&quot;UAF漏洞(use after free)&quot;&gt;&lt;/a&gt;UAF漏洞(use after free)&lt;/h2&gt;&lt;p&gt;顾名思义，UAF漏洞的意思就是在chunk被free之后依然能够使用，产生的原因在于使用过堆块之后没有及时将堆块的指针置null，导致下次申请内存的时候依然能狗使用该堆块&lt;/p&gt;
     
     </summary>
     
