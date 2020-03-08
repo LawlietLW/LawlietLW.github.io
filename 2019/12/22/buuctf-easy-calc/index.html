@@ -1,498 +1,217 @@
-<!DOCTYPE HTML>
-<html lang="zh-CN">
-
-
-<head>
+<!DOCTYPE html>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="BUUCTF Easy Calc, L">
-    <meta name="description" content="打开环境
-
-查看源代码
-&amp;lt;!--I&#39;ve set up WAF to ensure security.--&gt;
-&amp;lt;script&gt;
-    $(&#39;#calc&#39;).submit(function(){
-        $.ajax({">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="L" type="application/atom+xml" />
+    
+    
+    
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/page.css">
+<link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/%5Bobject%20Object%5D.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/lightgallery.min.css">
+    <script type="text/javascript" src="/LawlietLW.github.io/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/util.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-zoom.min.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/LawlietLW.github.io/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">Copy</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" aria-label=\"Copy\"><i class=\"far fa-copy\"></i></button>",
+              "</div>",
+              "<div class=\"titlebar-center\">",
+                "code",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">Copy</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" aria-label=\"Copy\"><i class=\"far fa-copy\"></i></button>",
+              "</div>",
+              "<div class=\"titlebar-center\">",
+                "code",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "<i class=\"far fa-check-square\"></i>";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "<i class=\"far fa-copy\"></i>";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/custom.js"></script>
     <title>BUUCTF Easy Calc | L</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
+  <meta name="generator" content="Hexo 4.1.1"><link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN"  data-spy="scroll" data-target=".list-group">
     
-    <script src="/libs/jquery/jquery.min.js"></script>
-    
-<meta name="generator" content="Hexo 4.1.1"><link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="L" type="application/atom+xml">
-<link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
-
-
-<body>
-    <header class="navbar-fixed">
-    <nav id="headNav" class="bg-color nav-transparent">
-        <div id="navContainer" class="nav-wrapper head-container">
-            <div class="brand-logo">
-                <a href="/LawlietLW.github.io/" class="waves-effect waves-light">
-                    
-                    <img src="/medias/1.png" class="logo-img" alt="LOGO">
-                    
-                    <span class="logo-span">L</span>
-                </a>
-            </div>
-            
-
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
-<ul class="right nav-menu">
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/" class="waves-effect waves-light">
+<header id="header" class="header">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/LawlietLW.github.io/">L</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
       
-      <i class="fas fa-home" style="zoom: 0.6;"></i>
-      
-      <span>首页</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/tags" class="waves-effect waves-light">
-      
-      <i class="fas fa-tags" style="zoom: 0.6;"></i>
-      
-      <span>标签</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/categories" class="waves-effect waves-light">
-      
-      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
-      
-      <span>分类</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/archives" class="waves-effect waves-light">
-      
-      <i class="fas fa-archive" style="zoom: 0.6;"></i>
-      
-      <span>归档</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/about" class="waves-effect waves-light">
-      
-      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
-      
-      <span>关于</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/contact" class="waves-effect waves-light">
-      
-      <i class="fas fa-comments" style="zoom: 0.6;"></i>
-      
-      <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
-  <li>
-    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
-    </a>
-  </li>
-</ul>
-
-<div id="mobile-nav" class="side-nav sidenav">
-
-    <div class="mobile-head bg-color">
-        
-        <img src="/medias/1.png" class="logo-img circle responsive-img">
-        
-        <div class="logo-name">L</div>
-        <div class="logo-desc">
-            
-            Never really desperate, only the lost of the soul.
-            
-        </div>
     </div>
-
-    
-
-    <ul class="menu-list mobile-menu-list">
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="Toggle Navbar"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
         
-        <li class="m-nav-item">
-	  
-		<a href="/" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-home"></i>
-			
-			首页
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/tags" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-tags"></i>
-			
-			标签
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/categories" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-bookmark"></i>
-			
-			分类
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/archives" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-archive"></i>
-			
-			归档
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/about" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-user-circle"></i>
-			
-			关于
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/contact" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-comments"></i>
-			
-			留言板
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
-		</a>
-          
-        </li>
-        
-        
-    </ul>
-</div>
-
-        </div>
-
-        
+      </ul>
     </nav>
-
+  </div>
 </header>
 
-    
 
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/bizhi/6.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">BUUCTF Easy Calc</h1>
-                </div>
-            </div>
-        </div>
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://LawlietLW.github.io/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="Lock">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/LawlietLW.github.io/">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="L">
+      </span>
     </div>
-</div>
-
-
-
-
-<main class="post-container content">
-
-    
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        height: calc(100vh - 250px);
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #toc-content .is-active-link::before {
-        background-color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
-    <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                    <div class="article-tag">
-                        
-                            <a href="/LawlietLW.github.io/tags/Web/">
-                                <span class="chip bg-color">Web</span>
-                            </a>
-                        
-                            <a href="/LawlietLW.github.io/tags/http%E8%B5%B0%E7%A7%81/">
-                                <span class="chip bg-color">http走私</span>
-                            </a>
-                        
-                            <a href="/LawlietLW.github.io/tags/PHP%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E6%9E%90%E7%89%B9%E6%80%A7/">
-                                <span class="chip bg-color">PHP的字符串解析特性</span>
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                CTF
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-
-            <div class="post-info">
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-12-22
-                </div>
-                
-
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-01-23
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    724
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
-                </div>
-                
-
-                
-                    <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
-                        <span id="busuanzi_value_page_pv"></span>
-                    </div>
-				
-            </div>
-
-        </div>
-        <hr class="clearfix">
-        <div class="card-content article-card-content">
-            <div id="articleContent">
-                <p>打开环境<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/1.jpg" alt=""></p>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">BUUCTF Easy Calc</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2019-12-22T16:02:40+08:00">2019-12-22 16:02:40</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/LawlietLW.github.io/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a></span>
+        </span>
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <p>打开环境<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/1.jpg" alt=""></p>
 <a id="more"></a>
 <p>查看源代码</p>
-<pre class=" language-javascript"><code class="language-javascript"><span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span>I've <span class="token keyword">set</span> up WAF to ensure security<span class="token punctuation">.</span><span class="token operator">--</span><span class="token operator">></span>
-<span class="token operator">&lt;</span>script<span class="token operator">></span>
-    <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#calc'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        $<span class="token punctuation">.</span><span class="token function">ajax</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-            url<span class="token punctuation">:</span><span class="token string">"calc.php?num="</span><span class="token operator">+</span><span class="token function">encodeURIComponent</span><span class="token punctuation">(</span><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#content"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">val</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-            type<span class="token punctuation">:</span><span class="token string">'GET'</span><span class="token punctuation">,</span>
-            success<span class="token punctuation">:</span><span class="token keyword">function</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">{</span>
-                <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#result"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">html</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`&lt;div class="alert alert-success">
-            &lt;strong>答案:&lt;/strong></span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>data<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">
-            &lt;/div>`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span><span class="token punctuation">,</span>
-            error<span class="token punctuation">:</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-                <span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">"这啥?算不来!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span>
-        <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span></code></pre>
+<figure class="hljs highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre class=" language-hljs javascript"><code class="language-hljs javascript"><!--I've set up WAF to ensure security.--><br><script><br>    $('#calc').submit(function(){<br>        $.ajax({<br>            url:"calc.php?num="+encodeURIComponent($("#content").val()),<br>            type:'GET',<br>            success:function(data){<br>                $("#result").html(`<div class="alert alert-success"><br>            <strong>答案:</strong>${data}<br>            </div>`);<br>            },<br>            error:function(){<br>                alert("这啥?算不来!");<br>            }<br>        })<br>        return false;<br>    })<br></script><br></code></pre></td></tr></tbody></table></figure>
 <p>有一个<code>calc.php</code>,跟进去看看<br>发现waf代码</p>
-<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
-<span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'num'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token function">show_source</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
-        <span class="token variable">$str</span> <span class="token operator">=</span> <span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">'num'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token variable">$blacklist</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">' '</span><span class="token punctuation">,</span> <span class="token string">'\t'</span><span class="token punctuation">,</span> <span class="token string">'\r'</span><span class="token punctuation">,</span> <span class="token string">'\n'</span><span class="token punctuation">,</span><span class="token string">'\''</span><span class="token punctuation">,</span> <span class="token string">'"'</span><span class="token punctuation">,</span> <span class="token string">'`'</span><span class="token punctuation">,</span> <span class="token string">'\['</span><span class="token punctuation">,</span> <span class="token string">'\]'</span><span class="token punctuation">,</span><span class="token string">'\$'</span><span class="token punctuation">,</span><span class="token string">'\\'</span><span class="token punctuation">,</span><span class="token string">'\^'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-        <span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$blacklist</span> <span class="token keyword">as</span> <span class="token variable">$blackitem</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string">'/'</span> <span class="token punctuation">.</span> <span class="token variable">$blackitem</span> <span class="token punctuation">.</span> <span class="token string">'/m'</span><span class="token punctuation">,</span> <span class="token variable">$str</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                        <span class="token keyword">die</span><span class="token punctuation">(</span><span class="token string">"what are you want to do?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-        <span class="token function">eval</span><span class="token punctuation">(</span><span class="token string">'echo '</span><span class="token punctuation">.</span><span class="token variable">$str</span><span class="token punctuation">.</span><span class="token string">';'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token delimiter">?></span> </code></pre>
+<figure class="hljs highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre class=" language-hljs php"><span class="hljs-meta">&lt;?php</span><br>error_reporting(<span class="hljs-number">0</span>);<br><span class="hljs-keyword">if</span>(!<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'num'</span>])){<br>    show_source(<span class="hljs-keyword">__FILE__</span>);<br>}<span class="hljs-keyword">else</span>{<br>        $str = $_GET[<span class="hljs-string">'num'</span>];<br>        $blacklist = [<span class="hljs-string">' '</span>, <span class="hljs-string">'\t'</span>, <span class="hljs-string">'\r'</span>, <span class="hljs-string">'\n'</span>,<span class="hljs-string">'\''</span>, <span class="hljs-string">'"'</span>, <span class="hljs-string">'`'</span>, <span class="hljs-string">'\['</span>, <span class="hljs-string">'\]'</span>,<span class="hljs-string">'\$'</span>,<span class="hljs-string">'\\'</span>,<span class="hljs-string">'\^'</span>];<br>        <span class="hljs-keyword">foreach</span> ($blacklist <span class="hljs-keyword">as</span> $blackitem) {<br>                <span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'/'</span> . $blackitem . <span class="hljs-string">'/m'</span>, $str)) {<br>                        <span class="hljs-keyword">die</span>(<span class="hljs-string">"what are you want to do?"</span>);<br>                }<br>        }<br>        <span class="hljs-keyword">eval</span>(<span class="hljs-string">'echo '</span>.$str.<span class="hljs-string">';'</span>);<br>}<br><span class="hljs-meta"><code class="language-hljs php"><span class="hljs-meta">&lt;?php</span><br>error_reporting(<span class="hljs-number">0</span>);<br><span class="hljs-keyword">if</span>(!<span class="hljs-keyword">isset</span>($_GET[<span class="hljs-string">'num'</span>])){<br>    show_source(<span class="hljs-keyword">__FILE__</span>);<br>}<span class="hljs-keyword">else</span>{<br>        $str = $_GET[<span class="hljs-string">'num'</span>];<br>        $blacklist = [<span class="hljs-string">' '</span>, <span class="hljs-string">'\t'</span>, <span class="hljs-string">'\r'</span>, <span class="hljs-string">'\n'</span>,<span class="hljs-string">'\''</span>, <span class="hljs-string">'"'</span>, <span class="hljs-string">'`'</span>, <span class="hljs-string">'\['</span>, <span class="hljs-string">'\]'</span>,<span class="hljs-string">'\$'</span>,<span class="hljs-string">'\\'</span>,<span class="hljs-string">'\^'</span>];<br>        <span class="hljs-keyword">foreach</span> ($blacklist <span class="hljs-keyword">as</span> $blackitem) {<br>                <span class="hljs-keyword">if</span> (preg_match(<span class="hljs-string">'/'</span> . $blackitem . <span class="hljs-string">'/m'</span>, $str)) {<br>                        <span class="hljs-keyword">die</span>(<span class="hljs-string">"what are you want to do?"</span>);<br>                }<br>        }<br>        <span class="hljs-keyword">eval</span>(<span class="hljs-string">'echo '</span>.$str.<span class="hljs-string">';'</span>);<br>}<br><span class="hljs-meta">?></span><br></code></pre></td></tr></tbody></table></figure>
 <p>waf过滤了’ ‘,’\t’,’\r’,’\n’,’'‘,’”‘,’`’,’[‘,’]’,’$’,’'<br>其中以get方式给num传参</p>
 <p>由于前端设置了waf，所以只要我们的访问请求中包含非法字符就会返回403，无法访问到后端<br>在这样的情况下我们就可以使用HTTP走私来绕过前端waf直接访问后端</p>
 <p>关于HTTP走私的介绍网上有许多师傅做了讲解，在这里就不多叙述了<br>(HTTP走私)[<a href="https://xz.aliyun.com/t/6654]" target="_blank" rel="noopener">https://xz.aliyun.com/t/6654]</a><br>(http请求走私(HTTP Request Smuggling))[<a href="https://blog.csdn.net/qq_37865996/article/details/102529396]" target="_blank" rel="noopener">https://blog.csdn.net/qq_37865996/article/details/102529396]</a><br>贴两个链接</p>
 <p>在这里，我们可以使用CL-CL方式来进行http走私，当然其他的方式也一样可以<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/2.jpg" alt=""><br>前端服务器读取完num=1之后，将数据包原封不动地转发给后端，后端读取到<code>?num=phpinfo()</code>后，返回给我们<code>phpinfo()</code><br>在这一题里有几个PHP函数需要我们注意</p>
-<pre class=" language-bash"><code class="language-bash">scandir<span class="token punctuation">(</span><span class="token punctuation">)</span> 函数
-返回指定目录中的文件和目录的数组。
-var_dump<span class="token punctuation">(</span><span class="token punctuation">)</span>函数：var_dump<span class="token punctuation">(</span><span class="token punctuation">)</span> 函数用于输出变量的相关信息。
-var_dump<span class="token punctuation">(</span><span class="token punctuation">)</span> 函数显示关于一个或多个表达式的结构信息，包括表达式的类型与值。数组将递归展开值，通过缩进显示其结构。
-readfile<span class="token punctuation">(</span><span class="token punctuation">)</span> 函数
-输出一个文件。
-该函数读入一个文件并写入到输出缓冲。若成功，则返回从文件中读入的字节数。若失败，则返回false。您可以通过 @readfile<span class="token punctuation">(</span><span class="token punctuation">)</span> 形式调用该函数，来隐藏错误信息。</code></pre>
+<figure class="hljs highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre class=" language-hljs bash">scandir() 函数<br>返回指定目录中的文件和目录的数组。<br>var_dump()函数：var_dump() 函数用于输出变量的相关信息。<br>var_dump() 函数显示关于一个或多个表达式的结构信息，包括表达式的类型与值。数组将递归展开值，通过缩进显示其结构。<br>readfile() 函数<br>输出一个文件。<br>该函数读入一个文件并写入到输出缓冲。若成功，则返回从文件中读入的字节数。若失败，则返回<span class="hljs-literal"><code class="language-hljs bash">scandir() 函数<br>返回指定目录中的文件和目录的数组。<br>var_dump()函数：var_dump() 函数用于输出变量的相关信息。<br>var_dump() 函数显示关于一个或多个表达式的结构信息，包括表达式的类型与值。数组将递归展开值，通过缩进显示其结构。<br>readfile() 函数<br>输出一个文件。<br>该函数读入一个文件并写入到输出缓冲。若成功，则返回从文件中读入的字节数。若失败，则返回<span class="hljs-literal">false</span>。您可以通过 @readfile() 形式调用该函数，来隐藏错误信息。<br></code></pre></td></tr></tbody></table></figure>
 <p>我们可以使用<code>scandir("\")</code>来扫描根目录，但””被禁了，所以这样子不行，我们可以把\转为ASCII码，然后再转为字符，</p>
-<pre class=" language-bash"><code class="language-bash">chr<span class="token punctuation">(</span><span class="token punctuation">)</span>
-chr<span class="token punctuation">(</span><span class="token punctuation">)</span> 函数从指定的 ASCII 值返回字符。
-ASCII 值可被指定为十进制值、八进制值或十六进制值。八进制值被定义为带前置 0，而十六进制值被定义为带前置 0x。</code></pre>
+<figure class="hljs highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre class=" language-hljs bash"><code class="language-hljs bash">chr()<br>chr() 函数从指定的 ASCII 值返回字符。<br>ASCII 值可被指定为十进制值、八进制值或十六进制值。八进制值被定义为带前置 0，而十六进制值被定义为带前置 0x。<br></code></pre></td></tr></tbody></table></figure>
 <p>所以我们可以构造成<code>scandir(chr(47))</code>来扫描根目录<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/3.jpg" alt=""><br>找到了flag存放的目录<br>接下来，我们需要从f1agg目录中读取flag<br>构造payload</p>
-<pre class=" language-bash"><code class="language-bash">?num<span class="token operator">=</span>var_dump<span class="token punctuation">(</span>readfile<span class="token punctuation">(</span>chr<span class="token punctuation">(</span>47<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>102<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>49<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>97<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>103<span class="token punctuation">)</span>.chr<span class="token punctuation">(</span>103<span class="token punctuation">))</span><span class="token punctuation">)</span></code></pre>
+<figure class="hljs highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre class=" language-hljs bash"><code class="language-hljs bash">?num=var_dump(readfile(chr(47).chr(102).chr(49).chr(97).chr(103).chr(103)))<br></code></pre></td></tr></tbody></table></figure>
 <p><code>chr(47).chr(102).chr(49).chr(97).chr(103).chr(103)</code>就是/f1agg<br><img src="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/4.jpg" alt=""><br>flag到手</p>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -513,552 +232,110 @@ ASCII 值可被指定为十进制值、八进制值或十六进制值。八进�
             document.body.appendChild(img);
           });
       </script>
-            </div>
-            <hr/>
-
-            
-
-    <div class="reprint" id="reprint-statement">
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
         
-            <div class="reprint__author">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-user">
-                        文章作者:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="http://LawlietLW.github.io" rel="external nofollow noreferrer">LawlietLW</a>
-                </span>
-            </div>
-            <div class="reprint__type">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-link">
-                        文章链接:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="http://LawlietLW.github.io/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/">http://LawlietLW.github.io/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/</a>
-                </span>
-            </div>
-            <div class="reprint__notice">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-copyright">
-                        版权声明:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    本博客所有文章除特別声明外，均采用
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    许可协议。转载请注明来源
-                    <a href="http://LawlietLW.github.io" target="_blank">LawlietLW</a>
-                    !
-                </span>
-            </div>
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/Web/" rel="tag"><i class="fas fa-tags"></i>Web</a>
         
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/http%E8%B5%B0%E7%A7%81/" rel="tag"><i class="fas fa-tags"></i>http走私</a>
+        
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/PHP%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E6%9E%90%E7%89%B9%E6%80%A7/" rel="tag"><i class="fas fa-tags"></i>PHP的字符串解析特性</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/LawlietLW.github.io/2019/12/21/buuctf-admin/" rel="next" title="BUUCTF admin"><i class="fas fa-angle-left"></i><span class="nav-title">BUUCTF admin</span></a>
+      
     </div>
-
-    <script async defer>
-      document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
-        M.toast({html: toastHTML})
-      });
-
-      function navToReprintStatement() {
-        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
-      }
-    </script>
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
-                    
-                        <div class="article-tag">
-                            
-                                <a href="/LawlietLW.github.io/tags/Web/">
-                                    <span class="chip bg-color">Web</span>
-                                </a>
-                            
-                                <a href="/LawlietLW.github.io/tags/http%E8%B5%B0%E7%A7%81/">
-                                    <span class="chip bg-color">http走私</span>
-                                </a>
-                            
-                                <a href="/LawlietLW.github.io/tags/PHP%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E6%9E%90%E7%89%B9%E6%80%A7/">
-                                    <span class="chip bg-color">PHP的字符串解析特性</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-
-<div id="article-share">
-    
-    
-    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
-    <script src="/libs/share/js/social-share.min.js"></script>
-    
-
-    
-
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/LawlietLW.github.io/2019/12/23/buuctf-checkin/" rel="prev" title="BUUCTF CheckIn"><span class="nav-title">BUUCTF CheckIn</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
 </div>
 
-                </div>
-            </div>
-            
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/LawlietLW.github.io/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="Search" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <h1 class="author-name">Lock</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/LawlietLW.github.io/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+</aside>
+
+
+          
         </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="Back to Top"></i></button>
     </div>
-
-    
-        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
-<link rel="stylesheet" href="/css/my-gitalk.css">
-
-<div class="card gitalk-card" data-aos="fade-up">
-    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
-        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
-        <span>评论</span>
-    </div>
-    <div id="gitalk-container" class="card-content"></div>
-</div>
-
-<script src="/libs/gitalk/gitalk.min.js"></script>
-<script>
-    let gitalk = new Gitalk({
-        clientID: '',
-        clientSecret: '',
-        repo: '',
-        owner: '',
-        admin: null,
-        id: '2019-12-22T16-02-40',
-        distractionFreeMode: false  // Facebook-like distraction free mode
-    });
-
-    gitalk.render('gitalk-container');
-</script>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/LawlietLW.github.io/2019/12/23/buuctf-checkin/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/bizhi/8.jpg" class="responsive-img" alt="BUUCTF CheckIn">
-                        
-                        <span class="card-title">BUUCTF CheckIn</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            打开环境，是一个文件上传页面
-
-先查看一下源代码，看看有没有客户端校验显然没有客户端校验首先上传一个图片，检查上传功能图片正常上传接下来再上传一个php文件
-&lt;?php 
-@eval($_POST['shell']);
- ?>
-提示非
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-12-23
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/LawlietLW.github.io/tags/Web/">
-                        <span class="chip bg-color">Web</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/user-ini%E6%96%87%E4%BB%B6%E7%9A%84%E5%88%A9%E7%94%A8%EF%BC%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">
-                        <span class="chip bg-color">.user.ini文件的利用，文件上传</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">Lock</span><span class="year"><i class="far fa-copyright"></i>2020</span>
         </div>
         
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/LawlietLW.github.io/2019/12/21/buuctf-admin/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/bizhi/2.jpg" class="responsive-img" alt="BUUCTF admin">
-                        
-                        <span class="card-title">BUUCTF admin</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            打开环境，有注册和登录两个功能
-
-查看源代码，看到提示猜测需要以admin账号登陆才能拿到flag那么先注册一个账号看看(admin账号已被注册)注册账号后一共有四个选项首先看到post功能一个编辑留言的地方，可能会有xss之类的漏洞？我不
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-21
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/LawlietLW.github.io/tags/Web/">
-                        <span class="chip bg-color">Web</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/Unicode%E6%AC%BA%E9%AA%97/">
-                        <span class="chip bg-color">Unicode欺骗</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
         </div>
-        
-    </div>
-</article>
-
-</div>
-
-
-
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
-
-
-<!-- 代码块折行 -->
-
-<style type="text/css">
-code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
-</style>
-
-
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
+        <div class="powered-by">
+          Proudly Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> | Theme is <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
         </div>
+      </div>
     </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fas fa-list-ul"></i>
-    </a>
-</div>
-
-
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('2'),
-            headingSelector: 'h2, h3, h4'
-        });
-
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
-
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
-
-    
-
-</main>
-
-
-
-    <footer class="page-footer bg-color">
-    <div class="container row center-align" style="margin-bottom: 0px !important;">
-        <div class="col s12 m8 l8 copy-right">
-            Copyright&nbsp;&copy;
-            <span id="year">2019</span>
-            <a href="http://LawlietLW.github.io" target="_blank">LawlietLW</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <br>
-            
-            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">16.5k</span>&nbsp;字
-            
-            
-            
-            
-            
-            
-            <span id="busuanzi_container_site_pv">
-                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
-                    class="white-color"></span>&nbsp;次
-            </span>
-            
-            
-            <span id="busuanzi_container_site_uv">
-                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
-                    class="white-color"></span>&nbsp;人
-            </span>
-            
-            <br>
-            
-            <br>
-            
-        </div>
-        <div class="col s12 m4 l4 social-link social-statis">
-
-
-    <a href="mailto:2499086884@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fas fa-envelope-open"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2499086884" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2499086884" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="/LawlietLW.github.io/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
-
-</div>
-    </div>
+  </div>
 </footer>
 
-<div class="progress-bar"></div>
 
-
-    <!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
-    <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
-        </div>
-        <div id="searchResult"></div>
-    </div>
-</div>
-
-<script src="/js/search.js"></script>
-<script type="text/javascript">
-$(function () {
-    searchFunc("/LawlietLW.github.io/" + "search.xml", 'searchInput', 'searchResult');
-});
-</script>
-    <!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fas fa-arrow-up"></i>
-    </a>
-</div>
-
-
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="/js/matery.js"></script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', '');
-</script>
-
-
-    <!-- Baidu Analytics -->
-
-<script>
-    var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
-    <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-    
-    <script src="/libs/others/clicklove.js" async="async"></script>
-    
-    
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-    
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
-    
-
-</body>
-
+  </body>
 </html>

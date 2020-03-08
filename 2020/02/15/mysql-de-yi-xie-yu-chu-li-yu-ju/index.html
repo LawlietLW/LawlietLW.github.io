@@ -1,474 +1,212 @@
-<!DOCTYPE HTML>
-<html lang="zh-CN">
-
-
-<head>
+<!DOCTYPE html>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MySQL注入, L">
-    <meta name="description" content="复习了一下SQL注入，发觉还很有一部分知识点没掌握，记录一下以2019强网杯随便注为例，之前是用的更改列名和表名来做的，但相对于利用MySQL预处理语句来做要麻烦很多，先了解一下MySQL的预处理语句
-语法：
-定义预处理语句
-PREPARE">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="L" type="application/atom+xml" />
+    
+    
+    
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/page.css">
+<link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/%5Bobject%20Object%5D.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/lightgallery.min.css">
+    <script type="text/javascript" src="/LawlietLW.github.io/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/util.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-zoom.min.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/LawlietLW.github.io/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">Copy</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" aria-label=\"Copy\"><i class=\"far fa-copy\"></i></button>",
+              "</div>",
+              "<div class=\"titlebar-center\">",
+                "code",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">Copy</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" aria-label=\"Copy\"><i class=\"far fa-copy\"></i></button>",
+              "</div>",
+              "<div class=\"titlebar-center\">",
+                "code",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "<i class=\"far fa-check-square\"></i>";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "<i class=\"far fa-copy\"></i>";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/custom.js"></script>
     <title>MySQL注入 | L</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
+  <meta name="generator" content="Hexo 4.1.1"><link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN"  data-spy="scroll" data-target=".list-group">
     
-    <script src="/libs/jquery/jquery.min.js"></script>
-    
-<meta name="generator" content="Hexo 4.1.1"><link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="L" type="application/atom+xml">
-<link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
-
-
-<body>
-    <header class="navbar-fixed">
-    <nav id="headNav" class="bg-color nav-transparent">
-        <div id="navContainer" class="nav-wrapper head-container">
-            <div class="brand-logo">
-                <a href="/LawlietLW.github.io/" class="waves-effect waves-light">
-                    
-                    <img src="/medias/1.png" class="logo-img" alt="LOGO">
-                    
-                    <span class="logo-span">L</span>
-                </a>
-            </div>
-            
-
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
-<ul class="right nav-menu">
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/" class="waves-effect waves-light">
+<header id="header" class="header">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/LawlietLW.github.io/">L</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
       
-      <i class="fas fa-home" style="zoom: 0.6;"></i>
-      
-      <span>首页</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/tags" class="waves-effect waves-light">
-      
-      <i class="fas fa-tags" style="zoom: 0.6;"></i>
-      
-      <span>标签</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/categories" class="waves-effect waves-light">
-      
-      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
-      
-      <span>分类</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/archives" class="waves-effect waves-light">
-      
-      <i class="fas fa-archive" style="zoom: 0.6;"></i>
-      
-      <span>归档</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/about" class="waves-effect waves-light">
-      
-      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
-      
-      <span>关于</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/contact" class="waves-effect waves-light">
-      
-      <i class="fas fa-comments" style="zoom: 0.6;"></i>
-      
-      <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
-  <li>
-    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
-    </a>
-  </li>
-</ul>
-
-<div id="mobile-nav" class="side-nav sidenav">
-
-    <div class="mobile-head bg-color">
-        
-        <img src="/medias/1.png" class="logo-img circle responsive-img">
-        
-        <div class="logo-name">L</div>
-        <div class="logo-desc">
-            
-            Never really desperate, only the lost of the soul.
-            
-        </div>
     </div>
-
-    
-
-    <ul class="menu-list mobile-menu-list">
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="Toggle Navbar"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
         
-        <li class="m-nav-item">
-	  
-		<a href="/" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-home"></i>
-			
-			首页
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/tags" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-tags"></i>
-			
-			标签
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/categories" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-bookmark"></i>
-			
-			分类
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/archives" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-archive"></i>
-			
-			归档
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/about" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-user-circle"></i>
-			
-			关于
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/contact" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-comments"></i>
-			
-			留言板
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
-		</a>
-          
-        </li>
-        
-        
-    </ul>
-</div>
-
-        </div>
-
-        
+      </ul>
     </nav>
-
+  </div>
 </header>
 
-    
 
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">MySQL注入</h1>
-                </div>
-            </div>
-        </div>
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://LawlietLW.github.io/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="Lock">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/LawlietLW.github.io/">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="L">
+      </span>
     </div>
-</div>
-
-
-
-
-<main class="post-container content">
-
-    
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        height: calc(100vh - 250px);
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #toc-content .is-active-link::before {
-        background-color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
-    <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                    <div class="article-tag">
-                        
-                            <a href="/LawlietLW.github.io/tags/MySQL%E9%A2%84%E5%A4%84%E7%90%86/">
-                                <span class="chip bg-color">MySQL预处理</span>
-                            </a>
-                        
-                            <a href="/LawlietLW.github.io/tags/%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5/">
-                                <span class="chip bg-color">无列名注入</span>
-                            </a>
-                        
-                            <a href="/LawlietLW.github.io/tags/order-by%E7%9B%B2%E6%B3%A8/">
-                                <span class="chip bg-color">order by盲注</span>
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/LawlietLW.github.io/categories/SQL%E6%B3%A8%E5%85%A5/" class="post-category">
-                                SQL注入
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-
-            <div class="post-info">
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-02-15
-                </div>
-                
-
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-02-15
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    533
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
-                </div>
-                
-
-                
-                    <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
-                        <span id="busuanzi_value_page_pv"></span>
-                    </div>
-				
-            </div>
-
-        </div>
-        <hr class="clearfix">
-        <div class="card-content article-card-content">
-            <div id="articleContent">
-                <p>复习了一下SQL注入，发觉还很有一部分知识点没掌握，记录一下<br>以2019强网杯随便注为例，之前是用的更改列名和表名来做的，但相对于利用MySQL预处理语句来做要麻烦很多，先了解一下MySQL的预处理语句</p>
-<pre class=" language-sql"><code class="language-sql">语法：
-定义预处理语句
-PREPARE stmt_name <span class="token keyword">FROM</span> preparable_stmt<span class="token punctuation">;</span>
-执行预处理语句
-<span class="token keyword">EXECUTE</span> stmt_name <span class="token punctuation">[</span><span class="token keyword">USING</span> <span class="token variable">@var_name</span> <span class="token punctuation">[</span><span class="token punctuation">,</span> <span class="token variable">@var_name</span><span class="token punctuation">]</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-删除<span class="token punctuation">(</span>释放<span class="token punctuation">)</span>定义
-{<span class="token keyword">DEALLOCATE</span> <span class="token operator">|</span> <span class="token keyword">DROP</span>} PREPARE stmt_name<span class="token punctuation">;</span>
-<span class="token keyword">set</span>语句可用于向系统变量或用户变量赋值，针对用户变量的定义如下：
-<span class="token keyword">SET</span> <span class="token variable">@var_name</span> <span class="token operator">=</span> expr <span class="token punctuation">[</span><span class="token punctuation">,</span> <span class="token variable">@var_name</span> <span class="token operator">=</span> expr<span class="token punctuation">]</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span></code></pre>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">MySQL注入</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2020-02-15T12:41:27+08:00">2020-02-15 12:41:27</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/LawlietLW.github.io/categories/SQL%E6%B3%A8%E5%85%A5/" itemprop="url" rel="index"><span itemprop="name">SQL注入</span></a></span>
+        </span>
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <p>复习了一下SQL注入，发觉还很有一部分知识点没掌握，记录一下<br>以2019强网杯随便注为例，之前是用的更改列名和表名来做的，但相对于利用MySQL预处理语句来做要麻烦很多，先了解一下MySQL的预处理语句</p>
+<figure class="hljs highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre class=" language-hljs sql"><code class="language-hljs sql">语法：<br>定义预处理语句<br>PREPARE stmt_name FROM preparable_stmt;<br>执行预处理语句<br>EXECUTE stmt_name [USING @var_name [, @var_name] ...];<br>删除(释放)定义<br>{DEALLOCATE | DROP} PREPARE stmt_name;<br>set语句可用于向系统变量或用户变量赋值，针对用户变量的定义如下：<br>SET @var_name = expr [, @var_name = expr] ...<br></code></pre></td></tr></tbody></table></figure>
 <p>简单来说，预定义语句就类似于C的define关键字<br>再来看题<br>我们已经知道了flag在1919810931114514表中<br><img src="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/1.jpg" alt=""><br>不在我们当前表中，需要跨表查询，但能够查询的语句都被过滤掉了<br>这时我们可以利用预定义语句，如下</p>
-<pre class=" language-sql"><code class="language-sql"><span class="token keyword">Set</span> <span class="token variable">@a</span><span class="token operator">=</span><span class="token number">0x73656c656374202a2066726f6d20603139313938313039333131313435313460</span><span class="token punctuation">;</span>
-<span class="token comment" spellcheck="true">#0x73656c656374202a2066726f6d20603139313938313039333131313435313460是select * from `1919810931114514`的16进制编码</span>
-Prepare x <span class="token keyword">from</span> <span class="token variable">@a</span>
-<span class="token keyword">Execute</span> x</code></pre>
+<figure class="hljs highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre class=" language-hljs sql"><span class="hljs-keyword">Set</span> @a=<span class="hljs-number">0x73656c656374202a2066726f6d20603139313938313039333131313435313460</span>;<br><span class="hljs-comment">#0x73656c656374202a2066726f6d20603139313938313039333131313435313460是select * from `1919810931114514`的16进制编码</span><br><span class="hljs-keyword">Prepare</span> x <span class="hljs-keyword">from</span> @a<br><span class="hljs-keyword"><code class="language-hljs sql"><span class="hljs-keyword">Set</span> @a=<span class="hljs-number">0x73656c656374202a2066726f6d20603139313938313039333131313435313460</span>;<br><span class="hljs-comment">#0x73656c656374202a2066726f6d20603139313938313039333131313435313460是select * from `1919810931114514`的16进制编码</span><br><span class="hljs-keyword">Prepare</span> x <span class="hljs-keyword">from</span> @a<br><span class="hljs-keyword">Execute</span> x<br></code></pre></td></tr></tbody></table></figure>
 <p>第一句相当于把变量@a赋值为0x73656c656374202a2066726f6d20603139313938313039333131313435313460<br>第二句将@a预编译为x<br>第三句执行x<br><img src="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/2.jpg" alt=""><br>可以获得flag</p>
 <p>再来看另一种方法</p>
-<pre class=" language-bash"><code class="language-bash">handler语句代替select查询
-mysql除可使用select查询表中的数据，也可使用handler语句，这条语句使我们能够一行一行的浏览一个表中的数据，不过handler语句并不具备select语句的所有功能。它是mysql专用的语句，并没有包含到SQL标准中</code></pre>
-<pre class=" language-sql"><code class="language-sql">语法结构
-<span class="token keyword">HANDLER</span> tbl_name <span class="token keyword">OPEN</span> <span class="token punctuation">[</span> <span class="token punctuation">[</span><span class="token keyword">AS</span><span class="token punctuation">]</span> alias<span class="token punctuation">]</span>
-
-<span class="token keyword">HANDLER</span> tbl_name <span class="token keyword">READ</span> index_name { <span class="token operator">=</span> <span class="token operator">|</span> <span class="token operator">&lt;=</span> <span class="token operator">|</span> <span class="token operator">>=</span> <span class="token operator">|</span> <span class="token operator">&lt;</span> <span class="token operator">|</span> <span class="token operator">></span> } <span class="token punctuation">(</span>value1<span class="token punctuation">,</span>value2<span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
-    <span class="token punctuation">[</span> <span class="token keyword">WHERE</span> where_condition <span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">LIMIT</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">]</span>
-<span class="token keyword">HANDLER</span> tbl_name <span class="token keyword">READ</span> index_name { <span class="token keyword">FIRST</span> <span class="token operator">|</span> <span class="token keyword">NEXT</span> <span class="token operator">|</span> <span class="token keyword">PREV</span> <span class="token operator">|</span> <span class="token keyword">LAST</span> }
-    <span class="token punctuation">[</span> <span class="token keyword">WHERE</span> where_condition <span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">LIMIT</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">]</span>
-<span class="token keyword">HANDLER</span> tbl_name <span class="token keyword">READ</span> { <span class="token keyword">FIRST</span> <span class="token operator">|</span> <span class="token keyword">NEXT</span> }
-    <span class="token punctuation">[</span> <span class="token keyword">WHERE</span> where_condition <span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">LIMIT</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">]</span>
-
-<span class="token keyword">HANDLER</span> tbl_name <span class="token keyword">CLOSE</span></code></pre>
+<figure class="hljs highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre class=" language-hljs bash"><code class="language-hljs bash">handler语句代替select查询<br>mysql除可使用select查询表中的数据，也可使用handler语句，这条语句使我们能够一行一行的浏览一个表中的数据，不过handler语句并不具备select语句的所有功能。它是mysql专用的语句，并没有包含到SQL标准中<br></code></pre></td></tr></tbody></table></figure>
+<figure class="hljs highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre class=" language-hljs sql">语法结构<br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">OPEN</span> [ [<span class="hljs-keyword">AS</span>] <span class="hljs-keyword">alias</span>]<br><br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">READ</span> index_name { = | &lt;= | &gt;= | &lt; | &gt; } (value1,value2,...)<br>    [ <span class="hljs-keyword">WHERE</span> where_condition ] [<span class="hljs-keyword">LIMIT</span> ... ]<br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">READ</span> index_name { <span class="hljs-keyword">FIRST</span> | <span class="hljs-keyword">NEXT</span> | PREV | <span class="hljs-keyword">LAST</span> }<br>    [ <span class="hljs-keyword">WHERE</span> where_condition ] [<span class="hljs-keyword">LIMIT</span> ... ]<br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">READ</span> { <span class="hljs-keyword">FIRST</span> | <span class="hljs-keyword">NEXT</span> }<br>    [ <span class="hljs-keyword">WHERE</span> where_condition ] [<span class="hljs-keyword">LIMIT</span> ... ]<br><br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword"><code class="language-hljs sql">语法结构<br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">OPEN</span> [ [<span class="hljs-keyword">AS</span>] <span class="hljs-keyword">alias</span>]<br><br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">READ</span> index_name { = | &lt;= | &gt;= | &lt; | &gt; } (value1,value2,...)<br>    [ <span class="hljs-keyword">WHERE</span> where_condition ] [<span class="hljs-keyword">LIMIT</span> ... ]<br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">READ</span> index_name { <span class="hljs-keyword">FIRST</span> | <span class="hljs-keyword">NEXT</span> | PREV | <span class="hljs-keyword">LAST</span> }<br>    [ <span class="hljs-keyword">WHERE</span> where_condition ] [<span class="hljs-keyword">LIMIT</span> ... ]<br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">READ</span> { <span class="hljs-keyword">FIRST</span> | <span class="hljs-keyword">NEXT</span> }<br>    [ <span class="hljs-keyword">WHERE</span> where_condition ] [<span class="hljs-keyword">LIMIT</span> ... ]<br><br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">CLOSE</span><br></code></pre></td></tr></tbody></table></figure>
 <p>我用本地的sqli-lab的secruity库的users表来测试<br><img src="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/3.jpg" alt=""><br><img src="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/4.jpg" alt=""><br>能够一行一行地读取表中的内容<br>再回到题目<br>我们的sql语句如下</p>
-<pre class=" language-sql"><code class="language-sql"><span class="token keyword">handler</span> \<span class="token punctuation">`</span><span class="token number">1919810931114514</span>\<span class="token punctuation">`</span> <span class="token keyword">open</span> <span class="token keyword">as</span> <span class="token number">a</span> 
-<span class="token keyword">handler</span> <span class="token number">a</span> <span class="token keyword">read</span> <span class="token keyword">next</span></code></pre>
+<figure class="hljs highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre class=" language-hljs sql"><span class="hljs-keyword">handler</span> \<span class="hljs-string">`1919810931114514\`</span> <span class="hljs-keyword">open</span> <span class="hljs-keyword">as</span> a <br><span class="hljs-keyword">handler</span> a <span class="hljs-keyword">read</span> <span class="hljs-keyword"><code class="language-hljs sql"><span class="hljs-keyword">handler</span> \<span class="hljs-string">`1919810931114514\`</span> <span class="hljs-keyword">open</span> <span class="hljs-keyword">as</span> a <br><span class="hljs-keyword">handler</span> a <span class="hljs-keyword">read</span> <span class="hljs-keyword">next</span><br></code></pre></td></tr></tbody></table></figure>
 <p><img src="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/5.jpg" alt=""><br>同样能够读取flag</p>
 <p>预编译语句说完了，再看到无列名注入</p>
 <script>
@@ -490,545 +228,110 @@ mysql除可使用select查询表中的数据，也可使用handler语句，这�
             document.body.appendChild(img);
           });
       </script>
-            </div>
-            <hr/>
-
-            
-
-    <div class="reprint" id="reprint-statement">
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
         
-            <div class="reprint__author">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-user">
-                        文章作者:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="http://LawlietLW.github.io" rel="external nofollow noreferrer">LawlietLW</a>
-                </span>
-            </div>
-            <div class="reprint__type">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-link">
-                        文章链接:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="http://LawlietLW.github.io/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/">http://LawlietLW.github.io/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/</a>
-                </span>
-            </div>
-            <div class="reprint__notice">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-copyright">
-                        版权声明:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    本博客所有文章除特別声明外，均采用
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    许可协议。转载请注明来源
-                    <a href="http://LawlietLW.github.io" target="_blank">LawlietLW</a>
-                    !
-                </span>
-            </div>
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/MySQL%E9%A2%84%E5%A4%84%E7%90%86/" rel="tag"><i class="fas fa-tags"></i>MySQL预处理</a>
         
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5/" rel="tag"><i class="fas fa-tags"></i>无列名注入</a>
+        
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/order-by%E7%9B%B2%E6%B3%A8/" rel="tag"><i class="fas fa-tags"></i>order by盲注</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/LawlietLW.github.io/2020/02/10/dong-tai-gui-hua/" rel="next" title="动态规划的背包问题"><i class="fas fa-angle-left"></i><span class="nav-title">动态规划的背包问题</span></a>
+      
     </div>
-
-    <script async defer>
-      document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
-        M.toast({html: toastHTML})
-      });
-
-      function navToReprintStatement() {
-        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
-      }
-    </script>
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
-                    
-                        <div class="article-tag">
-                            
-                                <a href="/LawlietLW.github.io/tags/MySQL%E9%A2%84%E5%A4%84%E7%90%86/">
-                                    <span class="chip bg-color">MySQL预处理</span>
-                                </a>
-                            
-                                <a href="/LawlietLW.github.io/tags/%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5/">
-                                    <span class="chip bg-color">无列名注入</span>
-                                </a>
-                            
-                                <a href="/LawlietLW.github.io/tags/order-by%E7%9B%B2%E6%B3%A8/">
-                                    <span class="chip bg-color">order by盲注</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-
-<div id="article-share">
-    
-    
-    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
-    <script src="/libs/share/js/social-share.min.js"></script>
-    
-
-    
-
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/" rel="prev" title="堆学习记录"><span class="nav-title">堆学习记录</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
 </div>
 
-                </div>
-            </div>
-            
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/LawlietLW.github.io/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="Search" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <h1 class="author-name">Lock</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/LawlietLW.github.io/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+</aside>
+
+
+          
         </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="Back to Top"></i></button>
     </div>
-
-    
-        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
-<link rel="stylesheet" href="/css/my-gitalk.css">
-
-<div class="card gitalk-card" data-aos="fade-up">
-    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
-        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
-        <span>评论</span>
-    </div>
-    <div id="gitalk-container" class="card-content"></div>
-</div>
-
-<script src="/libs/gitalk/gitalk.min.js"></script>
-<script>
-    let gitalk = new Gitalk({
-        clientID: '',
-        clientSecret: '',
-        repo: '',
-        owner: '',
-        admin: null,
-        id: '2020-02-15T12-41-27',
-        distractionFreeMode: false  // Facebook-like distraction free mode
-    });
-
-    gitalk.render('gitalk-container');
-</script>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="堆学习记录">
-                        
-                        <span class="card-title">堆学习记录</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            大部分题目都选自HITCON Training
-UAF漏洞(use after free)顾名思义，UAF漏洞的意思就是在chunk被free之后依然能够使用，产生的原因在于使用过堆块之后没有及时将堆块的指针置null，导致下次申请内存的时
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-24
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/LawlietLW.github.io/categories/%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    漏洞学习
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/LawlietLW.github.io/tags/%E5%A0%86%E6%BC%8F%E6%B4%9E/">
-                        <span class="chip bg-color">堆漏洞</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">Lock</span><span class="year"><i class="far fa-copyright"></i>2020</span>
         </div>
         
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/LawlietLW.github.io/2020/02/10/dong-tai-gui-hua/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="动态规划的背包问题">
-                        
-                        <span class="card-title">动态规划的背包问题</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            01背包和完全背包记录一下这两天学习的动态规划算法，拖了好久了动态规划可以说是递归的升级版，甚至可以替代BFS和DFS，能熟练掌握的话就不用再就纠结用什么搜索算法好了这两天在洛谷上刷了一下动态规划地背包算法部分，深感DP的便利，用贪心算法的
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-10
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/LawlietLW.github.io/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                    算法
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/LawlietLW.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
-                        <span class="chip bg-color">动态规划</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/C/">
-                        <span class="chip bg-color">C</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">
-                        <span class="chip bg-color">背包问题</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
         </div>
-        
-    </div>
-</article>
-
-</div>
-
-
-
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
-
-
-<!-- 代码块折行 -->
-
-<style type="text/css">
-code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
-</style>
-
-
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
+        <div class="powered-by">
+          Proudly Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> | Theme is <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
         </div>
+      </div>
     </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fas fa-list-ul"></i>
-    </a>
-</div>
-
-
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('2'),
-            headingSelector: 'h2, h3, h4'
-        });
-
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
-
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
-
-    
-
-</main>
-
-
-
-    <footer class="page-footer bg-color">
-    <div class="container row center-align" style="margin-bottom: 0px !important;">
-        <div class="col s12 m8 l8 copy-right">
-            Copyright&nbsp;&copy;
-            <span id="year">2019</span>
-            <a href="http://LawlietLW.github.io" target="_blank">LawlietLW</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <br>
-            
-            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">16.5k</span>&nbsp;字
-            
-            
-            
-            
-            
-            
-            <span id="busuanzi_container_site_pv">
-                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
-                    class="white-color"></span>&nbsp;次
-            </span>
-            
-            
-            <span id="busuanzi_container_site_uv">
-                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
-                    class="white-color"></span>&nbsp;人
-            </span>
-            
-            <br>
-            
-            <br>
-            
-        </div>
-        <div class="col s12 m4 l4 social-link social-statis">
-
-
-    <a href="mailto:2499086884@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fas fa-envelope-open"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2499086884" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2499086884" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="/LawlietLW.github.io/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
-
-</div>
-    </div>
+  </div>
 </footer>
 
-<div class="progress-bar"></div>
 
-
-    <!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
-    <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
-        </div>
-        <div id="searchResult"></div>
-    </div>
-</div>
-
-<script src="/js/search.js"></script>
-<script type="text/javascript">
-$(function () {
-    searchFunc("/LawlietLW.github.io/" + "search.xml", 'searchInput', 'searchResult');
-});
-</script>
-    <!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fas fa-arrow-up"></i>
-    </a>
-</div>
-
-
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="/js/matery.js"></script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', '');
-</script>
-
-
-    <!-- Baidu Analytics -->
-
-<script>
-    var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
-    <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-    
-    <script src="/libs/others/clicklove.js" async="async"></script>
-    
-    
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-    
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
-    
-
-</body>
-
+  </body>
 </html>

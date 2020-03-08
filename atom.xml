@@ -6,11 +6,11 @@
   <link href="/LawlietLW.github.io/atom.xml" rel="self"/>
   
   <link href="http://lawlietlw.github.io/"/>
-  <updated>2020-02-27T11:12:14.875Z</updated>
+  <updated>2020-02-27T11:31:22.378Z</updated>
   <id>http://lawlietlw.github.io/</id>
   
   <author>
-    <name>LawlietLW</name>
+    <name>Lock</name>
     
   </author>
   
@@ -21,7 +21,7 @@
     <link href="http://lawlietlw.github.io/2020/02/24/dui-xue-xi-ji-lu/"/>
     <id>http://lawlietlw.github.io/2020/02/24/dui-xue-xi-ji-lu/</id>
     <published>2020-02-24T08:02:11.000Z</published>
-    <updated>2020-02-27T11:12:14.875Z</updated>
+    <updated>2020-02-27T11:31:22.378Z</updated>
     
     <summary type="html">
     
@@ -30,7 +30,7 @@
         
         
           &lt;p&gt;大部分题目都选自HITCON Training&lt;/p&gt;
-&lt;h1 id=&quot;UAF漏洞-use-after-free&quot;&gt;&lt;a href=&quot;#UAF漏洞-use-after-free&quot; class=&quot;headerlink&quot; title=&quot;UAF漏洞(use after
+&lt;h2 id=&quot;UAF漏洞-use-after-free&quot;&gt;&lt;a href=&quot;#UAF漏洞-use-after-free&quot; class=&quot;headerlink&quot; title=&quot;UAF漏洞(use after
         
       
     
@@ -58,7 +58,7 @@
         
         
           &lt;p&gt;复习了一下SQL注入，发觉还很有一部分知识点没掌握，记录一下&lt;br&gt;以2019强网杯随便注为例，之前是用的更改列名和表名来做的，但相对于利用MySQL预处理语句来做要麻烦很多，先了解一下MySQL的预处理语句&lt;/p&gt;
-&lt;pre class=&quot;
+&lt;figure class=&quot;hljs
         
       
     
@@ -81,7 +81,7 @@
     <link href="http://lawlietlw.github.io/2020/02/10/dong-tai-gui-hua/"/>
     <id>http://lawlietlw.github.io/2020/02/10/dong-tai-gui-hua/</id>
     <published>2020-02-10T07:09:26.000Z</published>
-    <updated>2020-02-27T08:12:02.651Z</updated>
+    <updated>2020-02-27T11:31:50.700Z</updated>
     
     <summary type="html">
     
@@ -89,7 +89,7 @@
       
         
         
-          &lt;h1 id=&quot;01背包和完全背包&quot;&gt;&lt;a href=&quot;#01背包和完全背包&quot; class=&quot;headerlink&quot;
+          &lt;h2 id=&quot;01背包和完全背包&quot;&gt;&lt;a href=&quot;#01背包和完全背包&quot; class=&quot;headerlink&quot;
         
       
     
@@ -150,8 +150,7 @@
         
         
           &lt;p&gt;打开环境，直接给出了源代码&lt;/p&gt;
-&lt;pre class=&quot; language-php&quot;&gt;&lt;code class=&quot;language-php&quot;&gt;&lt;span class=&quot;token delimiter&quot;&gt;&amp;lt;?php&lt;/span&gt;  
-&lt;span
+&lt;figure class=&quot;hljs highlight php&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span
         
       
     
@@ -185,7 +184,7 @@
         
         
           &lt;p&gt;打开环境&lt;br&gt;&lt;a href=&quot;1.jpg&quot;&gt;&lt;/a&gt;&lt;br&gt;直接给出源代码，代码审计&lt;/p&gt;
-&lt;pre class=&quot; language-php&quot;&gt;&lt;code class=&quot;language-php&quot;&gt;&lt;span class=&quot;token
+&lt;figure class=&quot;hljs highlight php&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span
         
       
     

