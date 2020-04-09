@@ -6,7 +6,7 @@
   <link href="/LawlietLW.github.io/atom.xml" rel="self"/>
   
   <link href="http://lawlietlw.github.io/"/>
-  <updated>2020-03-10T11:21:17.053Z</updated>
+  <updated>2020-03-08T06:06:45.412Z</updated>
   <id>http://lawlietlw.github.io/</id>
   
   <author>
@@ -15,33 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>xss</title>
-    <link href="http://lawlietlw.github.io/2020/03/10/xss/"/>
-    <id>http://lawlietlw.github.io/2020/03/10/xss/</id>
-    <published>2020-03-10T10:25:57.000Z</published>
-    <updated>2020-03-10T11:21:17.053Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;一直很抗拒xss的学习，但不学不行，了解了一下js的基础语法以及一些常用事件之后，找了一个&lt;br&gt;靶场联系一下，这里贴出网址:&lt;a href=&quot;https://xss.haozi.me/&quot; target=&quot;_blank&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="xss" scheme="http://LawlietLW.github.io/categories/xss/"/>
-    
-    
-      <category term="xss" scheme="http://LawlietLW.github.io/tags/xss/"/>
-    
-  </entry>
   
   <entry>
     <title>堆学习记录</title>
@@ -577,6 +550,29 @@
       <category term="堆叠注入" scheme="http://LawlietLW.github.io/tags/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5/"/>
     
       <category term="mysql_sql_mode" scheme="http://LawlietLW.github.io/tags/mysql-sql-mode/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>BUUCTF easy_tornado</title>
+    <link href="http://lawlietlw.github.io/2019/12/21/buuctf-easy-tornado/"/>
+    <id>http://lawlietlw.github.io/2019/12/21/buuctf-easy-tornado/</id>
+    <published>2019-12-21T09:39:38.000Z</published>
+    <updated>2020-01-23T12:15:27.316Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;打开环境&lt;br&gt;&lt;img src=&quot;/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://LawlietLW.github.io/categories/CTF/"/>
+    
+    
+      <category term="Web" scheme="http://LawlietLW.github.io/tags/Web/"/>
+    
+      <category term="模板注入" scheme="http://LawlietLW.github.io/tags/%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   
