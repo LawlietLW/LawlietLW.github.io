@@ -6,7 +6,7 @@
   <link href="/LawlietLW.github.io/atom.xml" rel="self"/>
   
   <link href="http://lawlietlw.github.io/"/>
-  <updated>2020-05-09T11:05:45.487Z</updated>
+  <updated>2020-05-12T03:09:42.977Z</updated>
   <id>http://lawlietlw.github.io/</id>
   
   <author>
@@ -21,17 +21,11 @@
     <link href="http://lawlietlw.github.io/2020/05/08/buuctf-shua-ti-ji-lu/"/>
     <id>http://lawlietlw.github.io/2020/05/08/buuctf-shua-ti-ji-lu/</id>
     <published>2020-05-08T10:56:40.000Z</published>
-    <updated>2020-05-09T11:05:45.487Z</updated>
+    <updated>2020-05-12T03:09:42.977Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2 id=&quot;0x1-gyctf-2020-signin&quot;&gt;&lt;a href=&quot;#0x1-gyctf-2020-signin&quot; class=&quot;headerlink&quot;
-        
-      
+      &lt;h2 id=&quot;0x1-gyctf-2020-signin&quot;&gt;&lt;a href=&quot;#0x1-gyctf-2020-signin&quot; class=&quot;headerlink&quot; title=&quot;0x1.gyctf_2020_signin&quot;&gt;&lt;/a&gt;0x1.gyctf_2020_signin&lt;/h2&gt;&lt;p&gt;环境是2.27.这题的考点在于，&lt;strong&gt;calloc&lt;/strong&gt;不会从tcache中取chunk，而是直接从fastbin中取，并且会将fastbin中剩余的chunk链入tcache&lt;/p&gt;
     
     </summary>
     

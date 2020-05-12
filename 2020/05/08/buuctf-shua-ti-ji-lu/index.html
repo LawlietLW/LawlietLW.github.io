@@ -17,10 +17,12 @@ if (isPassword) {
     noSupport: '浏览器不支持'
   }
 }</script><meta name="generator" content="Hexo 4.1.1"><link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="Lock's blog" type="application/atom+xml">
-<link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="toggle-sidebar-info button-hover"><span data-toggle="文章目录">站点概览</span></div><div class="sidebar-toc"><div class="sidebar-toc-title">目录</div><div class="sidebar-toc-progress"><span class="progress-notice">您已阅读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc-progress-bar"></div></div><div class="sidebar-toc-content" id="sidebar-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x1-gyctf-2020-signin"><span class="toc-number">1.</span> <span class="toc-text">0x1.gyctf_2020_signin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x2-gyctf-2020-document"><span class="toc-number">2.</span> <span class="toc-text">0x2.gyctf_2020_document</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x3-极客大挑战-2019-Not-Bad"><span class="toc-number">3.</span> <span class="toc-text">0x3.[极客大挑战 2019]Not Bad</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x4-axb-2019-fmt64"><span class="toc-number">4.</span> <span class="toc-text">0x4.axb_2019_fmt64</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x5-roarctf-2019-realloc-magic"><span class="toc-number">5.</span> <span class="toc-text">0x5.roarctf_2019_realloc_magic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x6-ciscn-2019-final-5"><span class="toc-number">6.</span> <span class="toc-text">0x6.ciscn_2019_final_5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x7-gyctf-2020-some-thing-interesting"><span class="toc-number">7.</span> <span class="toc-text">0x7.gyctf_2020_some_thing_interesting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x8-roarctf-2019-easy-pwn"><span class="toc-number">8.</span> <span class="toc-text">0x8.roarctf_2019_easy_pwn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x9-安恒四月赛sales-office-libc2-29"><span class="toc-number">9.</span> <span class="toc-text">0x9.安恒四月赛sales_office(libc2.29)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0xa-zctf2016-note2"><span class="toc-number">10.</span> <span class="toc-text">0xa.zctf2016_note2</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/avatar.png"></div><div class="author-info-name">Lock</div><div class="author-info-description"></div><div class="links-buttons"><a class="links-button button-hover" href="mailto:2499086884@qq.com" target="_blank">E-Mail<i class="icon-dot bg-color9"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/LawlietLW.github.io/archives"><span class="pull-top">日志</span><span class="pull-bottom">24</span></a><a class="author-info-articles-tags article-meta" href="/LawlietLW.github.io/tags"><span class="pull-top">标签</span><span class="pull-bottom">35</span></a><a class="author-info-articles-categories article-meta" href="/LawlietLW.github.io/categories"><span class="pull-top">分类</span><span class="pull-bottom">4</span></a></div><div class="friend-link"><a class="friend-link-text" href="https://buuoj.cn/" target="_blank">友链1:BUUCTF，有刷不完的题~</a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/tags">标签</a><a class="menu-item" href="/categories">分类</a><a class="menu-item" href="/archives">归档</a><a class="menu-item" href="/about">关于</a></nav><div class="right-info"><a class="title-name" href="/LawlietLW.github.io/">Lock's blog</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><article id="post"><div class="post-header"><div class="title">BUUCTF刷题记录</div><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 发表于 2020-05-08 | 更新于 2020-05-09</time><!--time.button-hover.post-date #[i.fas.fa-calendar-alt.article-icon(aria-hidden="true")] #[=__('post.modified')] #[=date(page['updated'], config.date_format)]--><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/PWN/">PWN</a></div></div></div><div class="main-content"><h2 id="0x1-gyctf-2020-signin"><a href="#0x1-gyctf-2020-signin" class="headerlink" title="0x1.gyctf_2020_signin"></a>0x1.gyctf_2020_signin</h2><p>环境是2.27.这题的考点在于，<strong>calloc</strong>不会从tcache中取chunk，而是直接从fastbin中取，并且会将fastbin中剩余的chunk链入tcache</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C1.jpg" alt="1"></p>
+<link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="toggle-sidebar-info button-hover"><span data-toggle="文章目录">站点概览</span></div><div class="sidebar-toc"><div class="sidebar-toc-title">目录</div><div class="sidebar-toc-progress"><span class="progress-notice">您已阅读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc-progress-bar"></div></div><div class="sidebar-toc-content" id="sidebar-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x1-gyctf-2020-signin"><span class="toc-number">1.</span> <span class="toc-text">0x1.gyctf_2020_signin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x2-gyctf-2020-document"><span class="toc-number">2.</span> <span class="toc-text">0x2.gyctf_2020_document</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x3-极客大挑战-2019-Not-Bad"><span class="toc-number">3.</span> <span class="toc-text">0x3.[极客大挑战 2019]Not Bad</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x4-axb-2019-fmt64"><span class="toc-number">4.</span> <span class="toc-text">0x4.axb_2019_fmt64</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x5-roarctf-2019-realloc-magic"><span class="toc-number">5.</span> <span class="toc-text">0x5.roarctf_2019_realloc_magic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x6-ciscn-2019-final-5"><span class="toc-number">6.</span> <span class="toc-text">0x6.ciscn_2019_final_5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x7-gyctf-2020-some-thing-interesting"><span class="toc-number">7.</span> <span class="toc-text">0x7.gyctf_2020_some_thing_interesting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x8-roarctf-2019-easy-pwn"><span class="toc-number">8.</span> <span class="toc-text">0x8.roarctf_2019_easy_pwn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x9-安恒四月赛sales-office-libc2-29"><span class="toc-number">9.</span> <span class="toc-text">0x9.安恒四月赛sales_office(libc2.29)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0xa-zctf2016-note2"><span class="toc-number">10.</span> <span class="toc-text">0xa.zctf2016_note2</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/avatar.png"></div><div class="author-info-name">Lock</div><div class="author-info-description"></div><div class="links-buttons"><a class="links-button button-hover" href="mailto:2499086884@qq.com" target="_blank">E-Mail<i class="icon-dot bg-color9"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/LawlietLW.github.io/archives"><span class="pull-top">日志</span><span class="pull-bottom">24</span></a><a class="author-info-articles-tags article-meta" href="/LawlietLW.github.io/tags"><span class="pull-top">标签</span><span class="pull-bottom">35</span></a><a class="author-info-articles-categories article-meta" href="/LawlietLW.github.io/categories"><span class="pull-top">分类</span><span class="pull-bottom">4</span></a></div><div class="friend-link"><a class="friend-link-text" href="https://buuoj.cn/" target="_blank">友链1:BUUCTF，有刷不完的题~</a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/tags">标签</a><a class="menu-item" href="/categories">分类</a><a class="menu-item" href="/archives">归档</a><a class="menu-item" href="/about">关于</a></nav><div class="right-info"><a class="title-name" href="/LawlietLW.github.io/">Lock's blog</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><article id="post"><div class="post-header"><div class="title">BUUCTF刷题记录</div><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 发表于 2020-05-08 | 更新于 2020-05-12</time><!--time.button-hover.post-date #[i.fas.fa-calendar-alt.article-icon(aria-hidden="true")] #[=__('post.modified')] #[=date(page['updated'], config.date_format)]--><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/PWN/">PWN</a></div></div></div><div class="main-content"><h2 id="0x1-gyctf-2020-signin"><a href="#0x1-gyctf-2020-signin" class="headerlink" title="0x1.gyctf_2020_signin"></a>0x1.gyctf_2020_signin</h2><p>环境是2.27.这题的考点在于，<strong>calloc</strong>不会从tcache中取chunk，而是直接从fastbin中取，并且会将fastbin中剩余的chunk链入tcache</p>
+<a id="more"></a>
+
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/1.jpg" alt=""></p>
 <p>程序的漏洞在于dele函数中，有uaf漏洞,同时还存在一个后门函数，先使用<strong>calloc</strong>分配一个chunk，如果<strong>ptr</strong>不为0，就可getshell</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C2.jpg" alt="2"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/2.jpg" alt=""></p>
 <p>exp如下:</p>
 <pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/python</span>
 <span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
@@ -86,11 +88,11 @@ getshell<span class="token punctuation">(</span><span class="token punctuation">
 io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>即先将tcache填满，之后free一个chunk进入fastbin，接着从tcache申请一块，然后调用后门函数，触发calloc，将ptr处写入前一个tcache的地址即可getshell</p>
 <h2 id="0x2-gyctf-2020-document"><a href="#0x2-gyctf-2020-document" class="headerlink" title="0x2.gyctf_2020_document"></a>0x2.gyctf_2020_document</h2><p>程序保护全开</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C4.jpg" alt="4"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/4.jpg" alt=""></p>
 <p>增删查改四个功能，<strong>add</strong>功能有点冗长，主要就是分配两个chunk，一个大小为<strong>0x20</strong>，一个<strong>0x90</strong>，前者的内容为后者的指针和一个标志位，记录该chunk是否被修改过(只允许修改一次)，<strong>0x90</strong>大小的chunk的数据段的前0x10大小记录<strong>name</strong>和<strong>sex</strong>，后0x70记录<strong>information</strong></p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C5.jpg" alt="5"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/5.jpg" alt=""></p>
 <p>漏洞点位于<strong>dele</strong>函数，<strong>uaf</strong>漏洞</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C6.jpg" alt="6"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/6.jpg" alt=""></p>
 <p>并且<strong>edit</strong>和<strong>show</strong>功能通过0x20大小chunk中存在的指针来进行相应操作，这也可以利用.由于我们可以分配的chunk大小固定为0x20和0x90，所以无法攻击<strong>malloc_hook</strong>,这里采用改<strong>free_hook</strong>为<strong>system</strong>的攻击方式，exp如下:</p>
 <pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/python</span>
 <span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
@@ -159,9 +161,9 @@ io<span class="token punctuation">.</span>interactive<span class="token punctuat
 </code></pre>
 <p>利用<strong>uaf</strong>漏洞，造成堆块重叠，使我们可以控制0x20大小的chunk中的指针，将指针改为<strong>free_hook</strong>的地址即可，然后利用edit修改为<strong>system</strong></p>
 <h2 id="0x3-极客大挑战-2019-Not-Bad"><a href="#0x3-极客大挑战-2019-Not-Bad" class="headerlink" title="0x3.[极客大挑战 2019]Not Bad"></a>0x3.[极客大挑战 2019]Not Bad</h2><p>这题没有任何保护，存在沙箱，无法getshell，所以考虑使用<strong>orw</strong>攻击读取flag</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C8.jpg" alt="8"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/8.jpg" alt=""></p>
 <p>程序在<strong>0x123000</strong>处开辟了一块内存</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C9.jpg" alt="9"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/9.jpg" alt=""></p>
 <p>考虑首先在栈中利用shellcode往<strong>0x123000</strong>处写入orw的shellcode，然后调用0x123000处的shellcode即可，exp如下:</p>
 <pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/python</span>
 <span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
@@ -188,7 +190,7 @@ io<span class="token punctuation">.</span>send<span class="token punctuation">(<
 io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>asm<span class="token punctuation">(</span>orw_payload<span class="token punctuation">)</span><span class="token punctuation">)</span>
 io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <h2 id="0x4-axb-2019-fmt64"><a href="#0x4-axb-2019-fmt64" class="headerlink" title="0x4.axb_2019_fmt64"></a>0x4.axb_2019_fmt64</h2><p>程序无限循环，got表可写</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C10.jpg" alt="10"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/10.jpg" alt=""></p>
 <p>首先泄露libc地址，然后将<strong>printf</strong>的<strong>got</strong>表值修改为<strong>system</strong>的地址，输入<strong>/bin/sh</strong>即可getshell.exp如下：</p>
 <pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/python</span>
 <span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
@@ -237,14 +239,14 @@ io<span class="token punctuation">.</span>interactive<span class="token punctuat
 </blockquote>
 <p>即，根据ptr和size值的不同，realloc将有free，malloc，edit和extend四种功能再回到题目来</p>
 <p>程序保护全开，有三个功能</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C11.jpg" alt="11"></p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C12.jpg" alt="12"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/11.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/12.jpg" alt=""></p>
 <p>re功能就是通过realloc分配chunk</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C13.jpg" alt="13"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/13.jpg" alt=""></p>
 <p>fr功能就是free掉当前指针指向的chunk，存在uaf漏洞</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C14.jpg" alt="14"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/14.jpg" alt=""></p>
 <p>ba功能就是将指针清零，只能使用一次</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C15.jpg" alt="15"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/15.jpg" alt=""></p>
 <p>由于程序缺少show功能，所以我们需要改stdout来泄露地址，exp如下</p>
 <pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/python</span>
 <span class="token comment" spellcheck="true">#!coding=utf-8</span>
@@ -334,19 +336,19 @@ libc <span class="token operator">=</span> ELF<span class="token punctuation">(<
             io<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
 <h2 id="0x6-ciscn-2019-final-5"><a href="#0x6-ciscn-2019-final-5" class="headerlink" title="0x6.ciscn_2019_final_5"></a>0x6.ciscn_2019_final_5</h2><p>这题的洞很不好找，<del>还是因为我太菜了</del>，首先检查程序保护机制</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C16.jpg" alt="16"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/16.jpg" alt=""></p>
 <p>got表可写，无PIE</p>
 <p>共有增删改三个功能</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C17.jpg" alt="17"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/17.jpg" alt=""></p>
 <p>漏洞点存在于add功能中</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C18.jpg" alt="18"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/18.jpg" alt=""></p>
 <p>sub_400AB0函数功能如下</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C19.jpg" alt="19"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/19.jpg" alt=""></p>
 <p>返回两个两个参数按位或之后的值，然后将这个值存入<strong>0x6020e0</strong>中，<strong>0x6020e0</strong>是一个数组，并且，这个程序中存储chunk的地址不是按照我们输入的序号来存的，而是从头遍历数组，依次存入地址</p>
 <p>当我们分配第一个chunk且输入序号为16时，返回指针的后三位是0x260，然后0x260|16=0x270，最终存入数组中的地址的后三位为0x270，这样我们就可以在0x270处伪造一个chunk头，造成chunkoverlap</p>
 <p>然后，这题有一点很🐕，就是在edit功能中</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C20.jpg" alt="20"></p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C21.jpg" alt="21"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/20.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/21.jpg" alt=""></p>
 <p>这个函数会将content[i]与0xf按位与，当content[i]&amp;0xf==index时，就往content[i]&amp;0xFFFFFFFFFFFFFFF0处写数据，先贴上exp:</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
 
@@ -495,7 +497,7 @@ io<span class="token punctuation">.</span>sendline<span class="token punctuation
 
 io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <h2 id="0x8-roarctf-2019-easy-pwn"><a href="#0x8-roarctf-2019-easy-pwn" class="headerlink" title="0x8.roarctf_2019_easy_pwn"></a>0x8.roarctf_2019_easy_pwn</h2><p>保护全开，四个功能，增删查改，在edit功能中存在off-by-one，当我们输入的要修改的new_size==old_size+10时，就会产生一个off-by-one</p>
-<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C22.jpg" alt="22"></p>
+<p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/22.jpg" alt=""></p>
 <p>由于程序使用的是calloc，calloc会清空申请过来的chunk的内容，所以不能通过申请一个大小在unsortedbin中的chunk然后free再申请回来的方法泄露地址，于是我们要构造处堆块复用，之后再利用一次堆块复用造成fastbinattack，即由chunk0溢出到chunk1，使chunk1的大小被修改为chunk1_size+chunk2_size，之后free chunk1，于是把chunk2也放入了bin中，然后在分两次把chunk1和chunk2申请回来，此时，我们第二次申请过来的chunk2既是chunk2也是另一个堆块，我们称之为chunkn，chunk2和chunkn公用一个chunk，我们free掉chunk2，edit chunkn，实际上也就是在editchunk2，修改chunk2的fd指向malloc_hook-0x23即可，exp如下:</p>
 <pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/python</span>
 <span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
@@ -572,7 +574,7 @@ edit<span class="token punctuation">(</span><span class="token number">6</span><
 add<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
 io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
-<h2 id="0x9-安恒四月赛sales-office-libc2-29"><a href="#0x9-安恒四月赛sales-office-libc2-29" class="headerlink" title="0x9.安恒四月赛sales_office(libc2.29)"></a>0x9.安恒四月赛sales_office(libc2.29)</h2><p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/D:%5CHexo%5Csource_posts%5CBUUCTF%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95%5C23.jpg" alt="23"></p>
+<h2 id="0x9-安恒四月赛sales-office-libc2-29"><a href="#0x9-安恒四月赛sales-office-libc2-29" class="headerlink" title="0x9.安恒四月赛sales_office(libc2.29)"></a>0x9.安恒四月赛sales_office(libc2.29)</h2><p><img src="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/23.jpg" alt=""></p>
 <p>got表可写，无PIE</p>
 <p>程序的存储结构类似于content(0x20)–&gt;chunk,即系统分配一个0x20大小的chunk，存储着用户分配的chunk的地址。这道题一共有两个环境，一个2.27的，由于存在uaf，2.27的利用非常简单，相对于2.27，2.29的tcache存在对doublefree的检测，所以难度更大了一些，但fastbin中依旧可以doublefree，所以我们只需要把tcache填满，在fastbin中进行doublefree即可，exp如下：</p>
 <pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/python</span>
