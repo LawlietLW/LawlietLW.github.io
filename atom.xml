@@ -6,7 +6,7 @@
   <link href="/LawlietLW.github.io/atom.xml" rel="self"/>
   
   <link href="http://lawlietlw.github.io/"/>
-  <updated>2020-04-10T06:08:57.277Z</updated>
+  <updated>2020-05-09T11:05:45.487Z</updated>
   <id>http://lawlietlw.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>BUUCTF刷题记录</title>
+    <link href="http://lawlietlw.github.io/2020/05/08/buuctf-shua-ti-ji-lu/"/>
+    <id>http://lawlietlw.github.io/2020/05/08/buuctf-shua-ti-ji-lu/</id>
+    <published>2020-05-08T10:56:40.000Z</published>
+    <updated>2020-05-09T11:05:45.487Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;0x1-gyctf-2020-signin&quot;&gt;&lt;a href=&quot;#0x1-gyctf-2020-signin&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="CTF" scheme="http://LawlietLW.github.io/categories/CTF/"/>
+    
+    
+      <category term="PWN" scheme="http://LawlietLW.github.io/tags/PWN/"/>
+    
+  </entry>
   
   <entry>
     <title>PWN学习记录</title>
@@ -465,31 +492,6 @@
       <category term="Web" scheme="http://LawlietLW.github.io/tags/Web/"/>
     
       <category term="Unicode欺骗" scheme="http://LawlietLW.github.io/tags/Unicode%E6%AC%BA%E9%AA%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>BUUCTF EasySQL</title>
-    <link href="http://lawlietlw.github.io/2019/12/21/buuctf-easy-sql/"/>
-    <id>http://lawlietlw.github.io/2019/12/21/buuctf-easy-sql/</id>
-    <published>2019-12-21T10:55:22.000Z</published>
-    <updated>2020-01-23T12:14:54.377Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;/LawlietLW.github.io/2019/12/21/buuctf-easy-sql/1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="CTF" scheme="http://LawlietLW.github.io/categories/CTF/"/>
-    
-    
-      <category term="Web" scheme="http://LawlietLW.github.io/tags/Web/"/>
-    
-      <category term="堆叠注入" scheme="http://LawlietLW.github.io/tags/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5/"/>
-    
-      <category term="mysql_sql_mode" scheme="http://LawlietLW.github.io/tags/mysql-sql-mode/"/>
     
   </entry>
   
