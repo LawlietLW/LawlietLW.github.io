@@ -17,5 +17,476 @@ if (isPassword) {
     noSupport: '浏览器不支持'
   }
 }</script><meta name="generator" content="Hexo 4.1.1"><link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="Lock's blog" type="application/atom+xml">
-<link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="author-info"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/avatar.png"></div><div class="author-info-name">Lock</div><div class="author-info-description"></div><div class="links-buttons"><a class="links-button button-hover" href="mailto:2499086884@qq.com" target="_blank">E-Mail<i class="icon-dot bg-color8"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/LawlietLW.github.io/archives"><span class="pull-top">日志</span><span class="pull-bottom">24</span></a><a class="author-info-articles-tags article-meta" href="/LawlietLW.github.io/tags"><span class="pull-top">标签</span><span class="pull-bottom">35</span></a><a class="author-info-articles-categories article-meta" href="/LawlietLW.github.io/categories"><span class="pull-top">分类</span><span class="pull-bottom">4</span></a></div><div class="friend-link"><a class="friend-link-text" href="https://buuoj.cn/" target="_blank">友链1:BUUCTF，有刷不完的题~</a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/tags">标签</a><a class="menu-item" href="/categories">分类</a><a class="menu-item" href="/archives">归档</a><a class="menu-item" href="/about">关于</a></nav><div class="right-info"><a class="title-name" href="/LawlietLW.github.io/">Lock's blog</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><div id="recent-posts"><!-- each post in page.posts.sort('date', -1).limit(10).toArray()--><!-- config中配置按照什么排序--><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/">BUUCTF刷题记录</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-05-12</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/PWN/">PWN</a></div></div><div class="post-content"><div class="main-content content"><h2 id="0x1-gyctf-2020-signin"><a href="#0x1-gyctf-2020-signin" class="headerlink" title="0x1.gyctf_2020_signin"></a>0x1.gyctf_2020_signin</h2><p>环境是2.27.这题的考点在于，<strong>calloc</strong>不会从tcache中取chunk，而是直接从fastbin中取，并且会将fastbin中剩余的chunk链入tcache</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/04/09/pwn-xue-xi-ji-lu/">PWN学习记录</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-10</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/pwn/">pwn</a></div></div><div class="post-content"><div class="main-content content"><h2 id="babyheap"><a href="#babyheap" class="headerlink" title="babyheap"></a>babyheap</h2><p>考察点:unsortedbin attack,house of sprit,global_max_fast,fastbin attack</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/04/09/pwn-xue-xi-ji-lu/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/">堆学习记录</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-03-08</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/">漏洞学习</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E5%A0%86%E6%BC%8F%E6%B4%9E/">堆漏洞</a></div></div><div class="post-content"><div class="main-content content"><p>大部分题目都选自HITCON Training</p>
-<h2 id="UAF漏洞-use-after-free"><a href="#UAF漏洞-use-after-free" class="headerlink" title="UAF漏洞(use after free)"></a>UAF漏洞(use after free)</h2><p>顾名思义，UAF漏洞的意思就是在chunk被free之后依然能够使用，产生的原因在于使用过堆块之后没有及时将堆块的指针置null，导致下次申请内存的时候依然能狗使用该堆块</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/">MySQL注入</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/SQL%E6%B3%A8%E5%85%A5/">SQL注入</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/MySQL%E9%A2%84%E5%A4%84%E7%90%86/">MySQL预处理</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5/">无列名注入</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/order-by%E7%9B%B2%E6%B3%A8/">order by盲注</a></div></div><div class="post-content"><div class="main-content content"><p>复习了一下SQL注入，发觉还很有一部分知识点没掌握，记录一下<br>以2019强网杯随便注为例，之前是用的更改列名和表名来做的，但相对于利用MySQL预处理语句来做要麻烦很多，先了解一下MySQL的预处理语句</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/10/dong-tai-gui-hua/">动态规划的背包问题</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/%E7%AE%97%E6%B3%95/">算法</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/C/">C</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">背包问题</a></div></div><div class="post-content"><div class="main-content content"><h2 id="01背包和完全背包"><a href="#01背包和完全背包" class="headerlink" title="01背包和完全背包"></a>01背包和完全背包</h2><p>记录一下这两天学习的动态规划算法，拖了好久了</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/10/dong-tai-gui-hua/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/">[CISCN2019 华北赛区 Day1 Web2]ikun</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">python反序列化</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/pickle%EF%BC%8CWeb/">pickle，Web</a></div></div><div class="post-content"><div class="main-content content"><p>打开环境，喜闻乐见<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/1.jpg" alt=""></p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/10/zjctf-2019-nizhuansiwei/">[ZJCTF 2019]NiZhuanSiWei</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/Web/">Web</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/data%E4%BC%AA%E5%8D%8F%E8%AE%AE/">data伪协议</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/filter%E4%BC%AA%E5%8D%8F%E8%AE%AE/">filter伪协议</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">PHP反序列化</a></div></div><div class="post-content"><div class="main-content content"><p>打开环境，直接给出了源代码</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/10/zjctf-2019-nizhuansiwei/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/09/buuctf-2018-online-tool/">[BUUCTF 2018]Online Tool</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/Web/">Web</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E7%BB%95%E8%BF%87escapeshellarg-escapeshellcmd/">绕过escapeshellarg()+escapeshellcmd()</a></div></div><div class="post-content"><div class="main-content content"><p>打开环境<br><a href="1.jpg"></a><br>直接给出源代码，代码审计</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/09/buuctf-2018-online-tool/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-secret-file/">[极客大挑战 2019]Secret File</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/Web/">Web</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/burp/">burp</a></div></div><div class="post-content"><div class="main-content content"><p>打开环境<br><img src="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-secret-file/1.jpg" alt=""><br>查看源代码，发现一个页面</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-secret-file/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/">[网鼎杯 2018]Fakebook</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/Web/">Web</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">PHP反序列化</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/">报错注入</a></div></div><div class="post-content"><div class="main-content content"><p>打开环境<br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/1.jpg" alt=""><br>注册一个账号，登陆进去</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-easysql/">[极客大挑战 2019]EasySQL</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/Web/">Web</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/sql%E4%B8%87%E8%83%BD%E5%AF%86%E7%A0%81/">sql万能密码</a></div></div><div class="post-content"><div class="main-content content"><p>打开环境，登录框<br><img src="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-easysql/1.jpg" alt=""><br>随便登陆测试一下</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-easysql/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-havefun/">[极客大挑战 2019]Havefun</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/Web/">Web</a></div></div><div class="post-content"><div class="main-content content"><p>打开环境<br><img src="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-havefun/1.jpg" alt=""></p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-havefun/#more">阅读全文</a></div></div><div id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/LawlietLW.github.io/page/2/">2</a><a class="extend next" rel="next" href="/LawlietLW.github.io/page/2/">&lt;i class&#x3D;&quot;fas fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a></div></div></div></div><div class="button-hover" id="return-top"><i class="fas fa-arrow-up" aria-hidden="true"></i></div><footer><div id="footer"><div class="button-hover" id="side-button"><i class="fas fa-arrow-right"></i></div><div class="right-content"><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_uv"><i class="fas fa-user"></i></span><span id="busuanzi_value_site_uv"></span><span></span><span class="footer-separator">|</span><span id="busuanzi_container_site_pv"><i class="fas fa-eye"></i></span><span id="busuanzi_value_site_pv"></span><span></span></div><div class="copyright">&copy;2019 ～ 2020 By Lock</div></div></div></footer></div><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/thirdparty/jquery-3.3.1.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/thirdparty/velocity.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/thirdparty/jquery.mCustomScrollbar.concat.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/fan.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/canvas_bg.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/utils.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/scroll.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/sidebar.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/copy.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/highlight.js"></script><!--script(src=url)--></body></html>
+<link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="author-info"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/avatar.png"></div><div class="author-info-name">Lock</div><div class="author-info-description"></div><div class="links-buttons"><a class="links-button button-hover" href="mailto:2499086884@qq.com" target="_blank">E-Mail<i class="icon-dot bg-color2"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/LawlietLW.github.io/archives"><span class="pull-top">日志</span><span class="pull-bottom">26</span></a><a class="author-info-articles-tags article-meta" href="/LawlietLW.github.io/tags"><span class="pull-top">标签</span><span class="pull-bottom">36</span></a><a class="author-info-articles-categories article-meta" href="/LawlietLW.github.io/categories"><span class="pull-top">分类</span><span class="pull-bottom">4</span></a></div><div class="friend-link"><a class="friend-link-text" href="https://buuoj.cn/" target="_blank">友链1:BUUCTF，有刷不完的题~</a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/tags">标签</a><a class="menu-item" href="/categories">分类</a><a class="menu-item" href="/archives">归档</a><a class="menu-item" href="/about">关于</a></nav><div class="right-info"><a class="title-name" href="/LawlietLW.github.io/">Lock's blog</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><div id="recent-posts"><!-- each post in page.posts.sort('date', -1).limit(10).toArray()--><!-- config中配置按照什么排序--><div class="recent-post-item"><i class="article-top"></i><a class="post-title" href="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/">BUUCTF刷题记录</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-05-20</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/PWN/">PWN</a></div></div><div class="post-content"><div class="main-content content"><h2 id="0x1-gyctf-2020-signin"><a href="#0x1-gyctf-2020-signin" class="headerlink" title="0x1.gyctf_2020_signin"></a>0x1.gyctf_2020_signin</h2><p>环境是2.27.这题的考点在于，<strong>calloc</strong>不会从tcache中取chunk，而是直接从fastbin中取，并且会将fastbin中剩余的chunk链入tcache</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/05/17/lu-you-qi-huan-jing-da-jian/">路由器环境搭建</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-05-20</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/%E7%AE%97%E6%B3%95/">算法</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></div></div><div class="post-content"><div class="main-content content"><p>​        学vmpwn学到自闭，逆指令太难了。。。整点新东西缓解一下。大一就想学iot安全，环境一来二去也搭了有几次，不过要越过glibc的pwn直接跳到iot的pwn还是不太好，一是ctf比赛中glibc的pwn还是战必很大的，二是打基础，最后找工作人也得看ctf经历不是？最终在大二上中旬开始学pwn，后来又弃了一段时间，转学web(<del>我想日站</del>！)最终在寒假又重新捡起了pwn，后来打了几场比赛，NPUCTF,安恒月赛，常规的glibc的pwn我还是能应付应付的，满怀期望的迎接De1CTF，去年是作为web狗参赛，今年是作为一只pwn🐕参赛，结果。。。。打自闭了，签到pwn是c艹，剩下的没一道常规题，两道mips，一道安卓，和去年的pwn的难度差太多了。。。。De1CTF之后又是网鼎杯，18年的网鼎杯pwn也比较常规，赛前我觉得如果是上一届那种难度我还是能做的，结果再次自闭。。。第一次接触vmpwn竟然是在网鼎杯，直接懵逼，一道编译器pwn，一道vmpwn，一道盲pwn。。。两场比赛之后我深刻的认识到了我是个fw，太辣鸡了，知识面太窄，基础不够扎实，仅仅只会glibc下的堆栈pwn完全不够了，要走的路还很长很长。。。。</p>
+<p>​       扯得有点远了，说了一下学pwn的一些历程，接下来进入正题，路由器环境搭建。</p>
+<p>​        参考了挺多大师傅的博客，以前都是直接无脑复制粘贴(<del>现在也是，只不过更谨慎地复制粘贴</del>)。</p>
+<p>首先是安装<strong>binwalk</strong>，有两种方法</p>
+<pre><code>方法1:sudo apt-get install binwalk 
+方法2:
+git clone https://github.com/devttys0/binwalk.git
+cd binwalk
+sudo ./deps.sh
+sudo python ./setup.py install
+sudo apt-get install python-lzma
+sudo -H pip install git+https://github.com/ahupp/python-magic
+sudo -H pip install git+https://github.com/sviehb/jefferson</code></pre><p>直接sudo apt-get有些包会安装不完全，所以推荐源码安装</p>
+<p>然后安装 <strong>firmadyne</strong>，需要安装<strong>postgres</strong>数据库</p>
+<pre><code>sudo apt-get install postgres
+git clone https://github.com/firmadyne/firmadyne
+cd firmadyne/ &amp;&amp; sudo download.sh
+sudo -u postgres createuser -P firmadyne  
+sudo -u postgres createdb -O firmadyne firmware
+sudo -u postgres psql -d firmware &lt; ./firmadyne/database/schema</code></pre><p>接下来是qemu，按照H4lo大佬的说法，过高版本或者过低版本在某些情况下会报错，推荐<strong>qemu2.4.0</strong>版本，下载压缩包本地编译</p>
+<pre><code>wget https://download.qemu.org/qemu-2.4.0.tar.xz
+tar xvf qemu-2.4.0.tar.xz &amp;&amp; cd qemu-2.4.0/
+./configure
+make -j8
+sudo make install</code></pre><p><strong>sasquatch</strong>安装</p>
+<pre><code>sudo apt-get install zlib1g-dev liblzma-dev liblzo2-dev
+sudo git clone https://github.com/devttys0/sasquatch
+cd sasquatch &amp;&amp; sudo make &amp;&amp; sudo make install</code></pre><p><strong>交叉编译环境 buildroot安装</strong></p>
+<p>还是跟着h牛的文章来，先把所有库都装上</p>
+<pre><code>sudo apt-get install libncurs*
+wget http://buildroot.uclibc.org/downloads/snapshots/buildroot-snapshot.tar.bz2
+tar -jxvf buildroot-snapshot.tar.bz2
+cd buildroot/
+make clean
+make menuconfig
+sudo make</code></pre><p>h牛wget的网址有问题，应该是<strong>snapshot</strong>，他多加了一个s，我当时就是下不好这个压缩包，后来直接搜索了一波，才发现问题所在</p>
+<p><strong>make menuconfig</strong>之后，会出现一个GUI界面，进入<strong>Target option</strong>，选择<strong>Target Architecture Varient</strong>为<strong>Mips 32</strong>，将<strong>Target Architecture</strong>选为<strong>MIPS(little endian)</strong>,保存后退出到上一级，进入<strong>Toolchain</strong>，将<strong>Kernel Headers</strong>修改为本机的kernel版本即可，然后保存退出，编译时间会有一个小时左右</p>
+<p> <strong>gdb-multiarch</strong></p>
+<pre><code>sudo apt-get install gdb-multiarch</code></pre><p>接下来我们还需要安装一下mips版本的gcc及其相关组件，apt 中对应的包名为 <code>gcc-mips-linux-gnu</code> 与 <code>gcc-mipsel-linux-gnu</code></p>
+<pre><code>sudo apt-get install gcc-mips-linux-gnu
+sudo apt-get install gcc-mipsel-linux-gnu</code></pre><p>其中mips-linux-gnu-gcc用来编译大端序程序，mipsel-linux-gnu-gcc用来编译小端序</p>
+<p>我们来写一个小程序验证一下</p>
+<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;malloc.h></span></span>
+
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+        <span class="token keyword">int</span> <span class="token operator">*</span>a<span class="token punctuation">;</span>
+        a <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"demo"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>这是h牛的文章中的一个程序</p>
+<p>首先我们用小端序编译</p>
+<pre><code>mipsel-linux-gnu-gcc demo.c -o demo -static</code></pre><p>静态编译</p>
+<p><img src="/LawlietLW.github.io/2020/05/17/lu-you-qi-huan-jing-da-jian/1.jpg" alt=""></p>
+<p>可以看出确实是小端序静态链接，接着我们运行一下</p>
+<p><img src="/LawlietLW.github.io/2020/05/17/lu-you-qi-huan-jing-da-jian/2.jpg" alt=""></p>
+<p>运行没问题。我们再用大端序编译一下</p>
+<pre><code>mips-linux-gnu-gcc demo.c -o demo -static</code></pre><p><img src="/LawlietLW.github.io/2020/05/17/lu-you-qi-huan-jing-da-jian/3.jpg" alt=""></p>
+<p>确实是大端序静态链接</p>
+<p>接着运行</p>
+<p><img src="/LawlietLW.github.io/2020/05/17/lu-you-qi-huan-jing-da-jian/4.jpg" alt=""></p>
+<p>无误</p>
+<p>现在都是静态链接，我们再动态编译一下</p>
+<pre><code>mipsel-linux-gnu-gcc demo.c -o demo</code></pre><p><img src="/LawlietLW.github.io/2020/05/17/lu-you-qi-huan-jing-da-jian/5.jpg" alt=""></p>
+<pre><code>qemu-mipsel -L /usr/mipsel-linux-gnu/ ./demo</code></pre><p><img src="/LawlietLW.github.io/2020/05/17/lu-you-qi-huan-jing-da-jian/6.jpg" alt=""></p>
+<p>-L是连接指定的libc库</p>
+<p>至此，环境就算配置完毕，还有一些gdb动态调试mips文件的，后面会再更新</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/05/17/lu-you-qi-huan-jing-da-jian/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/04/09/pwn-xue-xi-ji-lu/">PWN学习记录</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-10</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/pwn/">pwn</a></div></div><div class="post-content"><div class="main-content content"><h2 id="babyheap"><a href="#babyheap" class="headerlink" title="babyheap"></a>babyheap</h2><p>考察点:unsortedbin attack,house of sprit,global_max_fast,fastbin attack</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/04/09/pwn-xue-xi-ji-lu/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/">堆学习记录</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-03-08</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/">漏洞学习</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E5%A0%86%E6%BC%8F%E6%B4%9E/">堆漏洞</a></div></div><div class="post-content"><div class="main-content content"><p>大部分题目都选自HITCON Training</p>
+<h2 id="UAF漏洞-use-after-free"><a href="#UAF漏洞-use-after-free" class="headerlink" title="UAF漏洞(use after free)"></a>UAF漏洞(use after free)</h2><p>顾名思义，UAF漏洞的意思就是在chunk被free之后依然能够使用，产生的原因在于使用过堆块之后没有及时将堆块的指针置null，导致下次申请内存的时候依然能狗使用该堆块</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/24/dui-xue-xi-ji-lu/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/">MySQL注入</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/SQL%E6%B3%A8%E5%85%A5/">SQL注入</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/MySQL%E9%A2%84%E5%A4%84%E7%90%86/">MySQL预处理</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E6%97%A0%E5%88%97%E5%90%8D%E6%B3%A8%E5%85%A5/">无列名注入</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/order-by%E7%9B%B2%E6%B3%A8/">order by盲注</a></div></div><div class="post-content"><div class="main-content content"><p>复习了一下SQL注入，发觉还很有一部分知识点没掌握，记录一下<br>以2019强网杯随便注为例，之前是用的更改列名和表名来做的，但相对于利用MySQL预处理语句来做要麻烦很多，先了解一下MySQL的预处理语句</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/15/mysql-de-yi-xie-yu-chu-li-yu-ju/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/10/c-yu-yan-zai-hui-bian-zhong-de-biao-xian-xing-shi/">动态规划的背包问题</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-05-17</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/%E7%AE%97%E6%B3%95/">算法</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/C/">C</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">背包问题</a></div></div><div class="post-content"><div class="main-content content"><p>​        在做某些代码量比较大且比较杂的题时深感代码审计的吃力，基础还是不够扎实，比如vmpwn，虚拟机实现的功能翻译出来的伪C代码看的确实费力，从汇编层分析可能会更为清晰，所以打算将C语言中的一些常用代码转换成汇编代码分析一下，巩固一下基础</p>
+<h2 id="demo1"><a href="#demo1" class="headerlink" title="demo1"></a>demo1</h2><pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> a<span class="token punctuation">,</span>b<span class="token punctuation">,</span>c<span class="token punctuation">;</span>
+    <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">></span>b<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">switch</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">case</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"3"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">default</span><span class="token punctuation">:</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>b<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>这个demo中有定义变量，函数调用，if判断，switch语句和for循环，看一看反汇编出来的main函数</p>
+<pre class=" language-assembly"><code class="language-assembly">/*objdump --disassemble=main -M intel ./demo*/
+401186:    55                       push   rbp
+401187:    48 89 e5                 mov    rbp,rsp
+40118a:    48 83 ec 20              sub    rsp,0x20
+40118e:    64 48 8b 04 25 28 00     mov    rax,QWORD PTR fs:0x28
+401195:    00 00 
+401197:    48 89 45 f8              mov    QWORD PTR [rbp-0x8],rax
+40119b:    31 c0                    xor    eax,eax
+40119d:    48 8d 45 e8              lea    rax,[rbp-0x18]
+4011a1:    48 89 c6                 mov    rsi,rax
+4011a4:    bf 04 20 40 00           mov    edi,0x402004
+4011a9:    b8 00 00 00 00           mov    eax,0x0
+4011ae:    e8 bd fe ff ff           call   401070 <__isoc99_scanf@plt>
+4011b3:    48 8d 45 ec              lea    rax,[rbp-0x14]
+4011b7:    48 89 c6                 mov    rsi,rax
+4011ba:    bf 04 20 40 00           mov    edi,0x402004
+4011bf:    b8 00 00 00 00           mov    eax,0x0
+4011c4:    e8 a7 fe ff ff           call   401070 <__isoc99_scanf@plt>
+4011c9:    8b 55 e8                 mov    edx,DWORD PTR [rbp-0x18]
+4011cc:    8b 45 ec                 mov    eax,DWORD PTR [rbp-0x14]
+4011cf:    39 c2                    cmp    edx,eax
+4011d1:    7e 4e                    jle    401221 <main+0x9b>
+4011d3:    48 8d 45 f0              lea    rax,[rbp-0x10]
+4011d7:    48 89 c6                 mov    rsi,rax
+4011da:    bf 04 20 40 00           mov    edi,0x402004
+4011df:    b8 00 00 00 00           mov    eax,0x0
+4011e4:    e8 87 fe ff ff           call   401070 <__isoc99_scanf@plt>
+4011e9:    8b 45 f0                 mov    eax,DWORD PTR [rbp-0x10]
+4011ec:    83 f8 02                 cmp    eax,0x2
+4011ef:    74 18                    je     401209 <main+0x83>
+4011f1:    83 f8 03                 cmp    eax,0x3
+4011f4:    74 1f                    je     401215 <main+0x8f>
+4011f6:    83 f8 01                 cmp    eax,0x1
+4011f9:    74 02                    je     4011fd <main+0x77>
+4011fb:    eb 4d                    jmp    40124a <main+0xc4>
+4011fd:    bf 31 00 00 00           mov    edi,0x31
+401202:    e8 29 fe ff ff           call   401030 <putchar@plt>
+401207:    eb 41                    jmp    40124a <main+0xc4>
+401209:    bf 32 00 00 00           mov    edi,0x32
+40120e:    e8 1d fe ff ff           call   401030 <putchar@plt>
+401213:    eb 35                    jmp    40124a <main+0xc4>
+401215:    bf 33 00 00 00           mov    edi,0x33
+40121a:    e8 11 fe ff ff           call   401030 <putchar@plt>
+40121f:    eb 29                    jmp    40124a <main+0xc4>
+401221:    c7 45 f4 00 00 00 00     mov    DWORD PTR [rbp-0xc],0x0
+401228:    eb 18                    jmp    401242 <main+0xbc>
+40122a:    8b 45 f4                 mov    eax,DWORD PTR [rbp-0xc]
+40122d:    89 c6                    mov    esi,eax
+40122f:    bf 04 20 40 00           mov    edi,0x402004
+401234:    b8 00 00 00 00           mov    eax,0x0
+401239:    e8 12 fe ff ff           call   401050 <printf@plt>
+40123e:    83 45 f4 01              add    DWORD PTR [rbp-0xc],0x1
+401242:    8b 45 ec                 mov    eax,DWORD PTR [rbp-0x14]
+401245:    39 45 f4                 cmp    DWORD PTR [rbp-0xc],eax
+401248:    7e e0                    jle    40122a <main+0xa4>
+40124a:    b8 00 00 00 00           mov    eax,0x0
+40124f:    48 8b 4d f8              mov    rcx,QWORD PTR [rbp-0x8]
+401253:    64 48 33 0c 25 28 00     xor    rcx,QWORD PTR fs:0x28
+40125a:    00 00 
+40125c:    74 05                    je     401263 <main+0xdd>
+40125e:    e8 dd fd ff ff           call   401040 <__stack_chk_fail@plt>
+401263:    c9                       leave  
+401264:    c3                       ret</code></pre>
+<p>我们按照c代码的顺序来看，首先是<strong>scanf(“%d”,&amp;a);scanf(“%d”,&amp;b);</strong>，对应的汇编代码为</p>
+<pre class=" language-assembly"><code class="language-assembly">40119d:    48 8d 45 e8              lea    rax,[rbp-0x18]
+4011a1:    48 89 c6                 mov    rsi,rax
+4011a4:    bf 04 20 40 00           mov    edi,0x402004
+4011a9:    b8 00 00 00 00           mov    eax,0x0
+4011ae:    e8 bd fe ff ff           call   401070 <__isoc99_scanf@plt>
+4011b3:    48 8d 45 ec              lea    rax,[rbp-0x14]
+4011b7:    48 89 c6                 mov    rsi,rax
+4011ba:    bf 04 20 40 00           mov    edi,0x402004
+4011bf:    b8 00 00 00 00           mov    eax,0x0
+4011c4:    e8 a7 fe ff ff           call   401070 <__isoc99_scanf@plt></code></pre>
+<p>lea的作用是取地址，把$rbp-0x18存入rax中，这里就是变量<strong>a</strong>的地址，下一句就是传参了，64位程序传参顺序是rdi，rsi，rdx，scanf第一个参数是格式化字符串，<strong>mov    edi,0x402004</strong>这一句即是传参格式化字符串</p>
+<p><img src="/LawlietLW.github.io/2020/02/10/c-yu-yan-zai-hui-bian-zhong-de-biao-xian-xing-shi/D:%5CHexo%5Csource_posts%5CC%E8%AF%AD%E8%A8%80%E5%9C%A8%E6%B1%87%E7%BC%96%E4%B8%AD%E7%9A%84%E8%A1%A8%E7%8E%B0%E5%BD%A2%E5%BC%8F%5C1.jpg" alt="1"></p>
+<p>gdb调试可以确定</p>
+<p>之后就是调用scanf函数了</p>
+<p>再看到<strong>if(a&gt;b)</strong>这一句</p>
+<pre class=" language-assembly"><code class="language-assembly">4011c9:    8b 55 e8                 mov    edx,DWORD PTR [rbp-0x18]
+4011cc:    8b 45 ec                 mov    eax,DWORD PTR [rbp-0x14]
+4011cf:    39 c2                    cmp    edx,eax
+4011d1:    7e 4e                    jle    401221 <main+0x9b></code></pre>
+<p>将a的值放入edx，将b的值放入eax，然后比较edx和eax，jle即jmp less equal,小于等于就跳转，这样就直接跳转到了else语句处，我们先看else的代码块</p>
+<pre class=" language-assembly"><code class="language-assembly">else
+    {
+        for(int i=0;i<=b;i++)
+            printf("%d",i);
+    }</code></pre>
+<p>对应的汇编语句如下</p>
+<pre class=" language-assembly"><code class="language-assembly">401221:    c7 45 f4 00 00 00 00     mov    DWORD PTR [rbp-0xc],0x0
+401228:    eb 18                    jmp    401242 <main+0xbc>
+40122a:    8b 45 f4                 mov    eax,DWORD PTR [rbp-0xc]
+40122d:    89 c6                    mov    esi,eax
+40122f:    bf 04 20 40 00           mov    edi,0x402004
+401234:    b8 00 00 00 00           mov    eax,0x0
+401239:    e8 12 fe ff ff           call   401050 <printf@plt>
+40123e:    83 45 f4 01              add    DWORD PTR [rbp-0xc],0x1
+401242:    8b 45 ec                 mov    eax,DWORD PTR [rbp-0x14]
+401245:    39 45 f4                 cmp    DWORD PTR [rbp-0xc],eax
+401248:    7e e0                    jle    40122a <main+0xa4></code></pre>
+<p>首先定义变量i=0，<strong>mov    DWORD PTR [rbp-0xc],0x0</strong>，然后和变量b进行比较，</p>
+<pre class=" language-assembly"><code class="language-assembly">401228:    eb 18                    jmp    401242 <main+0xbc>
+......
+401242:    8b 45 ec                 mov    eax,DWORD PTR [rbp-0x14]
+401245:    39 45 f4                 cmp    DWORD PTR [rbp-0xc],eax
+401248:    7e e0                    jle    40122a <main+0xa4></code></pre>
+<p>将b的值存入eax，然后与i相比较，i&lt;=b即跳转</p>
+<pre class=" language-assembly"><code class="language-assembly">40122a:    8b 45 f4                 mov    eax,DWORD PTR [rbp-0xc]
+40122d:    89 c6                    mov    esi,eax
+40122f:    bf 04 20 40 00           mov    edi,0x402004
+401234:    b8 00 00 00 00           mov    eax,0x0
+401239:    e8 12 fe ff ff           call   401050 <printf@plt>
+40123e:    83 45 f4 01              add    DWORD PTR [rbp-0xc],0x1</code></pre>
+<p>这里就是调用printf函数，然后往下就有到了比较环节，循环</p>
+<p>接下来我们再回过头看if语句的代码块</p>
+<pre class=" language-assembly"><code class="language-assembly">4011d3:    48 8d 45 f0              lea    rax,[rbp-0x10]
+4011d7:    48 89 c6                 mov    rsi,rax
+4011da:    bf 04 20 40 00           mov    edi,0x402004
+4011df:    b8 00 00 00 00           mov    eax,0x0
+4011e4:    e8 87 fe ff ff           call   401070 <__isoc99_scanf@plt>
+4011e9:    8b 45 f0                 mov    eax,DWORD PTR [rbp-0x10]
+4011ec:    83 f8 02                 cmp    eax,0x2
+4011ef:    74 18                    je     401209 <main+0x83>
+4011f1:    83 f8 03                 cmp    eax,0x3
+4011f4:    74 1f                    je     401215 <main+0x8f>
+4011f6:    83 f8 01                 cmp    eax,0x1
+4011f9:    74 02                    je     4011fd <main+0x77>
+4011fb:    eb 4d                    jmp    40124a <main+0xc4>
+4011fd:    bf 31 00 00 00           mov    edi,0x31
+401202:    e8 29 fe ff ff           call   401030 <putchar@plt>
+401207:    eb 41                    jmp    40124a <main+0xc4>
+401209:    bf 32 00 00 00           mov    edi,0x32
+40120e:    e8 1d fe ff ff           call   401030 <putchar@plt>
+401213:    eb 35                    jmp    40124a <main+0xc4>
+401215:    bf 33 00 00 00           mov    edi,0x33
+40121a:    e8 11 fe ff ff           call   401030 <putchar@plt></code></pre>
+<p>流程也是先定义变量c，然后调用scanf，然后将c的值存入eax，与1、2、3作比较，相等则跳转到对应的语句，其中<strong>break</strong>的汇编代码就是</p>
+<p><strong>jmp    40124a &lt;main+0xc4&gt;</strong>，跳转到程序结尾</p>
+<pre class=" language-assembly"><code class="language-assembly">40124a:    b8 00 00 00 00           mov    eax,0x0
+40124f:    48 8b 4d f8              mov    rcx,QWORD PTR [rbp-0x8]
+401253:    64 48 33 0c 25 28 00     xor    rcx,QWORD PTR fs:0x28
+40125a:    00 00 
+40125c:    74 05                    je     401263 <main+0xdd>
+40125e:    e8 dd fd ff ff           call   401040 <__stack_chk_fail@plt>
+401263:    c9                       leave  
+401264:    c3                       ret</code></pre>
+<p>这个简单的程序就差不多分析完了，这么分析下来汇编代码也并没有想象的那么难，都是有据可依的，比如调用函数先传参，if语句则是cmp之后跳转，switch语句也是多个比较和跳转语句，接下来我们看另一个小程序，结构体分析</p>
+<h2 id="demo2"><a href="#demo2" class="headerlink" title="demo2"></a>demo2</h2><pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token keyword">struct</span> person<span class="token punctuation">{</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> age<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> height<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> person <span class="token operator">*</span>man<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    man<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">struct</span> person<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">struct</span> person<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    man<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">-></span>name<span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    man<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">-></span>age<span class="token operator">=</span><span class="token number">18</span><span class="token punctuation">;</span>
+    man<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">-></span>height<span class="token operator">=</span><span class="token number">180</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">10</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+        man<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">-></span>x<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>i<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class=" language-assembly"><code class="language-assembly">401156:    55                       push   rbp
+401157:    48 89 e5                 mov    rbp,rsp
+40115a:    53                       push   rbx
+40115b:    48 83 ec 18              sub    rsp,0x18
+40115f:    bf 38 00 00 00           mov    edi,0x38
+401164:    e8 d7 fe ff ff           call   401040 <malloc@plt>
+401169:    48 89 05 f0 2e 00 00     mov    QWORD PTR [rip+0x2ef0],rax        # 404060 <man>
+401170:    48 8b 1d e9 2e 00 00     mov    rbx,QWORD PTR [rip+0x2ee9]        # 404060 <man>
+401177:    bf 10 00 00 00           mov    edi,0x10
+40117c:    e8 bf fe ff ff           call   401040 <malloc@plt>
+401181:    48 89 03                 mov    QWORD PTR [rbx],rax
+401184:    48 8b 05 d5 2e 00 00     mov    rax,QWORD PTR [rip+0x2ed5]        # 404060 <man>
+40118b:    c7 40 08 12 00 00 00     mov    DWORD PTR [rax+0x8],0x12
+401192:    48 8b 05 c7 2e 00 00     mov    rax,QWORD PTR [rip+0x2ec7]        # 404060 <man>
+401199:    c7 40 0c b4 00 00 00     mov    DWORD PTR [rax+0xc],0xb4
+4011a0:    c7 45 ec 00 00 00 00     mov    DWORD PTR [rbp-0x14],0x0
+4011a7:    eb 1b                    jmp    4011c4 <main+0x6e>
+4011a9:    48 8b 05 b0 2e 00 00     mov    rax,QWORD PTR [rip+0x2eb0]        # 404060 <man>
+4011b0:    8b 55 ec                 mov    edx,DWORD PTR [rbp-0x14]
+4011b3:    48 63 d2                 movsxd rdx,edx
+4011b6:    48 8d 4a 04              lea    rcx,[rdx+0x4]
+4011ba:    8b 55 ec                 mov    edx,DWORD PTR [rbp-0x14]
+4011bd:    89 14 88                 mov    DWORD PTR [rax+rcx*4],edx
+4011c0:    83 45 ec 01              add    DWORD PTR [rbp-0x14],0x1
+4011c4:    83 7d ec 09              cmp    DWORD PTR [rbp-0x14],0x9
+4011c8:    7e df                    jle    4011a9 <main+0x53>
+4011ca:    b8 00 00 00 00           mov    eax,0x0
+4011cf:    48 83 c4 18              add    rsp,0x18
+4011d3:    5b                       pop    rbx
+4011d4:    5d                       pop    rbp
+4011d5:    c3                       ret    
+</code></pre>
+<p>C代码中定义了一个结构体，然后定义了五个结构体指针，我仅仅对一个结构体指针进行了初始化，更好的观察结构体在汇编代码中的实现</p>
+<p>首先是给结构体分配内存</p>
+<pre class=" language-c"><code class="language-c">man<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">struct</span> person<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">struct</span> person<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>这一句对应着的汇编代码如下</p>
+<pre class=" language-assembly"><code class="language-assembly">40115f:    bf 38 00 00 00           mov    edi,0x38
+401164:    e8 d7 fe ff ff           call   401040 <malloc@plt>
+401169:    48 89 05 f0 2e 00 00     mov    QWORD PTR [rip+0x2ef0],rax </code></pre>
+<p>malloc的参数为0x38，返回值是一个指针，汇编中结果一般放在eax寄存器中，所以这里malloc的返回值直接存入了eax，然后将rax的值存入<strong>$rip+0x2ef0</strong>指向的地址，这里是一个相对寻址，未初始化的全局变量是存储在bss段的。</p>
+<p>再看到这三句代码</p>
+<pre class=" language-c"><code class="language-c">man<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">-></span>name<span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+man<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">-></span>age<span class="token operator">=</span><span class="token number">18</span><span class="token punctuation">;</span>
+man<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">-></span>height<span class="token operator">=</span><span class="token number">180</span><span class="token punctuation">;</span></code></pre>
+<p>对应的汇编代码为</p>
+<pre class=" language-assembly"><code class="language-assembly">401170:    48 8b 1d e9 2e 00 00     mov    rbx,QWORD PTR [rip+0x2ee9]        # 404060 <man>
+401177:    bf 10 00 00 00           mov    edi,0x10
+40117c:    e8 bf fe ff ff           call   401040 <malloc@plt>
+401181:    48 89 03                 mov    QWORD PTR [rbx],rax
+401184:    48 8b 05 d5 2e 00 00     mov    rax,QWORD PTR [rip+0x2ed5]        # 404060 <man>
+40118b:    c7 40 08 12 00 00 00     mov    DWORD PTR [rax+0x8],0x12
+401192:    48 8b 05 c7 2e 00 00     mov    rax,QWORD PTR [rip+0x2ec7]        # 404060 <man>
+401199:    c7 40 0c b4 00 00 00     mov    DWORD PTR [rax+0xc],0xb4</code></pre>
+<p>首先将man[0]的值(即malloc(0x38)的返回值)存入rbx，然后调用malloc，分配name指针，然后将指针存入man[0]的值指向的地址，实际上在堆区，然后再将man[0]的值存入rax，往*(man[0]+8)写入0x12，接着继续往</p>
+<p>*(man[0]+0xc)写入0xb4</p>
+<p>还剩下最后一段，给数组循环赋值</p>
+<pre class=" language-c"><code class="language-c"><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">10</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+        man<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">-></span>x<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>i<span class="token punctuation">;</span></code></pre>
+<pre class=" language-assembly"><code class="language-assembly">4011a0:    c7 45 ec 00 00 00 00     mov    DWORD PTR [rbp-0x14],0x0
+4011a7:    eb 1b                    jmp    4011c4 <main+0x6e>
+4011a9:    48 8b 05 b0 2e 00 00     mov    rax,QWORD PTR [rip+0x2eb0]        # 404060 <man>
+4011b0:    8b 55 ec                 mov    edx,DWORD PTR [rbp-0x14]
+4011b3:    48 63 d2                 movsxd rdx,edx
+4011b6:    48 8d 4a 04              lea    rcx,[rdx+0x4]
+4011ba:    8b 55 ec                 mov    edx,DWORD PTR [rbp-0x14]
+4011bd:    89 14 88                 mov    DWORD PTR [rax+rcx*4],edx
+4011c0:    83 45 ec 01              add    DWORD PTR [rbp-0x14],0x1
+4011c4:    83 7d ec 09              cmp    DWORD PTR [rbp-0x14],0x9
+4011c8:    7e df                    jle    4011a9 <main+0x53></code></pre>
+<p>首先定义变量i，然后跳转，和9进行大小比较，如果小于等于9则跳转，然后将<em>man[0]存入rax，将i存入edx，下面的<strong>movsxd rdx,edx</strong>是将edx由32位扩展为64位，将高32位置为第31位(即edx的最高位)的值，扩展了位数，数值保持不变，接着将i+4存入rcx，将i存入edx，将edx的值传给\</em>(man[0])+$rcx<em>\</em>4,这样，一开始i=0，i+4=4,edx=0，即将0传入*(man[0])+4<em>4=\</em>(man[0])+0x10处，*(man[0])存入了name，*(man[0])+0x8存入了age，*(man[0])+0xc存入了hieght，所以x[0]正好是存放在*(man[0])+0x10地址处的，剩下的数存入的地址也是每次增加4字节，那么，整个结构体的大概结构图如下</p>
+<pre><code>0x404060:man[0]-----
+                    |
+                    |        
+                    ----&gt;  -----------
+                          |              |
+                          |      *name      |----------
+                          |              |            |
+                           -----------            |
+                          |              |            |    
+                          |       age      |            |
+                          |              |            |
+                            -----------            |
+                          |              |            |
+                          |      height  |            |
+                          |              |            |
+                            -----------            |
+                          |              |            |
+                          |      x[10]      |            |
+                          |              |            |
+                           -----------            |
+                                                   |
+                                                   ------&gt;  --------
+                                                           |         |
+                                                           |  name  |
+                                                           |        |
+                                                            --------</code></pre><h2 id="demo3"><a href="#demo3" class="headerlink" title="demo3"></a>demo3</h2><p>这个demo主要是分析数组实现</p>
+<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">10</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+        a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>i<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class=" language-assembly"><code class="language-assembly">  401156:    55                       push   rbp
+  401157:    48 89 e5                 mov    rbp,rsp
+  40115a:    48 83 ec 40              sub    rsp,0x40
+  40115e:    64 48 8b 04 25 28 00     mov    rax,QWORD PTR fs:0x28
+  401165:    00 00 
+  401167:    48 89 45 f8              mov    QWORD PTR [rbp-0x8],rax
+  40116b:    31 c0                    xor    eax,eax
+  40116d:    c7 45 cc 00 00 00 00     mov    DWORD PTR [rbp-0x34],0x0
+  401174:    eb 10                    jmp    401186 <main+0x30>
+  401176:    8b 45 cc                 mov    eax,DWORD PTR [rbp-0x34]
+  401179:    48 98                    cdqe   
+  40117b:    8b 55 cc                 mov    edx,DWORD PTR [rbp-0x34]
+  40117e:    89 54 85 d0              mov    DWORD PTR [rbp+rax*4-0x30],edx
+  401182:    83 45 cc 01              add    DWORD PTR [rbp-0x34],0x1
+  401186:    83 7d cc 09              cmp    DWORD PTR [rbp-0x34],0x9
+  40118a:    7e ea                    jle    401176 <main+0x20>
+  40118c:    b8 00 00 00 00           mov    eax,0x0
+  401191:    48 8b 4d f8              mov    rcx,QWORD PTR [rbp-0x8]
+  401195:    64 48 33 0c 25 28 00     xor    rcx,QWORD PTR fs:0x28
+  40119c:    00 00 
+  40119e:    74 05                    je     4011a5 <main+0x4f>
+  4011a0:    e8 8b fe ff ff           call   401030 <__stack_chk_fail@plt>
+  4011a5:    c9                       leave  
+  4011a6:    c3                       ret    
+</code></pre>
+<p>其实分析过上面的结构体的数组，这个就很清楚了，</p>
+<pre class=" language-assembly"><code class="language-assembly">40116d:    c7 45 cc 00 00 00 00     mov    DWORD PTR [rbp-0x34],0x0
+401174:    eb 10                    jmp    401186 <main+0x30></code></pre>
+<p>这一句定义变量i，然后跳转</p>
+<pre class=" language-assembly"><code class="language-assembly">401186:    83 7d cc 09              cmp    DWORD PTR [rbp-0x34],0x9
+40118a:    7e ea                    jle    401176 <main+0x20></code></pre>
+<p>两段加起来就是for循环了</p>
+<pre class=" language-assembly"><code class="language-assembly">401176:    8b 45 cc                 mov    eax,DWORD PTR [rbp-0x34]
+401179:    48 98                    cdqe   
+40117b:    8b 55 cc                 mov    edx,DWORD PTR [rbp-0x34]
+40117e:    89 54 85 d0              mov    DWORD PTR [rbp+rax*4-0x30],edx
+401182:    83 45 cc 01              add    DWORD PTR [rbp-0x34],0x1</code></pre>
+<p>这里就能看出，a[10]是从$rbp-0x30开始存储的，一个值占用四个字节，所以根据这两个demo，我们可以知道，数组连续占用一块内存，和其他局部变量一样都是通过$rbp寻址，再看最后一个demo，bss段的数组</p>
+<h2 id="demo3-1"><a href="#demo3-1" class="headerlink" title="demo3"></a>demo3</h2><pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">10</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+        a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>i<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<pre class=" language-assembly"><code class="language-assembly">  401146:    55                       push   rbp
+  401147:    48 89 e5                 mov    rbp,rsp
+  40114a:    c7 45 fc 00 00 00 00     mov    DWORD PTR [rbp-0x4],0x0
+  401151:    eb 13                    jmp    401166 <main+0x20>
+  401153:    8b 45 fc                 mov    eax,DWORD PTR [rbp-0x4]
+  401156:    48 98                    cdqe   
+  401158:    8b 55 fc                 mov    edx,DWORD PTR [rbp-0x4]
+  40115b:    89 14 85 60 40 40 00     mov    DWORD PTR [rax*4+0x404060],edx
+  401162:    83 45 fc 01              add    DWORD PTR [rbp-0x4],0x1
+  401166:    83 7d fc 09              cmp    DWORD PTR [rbp-0x4],0x9
+  40116a:    7e e7                    jle    401153 <main+0xd>
+  40116c:    b8 00 00 00 00           mov    eax,0x0
+  401171:    5d                       pop    rbp
+  401172:    c3                       ret    
+</code></pre>
+<p>这个demo中数组是未初始化的全局变量，汇编代码中和上一个的差别在于寻址</p>
+<pre class=" language-assembly"><code class="language-assembly">40115b:    89 14 85 60 40 40 00     mov    DWORD PTR [rax*4+0x404060],edx</code></pre>
+<p>局部变量数组通过$rbp寻址，而全局变量数组直接通过数组在bss段中的地址来寻址</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/10/c-yu-yan-zai-hui-bian-zhong-de-biao-xian-xing-shi/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/10/dong-tai-gui-hua/">动态规划的背包问题</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/%E7%AE%97%E6%B3%95/">算法</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/C/">C</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/">背包问题</a></div></div><div class="post-content"><div class="main-content content"><h2 id="01背包和完全背包"><a href="#01背包和完全背包" class="headerlink" title="01背包和完全背包"></a>01背包和完全背包</h2><p>记录一下这两天学习的动态规划算法，拖了好久了</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/10/dong-tai-gui-hua/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/">[CISCN2019 华北赛区 Day1 Web2]ikun</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">python反序列化</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/pickle%EF%BC%8CWeb/">pickle，Web</a></div></div><div class="post-content"><div class="main-content content"><p>打开环境，喜闻乐见<br><img src="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/1.jpg" alt=""></p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/10/ciscn2019-hua-bei-sai-qu-day1-web2-ikun/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/10/zjctf-2019-nizhuansiwei/">[ZJCTF 2019]NiZhuanSiWei</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/Web/">Web</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/data%E4%BC%AA%E5%8D%8F%E8%AE%AE/">data伪协议</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/filter%E4%BC%AA%E5%8D%8F%E8%AE%AE/">filter伪协议</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">PHP反序列化</a></div></div><div class="post-content"><div class="main-content content"><p>打开环境，直接给出了源代码</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/10/zjctf-2019-nizhuansiwei/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/09/buuctf-2018-online-tool/">[BUUCTF 2018]Online Tool</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/Web/">Web</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E7%BB%95%E8%BF%87escapeshellarg-escapeshellcmd/">绕过escapeshellarg()+escapeshellcmd()</a></div></div><div class="post-content"><div class="main-content content"><p>打开环境<br><a href="1.jpg"></a><br>直接给出源代码，代码审计</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/09/buuctf-2018-online-tool/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-secret-file/">[极客大挑战 2019]Secret File</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/Web/">Web</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/burp/">burp</a></div></div><div class="post-content"><div class="main-content content"><p>打开环境<br><img src="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-secret-file/1.jpg" alt=""><br>查看源代码，发现一个页面</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-secret-file/#more">阅读全文</a></div><div class="recent-post-item"><a class="post-title" href="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/">[网鼎杯 2018]Fakebook</a><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 更新于 2020-04-09</time><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/CTF/">CTF</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/Web/">Web</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">PHP反序列化</a><span>&nbsp;|&nbsp;</span><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/">报错注入</a></div></div><div class="post-content"><div class="main-content content"><p>打开环境<br><img src="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/1.jpg" alt=""><br>注册一个账号，登陆进去</p></div></div><a class="button-hover more" href="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/#more">阅读全文</a></div></div><div id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/LawlietLW.github.io/page/2/">2</a><a class="page-number" href="/LawlietLW.github.io/page/3/">3</a><a class="extend next" rel="next" href="/LawlietLW.github.io/page/2/">&lt;i class&#x3D;&quot;fas fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a></div></div></div></div><div class="button-hover" id="return-top"><i class="fas fa-arrow-up" aria-hidden="true"></i></div><footer><div id="footer"><div class="button-hover" id="side-button"><i class="fas fa-arrow-right"></i></div><div class="right-content"><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_uv"><i class="fas fa-user"></i></span><span id="busuanzi_value_site_uv"></span><span></span><span class="footer-separator">|</span><span id="busuanzi_container_site_pv"><i class="fas fa-eye"></i></span><span id="busuanzi_value_site_pv"></span><span></span></div><div class="copyright">&copy;2019 ～ 2020 By Lock</div></div></div></footer></div><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/thirdparty/jquery-3.3.1.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/thirdparty/velocity.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/thirdparty/jquery.mCustomScrollbar.concat.min.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/fan.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/canvas_bg.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/utils.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/scroll.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/sidebar.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/copy.js"></script><!--script(src=url)--><!--js(src=url_for(url) + '?version=' + version())--><script src="/LawlietLW.github.io/js/highlight.js"></script><!--script(src=url)--></body></html>
