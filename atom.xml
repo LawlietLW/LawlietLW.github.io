@@ -6,7 +6,7 @@
   <link href="/LawlietLW.github.io/atom.xml" rel="self"/>
   
   <link href="http://lawlietlw.github.io/"/>
-  <updated>2020-08-30T10:05:05.036Z</updated>
+  <updated>2020-08-31T00:26:42.337Z</updated>
   <id>http://lawlietlw.github.io/</id>
   
   <author>
@@ -21,18 +21,23 @@
     <link href="http://lawlietlw.github.io/2020/08/29/qiang-wang-bei-2020/"/>
     <id>http://lawlietlw.github.io/2020/08/29/qiang-wang-bei-2020/</id>
     <published>2020-08-29T01:54:31.000Z</published>
-    <updated>2020-08-30T10:05:05.036Z</updated>
+    <updated>2020-08-31T00:26:42.337Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;p&gt;强网杯2020的pwn题多且质量高，非常有必要复现一部分&lt;/p&gt;
-&lt;h3 id=&quot;0x1-easypwn&quot;&gt;&lt;a href=&quot;#0x1-easypwn&quot; class=&quot;headerlink&quot;
-        
-      
+      &lt;p&gt;强网杯2020的pwn题多且质量高，非常有必要复现一部分&lt;/p&gt;
+&lt;h3 id=&quot;0x1-easypwn&quot;&gt;&lt;a href=&quot;#0x1-easypwn&quot; class=&quot;headerlink&quot; title=&quot;0x1.easypwn&quot;&gt;&lt;/a&gt;0x1.easypwn&lt;/h3&gt;&lt;pre&gt;&lt;code class=&quot;c&quot;&gt;unsigned __int64 sub_ACE()
+{
+  unsigned __int64 v1; // [rsp+8h] [rbp-8h]
+
+  v1 = __readfsqword(0x28u);
+  setvbuf(stdin, 0LL, 2, 0LL);
+  setvbuf(stdout, 0LL, 2, 0LL);
+  setvbuf(stderr, 0LL, 2, 0LL);
+  if ( !mallopt(1, 0) )
+    exit(-1);
+  return __readfsqword(0x28u) ^ v1;
+}&lt;/code&gt;&lt;/pre&gt;
     
     </summary>
     
@@ -78,18 +83,11 @@
     <link href="http://lawlietlw.github.io/2020/08/08/io-file-xue-xi/"/>
     <id>http://lawlietlw.github.io/2020/08/08/io-file-xue-xi/</id>
     <published>2020-08-08T05:22:16.000Z</published>
-    <updated>2020-08-14T06:00:42.314Z</updated>
+    <updated>2020-08-31T00:26:49.788Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;p&gt;本文用于记录IO_FILE的利用原理思路以及构造模板&lt;/p&gt;
-&lt;p&gt;首先我们知道内核启动的时候默认打开3个I/O设备文件，标准输入文件&lt;code&gt;stdin&lt;/code&gt;，标准输出文件&lt;code&gt;stdout&lt;/code&gt;，标准错误输出文件&lt;code&gt;stderr&lt;/cod
-        
-      
+      &lt;p&gt;本文用于记录IO_FILE的利用原理思路以及构造模板&lt;/p&gt;
     
     </summary>
     
@@ -106,17 +104,11 @@
     <link href="http://lawlietlw.github.io/2020/08/04/lock-mipspwn-xue-xi/"/>
     <id>http://lawlietlw.github.io/2020/08/04/lock-mipspwn-xue-xi/</id>
     <published>2020-08-04T03:51:17.000Z</published>
-    <updated>2020-08-05T03:04:05.543Z</updated>
+    <updated>2020-08-31T00:27:12.345Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;p&gt;​       
-        
-      
+      &lt;p&gt;​        MIPS架构常用于路由器设备，而路由器固件漏洞大部分都是栈溢出，因此，掌握MIPS架构下的漏洞利用对于挖掘利用路由器漏洞也是很重要的一项技能。&lt;/p&gt;
     
     </summary>
     
@@ -133,19 +125,11 @@
     <link href="http://lawlietlw.github.io/2020/06/04/vmpwn-xue-xi/"/>
     <id>http://lawlietlw.github.io/2020/06/04/vmpwn-xue-xi/</id>
     <published>2020-06-04T10:01:27.000Z</published>
-    <updated>2020-06-12T06:35:04.034Z</updated>
+    <updated>2020-08-31T00:26:54.148Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;p&gt;新手向，会讲得比较详细，入门不易&lt;/p&gt;
-&lt;p&gt;虚拟机保护的题目相比于普通的pwn题逆向量要大许多，需要分析出分析出不同的opcode的功能再从中找出漏洞，实际上，vmpwn的大部分工作量都在逆向中，能分析出虚拟指令集的功能实现，要做出这道题也比较容易了。&lt;/p&gt;
-&lt;p&gt;先
-        
-      
+      &lt;p&gt;新手向，会讲得比较详细，入门不易&lt;/p&gt;
     
     </summary>
     
@@ -186,11 +170,19 @@
     <link href="http://lawlietlw.github.io/2020/05/17/lu-you-qi-huan-jing-da-jian/"/>
     <id>http://lawlietlw.github.io/2020/05/17/lu-you-qi-huan-jing-da-jian/</id>
     <published>2020-05-17T10:22:42.000Z</published>
-    <updated>2020-05-20T10:57:35.555Z</updated>
+    <updated>2020-08-31T00:26:31.703Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;​&lt;/p&gt;
+      
+      
+        
+        
+          &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+
+&lt;p&gt;​       
+        
+      
     
     </summary>
     
@@ -296,18 +288,11 @@
     <link href="http://lawlietlw.github.io/2020/02/10/c-yu-yan-zai-hui-bian-zhong-de-biao-xian-xing-shi/"/>
     <id>http://lawlietlw.github.io/2020/02/10/c-yu-yan-zai-hui-bian-zhong-de-biao-xian-xing-shi/</id>
     <published>2020-02-10T07:09:26.000Z</published>
-    <updated>2020-05-17T02:17:10.315Z</updated>
+    <updated>2020-08-31T00:27:20.432Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;p&gt;​        在做某些代码量比较大且比较杂的题时深感代码审计的吃力，基础还是不够扎实，比如vmpwn，虚拟机实现的功能翻译出来的伪C代码看的确实费力，从汇编层分析可能会更为清晰，所以打算将C语言中的一些常用代码转换成汇编代码分析一下，巩固一下基础&lt;/p&gt;
-&lt;h2
-        
-      
+      &lt;p&gt;​        在做某些代码量比较大且比较杂的题时深感代码审计的吃力，基础还是不够扎实，比如vmpwn，虚拟机实现的功能翻译出来的伪C代码看的确实费力，从汇编层分析可能会更为清晰，所以打算将C语言中的一些常用代码转换成汇编代码分析一下，巩固一下基础&lt;/p&gt;
     
     </summary>
     
