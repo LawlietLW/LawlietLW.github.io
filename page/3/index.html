@@ -1,289 +1,1131 @@
-
-
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="zh-CN">
+
+
 <head>
-    
-    <meta name="author" content="Lock">
-    
-    
-
-    
-    <link rel="alternative" href="YOUR_RSS_ADDRESS" title="Lock&#39;s blog" type="application/atom+xml">
-    
-    
-    
-
     <meta charset="utf-8">
+    <meta name="keywords" content="Lock&#39;s blog">
+    <meta name="description" content="Lock&#39;s blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Lock&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
 
-    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
     
-<link rel="stylesheet" href="/LawlietLW.github.io/bootstrap/css/bootstrap.min.css">
-
+    <script src="/libs/jquery/jquery.min.js"></script>
     
-<link rel="stylesheet" href="/LawlietLW.github.io/css/style.css">
+<meta name="generator" content="Hexo 4.1.1"><link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="Lock's blog" type="application/atom+xml">
+<link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
 
 
-    <!-- Javascript -->
-    <script src="/LawlietLW.github.io/js/jquery-2.1.0.min.js"></script>
-    <script src="/LawlietLW.github.io/js/jquery.backstretch.min.js"></script>
-    <script src="/LawlietLW.github.io/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/LawlietLW.github.io/js/headroom.min.js"></script>
-    <script src="/LawlietLW.github.io/js/jquery.headroom.min.js"></script> 
-    <script src="/LawlietLW.github.io/js/common.js"></script>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-<meta name="generator" content="Hexo 4.1.1"><link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="banner">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="https://github.com/LawlietLW" title="Lock's blog">Lock&#39;s blog</a>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/LawlietLW.github.io/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/1.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Lock's blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/1.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Lock's blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+    <div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+        <div class="brand">
+            <div class="title center-align">
+                
+                subtitle
+                
             </div>
 
-            <div role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
+            <div class="description center-align">
                 
-
-                <ul class="nav navbar-nav">
-                    
-                    <li id="nav-index"><a href="/">首页</a></li>
-                    
-                    <li id="nav-archives"><a href="/archives">归档</a></li>
-                    
-                    <li id="nav-tags"><a href="/tags">标签</a></li>
-                    
-                    <li id="nav-categories"><a href="/categories">分类</a></li>
-                    
-                    <li id="nav-curriculumvitae"><a href="/curriculumvitae">关于</a></li>
-                    
-                    <li id="nav-links"><a href="/links">链接</a></li>
-                    
-                    
-                    <li><a href="https://github.com/YOUR_GITHUB_NAME" target="_blank">GitHub</a></li>
-                </ul>
+                <span id="subtitle"></span>
+                <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                <script>
+                    var typed = new Typed("#subtitle", {
+                        strings: ['从来没有真正的绝境, 只有心灵的迷途','Never really desperate, only the lost of the soul'],
+                        startDelay: 300,
+                        typeSpeed: 100,
+                        loop: true,
+                        backSpeed: 50,
+                        showCursor: true
+                    });
+                </script>
+                
             </div>
         </div>
-    </nav>
-    
-    <script>
-    var backRoot = "/source/images/background";
-    var backArray = [ "1.jpg", "2.jpg", "3.jpg",  ];
-        
-    $(function() {
-        // page-id...
-        var pageId = "page/3/index.html";
-        pageId = pageId.substr(0, pageId.indexOf("/"));
-        if(pageId === "") pageId = "index";
-        
-        $("#nav-" + pageId).addClass("active");
-    });
-    </script>
-
-    
-<article class="post container">
-    <div class="jumbotron">
-        <h1><a href="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/" title="BUUCTF pwn1_sctf_2016">BUUCTF pwn1_sctf_2016</a></h1>
-
-        
-            <p>checksec32位程序，开启栈不可执行IDA分析，vuln函数和后门函数</p>
-        
-
-        <p class="say-title">
-            —— <img src="/source/images/avatar.gif" class="img-circle index-post-avatar" />
-            <a href="https://github.com/LawlietLW" target="_blank" title="Lock">Lock</a>
-            于2020-01-30自豪地以 <a class="article-tag-link" href="/LawlietLW.github.io/tags/pwn/" rel="tag">pwn</a>, <a class="article-tag-link" href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/" rel="tag">栈溢出</a> 唠嗑
-        </p>
-    </div>
-</article>
-
-<article class="post container">
-    <div class="jumbotron">
-        <h1><a href="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/" title="BUUCTF warmup_csaw_2016">BUUCTF warmup_csaw_2016</a></h1>
-
-        
-            <p>checksec64位程序，没有保护</p>
-        
-
-        <p class="say-title">
-            —— <img src="/source/images/avatar.gif" class="img-circle index-post-avatar" />
-            <a href="https://github.com/LawlietLW" target="_blank" title="Lock">Lock</a>
-            于2020-01-30自豪地以 <a class="article-tag-link" href="/LawlietLW.github.io/tags/pwn/" rel="tag">pwn</a>, <a class="article-tag-link" href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/" rel="tag">栈溢出</a> 唠嗑
-        </p>
-    </div>
-</article>
-
-<article class="post container">
-    <div class="jumbotron">
-        <h1><a href="/LawlietLW.github.io/2020/01/23/buuctf-rip/" title="BUUCTF rip">BUUCTF rip</a></h1>
-
-        
-            <p>入门栈溢出题目，首先checksec一下64位程序，没有任何保护</p>
-        
-
-        <p class="say-title">
-            —— <img src="/source/images/avatar.gif" class="img-circle index-post-avatar" />
-            <a href="https://github.com/LawlietLW" target="_blank" title="Lock">Lock</a>
-            于2020-01-23自豪地以 <a class="article-tag-link" href="/LawlietLW.github.io/tags/pwn/" rel="tag">pwn</a>, <a class="article-tag-link" href="/LawlietLW.github.io/tags/rip/" rel="tag">rip</a>, <a class="article-tag-link" href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/" rel="tag">栈溢出</a> 唠嗑
-        </p>
-    </div>
-</article>
-
-<article class="post container">
-    <div class="jumbotron">
-        <h1><a href="/LawlietLW.github.io/2019/12/23/buuctf-checkin/" title="BUUCTF CheckIn">BUUCTF CheckIn</a></h1>
-
-        
-            <p>打开环境，是一个文件上传页面</p>
-        
-
-        <p class="say-title">
-            —— <img src="/source/images/avatar.gif" class="img-circle index-post-avatar" />
-            <a href="https://github.com/LawlietLW" target="_blank" title="Lock">Lock</a>
-            于2019-12-23自豪地以 <a class="article-tag-link" href="/LawlietLW.github.io/tags/user-ini%E6%96%87%E4%BB%B6%E7%9A%84%E5%88%A9%E7%94%A8%EF%BC%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" rel="tag">.user.ini文件的利用，文件上传</a>, <a class="article-tag-link" href="/LawlietLW.github.io/tags/Web/" rel="tag">Web</a> 唠嗑
-        </p>
-    </div>
-</article>
-
-<article class="post container">
-    <div class="jumbotron">
-        <h1><a href="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/" title="BUUCTF Easy Calc">BUUCTF Easy Calc</a></h1>
-
-        
-            <p>打开环境</p>
-        
-
-        <p class="say-title">
-            —— <img src="/source/images/avatar.gif" class="img-circle index-post-avatar" />
-            <a href="https://github.com/LawlietLW" target="_blank" title="Lock">Lock</a>
-            于2019-12-22自豪地以 <a class="article-tag-link" href="/LawlietLW.github.io/tags/PHP%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E6%9E%90%E7%89%B9%E6%80%A7/" rel="tag">PHP的字符串解析特性</a>, <a class="article-tag-link" href="/LawlietLW.github.io/tags/Web/" rel="tag">Web</a>, <a class="article-tag-link" href="/LawlietLW.github.io/tags/http%E8%B5%B0%E7%A7%81/" rel="tag">http走私</a> 唠嗑
-        </p>
-    </div>
-</article>
-
-<article class="post container">
-    <div class="jumbotron">
-        <h1><a href="/LawlietLW.github.io/2019/12/21/buuctf-admin/" title="BUUCTF admin">BUUCTF admin</a></h1>
-
-        
-            <p>打开环境，有注册和登录两个功能</p>
-        
-
-        <p class="say-title">
-            —— <img src="/source/images/avatar.gif" class="img-circle index-post-avatar" />
-            <a href="https://github.com/LawlietLW" target="_blank" title="Lock">Lock</a>
-            于2019-12-21自豪地以 <a class="article-tag-link" href="/LawlietLW.github.io/tags/Unicode%E6%AC%BA%E9%AA%97/" rel="tag">Unicode欺骗</a>, <a class="article-tag-link" href="/LawlietLW.github.io/tags/Web/" rel="tag">Web</a> 唠嗑
-        </p>
-    </div>
-</article>
-
-<article class="post container">
-    <div class="jumbotron">
-        <h1><a href="/LawlietLW.github.io/2019/12/21/buuctf-easy-sql/" title="BUUCTF EasySQL">BUUCTF EasySQL</a></h1>
-
-        
-            <p></p>
-        
-
-        <p class="say-title">
-            —— <img src="/source/images/avatar.gif" class="img-circle index-post-avatar" />
-            <a href="https://github.com/LawlietLW" target="_blank" title="Lock">Lock</a>
-            于2019-12-21自豪地以 <a class="article-tag-link" href="/LawlietLW.github.io/tags/Web/" rel="tag">Web</a>, <a class="article-tag-link" href="/LawlietLW.github.io/tags/mysql-sql-mode/" rel="tag">mysql_sql_mode</a>, <a class="article-tag-link" href="/LawlietLW.github.io/tags/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5/" rel="tag">堆叠注入</a> 唠嗑
-        </p>
-    </div>
-</article>
-
-<article class="post container">
-    <div class="jumbotron">
-        <h1><a href="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/" title="BUUCTF easy_tornado">BUUCTF easy_tornado</a></h1>
-
-        
-            <p>打开环境</p>
-        
-
-        <p class="say-title">
-            —— <img src="/source/images/avatar.gif" class="img-circle index-post-avatar" />
-            <a href="https://github.com/LawlietLW" target="_blank" title="Lock">Lock</a>
-            于2019-12-21自豪地以 <a class="article-tag-link" href="/LawlietLW.github.io/tags/Web/" rel="tag">Web</a>, <a class="article-tag-link" href="/LawlietLW.github.io/tags/%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" rel="tag">模板注入</a> 唠嗑
-        </p>
-    </div>
-</article>
-
-<article class="post container">
-    <div class="jumbotron">
-        <h1><a href="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/" title="BUUCTF 强网杯-随便注">BUUCTF 强网杯-随便注</a></h1>
-
-        
-            <p>打开环境，看到这样的页面</p>
-        
-
-        <p class="say-title">
-            —— <img src="/source/images/avatar.gif" class="img-circle index-post-avatar" />
-            <a href="https://github.com/LawlietLW" target="_blank" title="Lock">Lock</a>
-            于2019-12-21自豪地以 <a class="article-tag-link" href="/LawlietLW.github.io/tags/Web/" rel="tag">Web</a>, <a class="article-tag-link" href="/LawlietLW.github.io/tags/%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%90%8D%E5%92%8C%E5%88%97/" rel="tag">修改表名和列</a>, <a class="article-tag-link" href="/LawlietLW.github.io/tags/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5/" rel="tag">堆叠注入</a> 唠嗑
-        </p>
-    </div>
-</article>
-
-<article class="post container">
-    <div class="jumbotron">
-        <h1><a href="/LawlietLW.github.io/2019/12/21/buuctf-warmup/" title="BUUCTF warmup">BUUCTF warmup</a></h1>
-
-        
-            <p>代码审计题目查看源代码，发现提示
-&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang=&#34;en&#34;&amp;gt;
-&amp;lt;head&amp;gt;
-    &amp;lt;meta charset=&#34;UTF-8&#34;&amp;gt;
-    &amp;lt;meta name=&#34;viewport&#34; con</p>
-        
-
-        <p class="say-title">
-            —— <img src="/source/images/avatar.gif" class="img-circle index-post-avatar" />
-            <a href="https://github.com/LawlietLW" target="_blank" title="Lock">Lock</a>
-            于2019-12-21自豪地以 <a class="article-tag-link" href="/LawlietLW.github.io/tags/Web/" rel="tag">Web</a> 唠嗑
-        </p>
-    </div>
-</article>
-
-
-
-<div class="container pagination-div">
-    <div class="well">
-    <a class="extend prev" rel="prev" href="/LawlietLW.github.io/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/LawlietLW.github.io/">1</a><a class="page-number" href="/LawlietLW.github.io/page/2/">2</a><span class="page-number current">3</span>
     </div>
 </div>
 
 
 <script>
-$(function() {
-    $("article:first").addClass("first-post");
-});
+    // 每天切换 banner 图.  Switch banner image every day.
+    $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '.jpg)');
 </script>
-    <footer id="footer">
-    <div id="bottom-tip">
-        Lock&#39;s blog
+
+
     </div>
-        <small>该博客由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动，搭载 <a href="https://github.com/XadillaX/hexadillax" target="_blank">Hexadillax</a> 主题</small><br />
-        <small>&copy; 2014 Lock</small>
-    </footer>
+</div>
+
+
+<main class="content">
+
+    
+    <div id="indexCard" class="index-card">
+        <div class="container ">
+            <div class="card">
+                <div class="card-content">
+                    
+                        <div class="dream">
+    
+    <div class="title center-align">
+        <i class="far fa-lightbulb"></i>&nbsp;&nbsp;我的梦想
+    </div>
+    
+    <div class="row">
+        <div class="col l8 offset-l2 m10 offset-m1 s10 offset-s1 center-align text">
+            不是每个人都应该像我这样去建造一座水晶大教堂，但是每个人都应该拥有自己的梦想，设计自己的梦想，追求自己的梦想，实现自己的梦想。梦想是生命的灵魂，是心灵的灯塔，是引导人走向成功的信仰。有了崇高的梦想，只要矢志不渝地追求，梦想就会成为现实，奋斗就会变成壮举，生命就会创造奇迹。——罗伯·舒乐
+        </div>
+    </div>
+</div>
+                    
+
+                    
+
+                    
+
+                    
+                    <div id="recommend-sections" class="recommend">
+                        
+
+
+
+
+
+<div class="title"><i class="far fa-thumbs-up"></i>&nbsp;&nbsp;推荐文章</div>
+
+<div class="row">
+
+    
+    
+    <div class="col s12" >
+        <div class="post-card" style="background-image: url('/medias/featureimages/17.jpg')">
+            <div class="post-body">
+                <div class="post-categories">
+                    
+                        
+                            <a href="/LawlietLW.github.io/categories/CTF/" class="category">CTF</a>
+                        
+                    
+                </div>
+                <a href="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/">
+                    <h3 class="post-title">BUUCTF刷题记录</h3>
+                </a>
+                <p class="post-description">0x1.gyctf_2020_signin环境是2.27.这题的考点在于，calloc不会从tcache中取chunk，而是直接从fastbin中取，并且会将fastbi</p>
+                <a href="/LawlietLW.github.io/2020/05/08/buuctf-shua-ti-ji-lu/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #FF5E3A 0%, #FF2A68 100%)" target="_blank">
+                    <i class="icon far fa-eye fa-fw"></i>阅读更多
+                </a>
+            </div>
+        </div>
+    </div>
+    
+
+</div>
+
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
     
 
+    
+
+    <!-- 所有文章卡片 -->
+    <article id="articles" class="container articles">
+        <div class="row article-row">
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2020/01/30/buuctf-pwn1-sctf-2016/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/bizhi/8.jpg" class="responsive-img" alt="BUUCTF pwn1_sctf_2016">
+                            
+                            <span class="card-title">BUUCTF pwn1_sctf_2016</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                checksec32位程序，开启栈不可执行IDA分析，vuln函数和后门函数
+
+
+vuln函数看起来很大一坨，实际上都是C++的一些东西，函数的真正意思其实就是把I替换成you执行程序试一试如我们所想一样再看向缓冲区gets允许输入32个字
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-30
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/pwn/">
+                            <span class="chip bg-color">pwn</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">
+                            <span class="chip bg-color">栈溢出</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2020/01/30/buuctf-warmup-csaw-2016/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="BUUCTF warmup_csaw_2016">
+                            
+                            <span class="card-title">BUUCTF warmup_csaw_2016</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                checksec64位程序，没有保护
+
+拖入IDA查看,F5大法同样有一个后门函数，这个后门函数直接读取flag所以做法和rip一样直接贴exp
+from pwn import *
+
+#io = process('./warmup_csaw
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-30
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/pwn/">
+                            <span class="chip bg-color">pwn</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">
+                            <span class="chip bg-color">栈溢出</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2020/01/23/buuctf-rip/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="BUUCTF rip">
+                            
+                            <span class="card-title">BUUCTF rip</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                入门栈溢出题目，首先checksec一下64位程序，没有任何保护
+
+拖入IDA查看,F5大法好首先是main函数还有一个后门函数fun()很明显,main函数中的gets存在溢出,接下来来确定溢出字节数相对于EIP有23个字节exp如下
+f
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-23
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/pwn/">
+                            <span class="chip bg-color">pwn</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/%E6%A0%88%E6%BA%A2%E5%87%BA/">
+                            <span class="chip bg-color">栈溢出</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/rip/">
+                            <span class="chip bg-color">rip</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2019/12/23/buuctf-checkin/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/bizhi/8.jpg" class="responsive-img" alt="BUUCTF CheckIn">
+                            
+                            <span class="card-title">BUUCTF CheckIn</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                打开环境，是一个文件上传页面
+
+先查看一下源代码，看看有没有客户端校验显然没有客户端校验首先上传一个图片，检查上传功能图片正常上传接下来再上传一个php文件
+&lt;?php 
+@eval($_POST['shell']);
+ ?>
+提示非
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-23
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/Web/">
+                            <span class="chip bg-color">Web</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/user-ini%E6%96%87%E4%BB%B6%E7%9A%84%E5%88%A9%E7%94%A8%EF%BC%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">
+                            <span class="chip bg-color">.user.ini文件的利用，文件上传</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2019/12/22/buuctf-easy-calc/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/bizhi/6.jpg" class="responsive-img" alt="BUUCTF Easy Calc">
+                            
+                            <span class="card-title">BUUCTF Easy Calc</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                打开环境
+
+查看源代码
+&lt;!--I've set up WAF to ensure security.-->
+&lt;script>
+    $('#calc').submit(function(){
+        $.ajax({
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-22
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/Web/">
+                            <span class="chip bg-color">Web</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/http%E8%B5%B0%E7%A7%81/">
+                            <span class="chip bg-color">http走私</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/PHP%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E6%9E%90%E7%89%B9%E6%80%A7/">
+                            <span class="chip bg-color">PHP的字符串解析特性</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2019/12/21/buuctf-admin/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/bizhi/2.jpg" class="responsive-img" alt="BUUCTF admin">
+                            
+                            <span class="card-title">BUUCTF admin</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                打开环境，有注册和登录两个功能
+
+查看源代码，看到提示猜测需要以admin账号登陆才能拿到flag那么先注册一个账号看看(admin账号已被注册)注册账号后一共有四个选项首先看到post功能一个编辑留言的地方，可能会有xss之类的漏洞？我不
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-21
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/Web/">
+                            <span class="chip bg-color">Web</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/Unicode%E6%AC%BA%E9%AA%97/">
+                            <span class="chip bg-color">Unicode欺骗</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2019/12/21/buuctf-easy-sql/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="BUUCTF EasySQL">
+                            
+                            <span class="card-title">BUUCTF EasySQL</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+
+这题和强网杯随便注一样，都是堆叠注入通过show tables可以看到Flag表但想要看到列就不行了通过burpfuzz一下，能看到过滤了挺多关键字的
+
+有点难顶，只能看wp了
+官方解:1;set sql_mode=pipes_as_c
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-21
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/Web/">
+                            <span class="chip bg-color">Web</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5/">
+                            <span class="chip bg-color">堆叠注入</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/mysql-sql-mode/">
+                            <span class="chip bg-color">mysql_sql_mode</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2019/12/21/buuctf-easy-tornado/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="BUUCTF easy_tornado">
+                            
+                            <span class="card-title">BUUCTF easy_tornado</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                打开环境
+
+有三个页面，挨个访问看看
+/flag.txt
+
+/welcome.txt
+
+/hints.txt
+开始分析第一个页面告诉我们flag in /fllllllllllllaghint告诉我们
+md5(cookie_secret+m
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-21
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/Web/">
+                            <span class="chip bg-color">Web</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/">
+                            <span class="chip bg-color">模板注入</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2019/12/21/buuctf-qiang-wang-bei-sui-bian-zhu/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="BUUCTF 强网杯-随便注">
+                            
+                            <span class="card-title">BUUCTF 强网杯-随便注</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                打开环境，看到这样的页面
+
+加’引号测试报错加注释恢复正常，所以可以判断是单引号的注入
+之后开始判断列数order by测试到3的时候报错所以一共有两列判断完列数，开始union注入，但回显告诉我们过滤了很多关键字之后尝试了许多方法想要绕过
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-21
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/Web/">
+                            <span class="chip bg-color">Web</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5/">
+                            <span class="chip bg-color">堆叠注入</span>
+                        </a>
+                        
+                        <a href="/LawlietLW.github.io/tags/%E4%BF%AE%E6%94%B9%E8%A1%A8%E5%90%8D%E5%92%8C%E5%88%97/">
+                            <span class="chip bg-color">修改表名和列</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2019/12/21/buuctf-warmup/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="BUUCTF warmup">
+                            
+                            <span class="card-title">BUUCTF warmup</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                代码审计题目查看源代码，发现提示
+&lt;!DOCTYPE html>
+&lt;html lang="en">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewp
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-12-21
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/Web/">
+                            <span class="chip bg-color">Web</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </article>
+
+</main>
+
+
+<div class="container paging">
+    <div class="row">
+        <div class="col s6 m4 l4">
+            
+            <a href="/LawlietLW.github.io/page/2/"
+               class="left btn-floating btn-large waves-effect waves-light bg-color">
+                <i class="fas fa-angle-left"></i>
+            </a>
+            
+        </div>
+        <div class="page-info col m4 l4 hide-on-small-only">
+            <div class="center-align b-text-gray">3 / 3</div>
+        </div>
+        <div class="col s6 m4 l4">
+            
+            <a class="right btn-floating btn-large disabled">
+                <i class="fas fa-angle-right"></i>
+            </a>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="https://lawliet.ren" target="_blank">Lock</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">59.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+    <a href="mailto:2499086884@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2499086884" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2499086884" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/LawlietLW.github.io/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/LawlietLW.github.io/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
 
 </body>
-</html>
 
+</html>
