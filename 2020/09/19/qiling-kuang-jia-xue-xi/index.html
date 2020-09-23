@@ -5,10 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="qiling框架学习, Lock&#39;s blog">
-    <meta name="description" content="
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-          .forEach(el =&gt; {
-            if (!el.dataset.src) { return">
+    <meta name="description" content="qiling框架能够做到
+
+麒麟框架不仅仅是一个仿真平台或逆向工程工具。它还将“二进制插桩”和“二进制仿真”结合一起。并解决了应用程序不能在隔离环境里运行并且高度依赖于操作系统的问题。由于大量的操作系统支持，麒麟框架为二进制分析提供了无限的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -364,12 +363,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/LawlietLW.github.io/tags/qiling/">
+                                <span class="chip bg-color">qiling</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/LawlietLW.github.io/categories/IOT/" class="post-category">
+                                IOT
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -392,14 +404,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    52
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    6 分
                 </div>
                 
 
@@ -415,7 +427,154 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <script>
+                <p><a href="https://github.com/qilingframework/qiling" target="_blank" rel="noopener">qiling</a>框架能够做到</p>
+<blockquote>
+<p>麒麟框架不仅仅是一个仿真平台或逆向工程工具。它还将“二进制插桩”和“二进制仿真”结合一起。并解决了应用程序不能在隔离环境里运行并且高度依赖于操作系统的问题。由于大量的操作系统支持，麒麟框架为二进制分析提供了无限的可能性和潜力。使用麒麟框架，你可以：</p>
+<ul>
+<li>跨平台：Windows、MacOS、Linux、BSD、UEFI、DOS</li>
+<li>跨体系结构：X86、X86 64位、ARM、ARM 64位、MIPS、8086</li>
+<li>多种文件格式：PE、MachO、ELF、COM</li>
+<li>在隔离环境中模拟沙盒机器代码</li>
+<li>支持跨体系结构和平台调试功能</li>
+<li>提供高级API来设置和配置沙盒</li>
+<li>细化检测：允许不同级别的钩子（指令/基本块/内存访问/异常/系统调用/IO等）</li>
+<li>允许动态热补丁运行代码，包括加载的库</li>
+</ul>
+<p>麒麟框架能够模拟：</p>
+<ul>
+<li>Windows x86 32/64位</li>
+<li>Linux x86 32/64位，ARM，AARCH64，MIPS</li>
+<li>MacOS x86 32/64位</li>
+<li>FreeBSD x86 32/64位</li>
+<li>UEFI</li>
+<li>DOS</li>
+<li>MBR</li>
+</ul>
+<p>麒麟框架能够在Linux/MacOS/FreeBSD/Windows(WSL2)等操作系统上运行，且不受CPU架构所限制</p>
+</blockquote>
+<p>感觉是个挺有用挺好玩的框架，上手学一下</p>
+<h3 id="0x1-运行不同架构的程序"><a href="#0x1-运行不同架构的程序" class="headerlink" title="0x1.运行不同架构的程序"></a>0x1.运行不同架构的程序</h3><p>来个最简单的helloworld程序，mips小端序架构</p>
+<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span><span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Hello world"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>用qemu运行使用以下命令</p>
+<pre class=" language-shell"><code class="language-shell">qemu-mipsel -L /usr/mipsel-linux-gnu/ ./hello</code></pre>
+<p>用qiling运行使用如下脚本</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/python3</span>
+<span class="token keyword">from</span> qiling <span class="token keyword">import</span> <span class="token operator">*</span>
+
+
+<span class="token keyword">def</span> <span class="token function">mysandbox</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span>rootfs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    ql<span class="token operator">=</span>Qiling<span class="token punctuation">(</span>path<span class="token punctuation">,</span>rootfs<span class="token punctuation">,</span>output<span class="token operator">=</span><span class="token string">'default'</span><span class="token punctuation">)</span>
+    ql<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__<span class="token operator">==</span><span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    mysandbox<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'hello'</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token string">'/usr/mipsel-linux-gnu'</span><span class="token punctuation">)</span></code></pre>
+<p>我们先运行一下，看看效果</p>
+<pre class=" language-c"><code class="language-c">root@IOT<span class="token punctuation">:</span><span class="token operator">~</span># <span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python3 <span class="token string">"/root/demo.py"</span>
+<span class="token function">brk</span><span class="token punctuation">(</span><span class="token number">0x0</span><span class="token punctuation">)</span>
+<span class="token function">mmap2</span><span class="token punctuation">(</span><span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x2000</span><span class="token punctuation">,</span> <span class="token number">0x3</span><span class="token punctuation">,</span> <span class="token number">0x802</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0x774bf000</span>
+<span class="token function">uname</span><span class="token punctuation">(</span><span class="token number">0x7ff3c728</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token function">access</span><span class="token punctuation">(</span><span class="token operator">/</span>etc<span class="token operator">/</span>ld<span class="token punctuation">.</span>so<span class="token punctuation">.</span>nohwcap<span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span> 
+<span class="token function">access</span><span class="token punctuation">(</span><span class="token operator">/</span>etc<span class="token operator">/</span>ld<span class="token punctuation">.</span>so<span class="token punctuation">.</span>preload<span class="token punctuation">,</span> <span class="token number">0x4</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span> 
+<span class="token function">openat</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token operator">/</span>etc<span class="token operator">/</span>ld<span class="token punctuation">.</span>so<span class="token punctuation">.</span>cache<span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 0o0<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">openat</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>tls<span class="token operator">/</span>i686<span class="token operator">/</span>libc<span class="token punctuation">.</span>so<span class="token number">.6</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 0o0<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">stat64</span><span class="token punctuation">(</span><span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>tls<span class="token operator">/</span>i686<span class="token punctuation">,</span> <span class="token number">0x7ff3c360</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">openat</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>tls<span class="token operator">/</span>libc<span class="token punctuation">.</span>so<span class="token number">.6</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 0o0<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">stat64</span><span class="token punctuation">(</span><span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>tls<span class="token punctuation">,</span> <span class="token number">0x7ff3c360</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">openat</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>i686<span class="token operator">/</span>libc<span class="token punctuation">.</span>so<span class="token number">.6</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 0o0<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">stat64</span><span class="token punctuation">(</span><span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>i686<span class="token punctuation">,</span> <span class="token number">0x7ff3c360</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">openat</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>libc<span class="token punctuation">.</span>so<span class="token number">.6</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 0o0<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">stat64</span><span class="token punctuation">(</span><span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token punctuation">,</span> <span class="token number">0x7ff3c360</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">openat</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token operator">/</span>usr<span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>tls<span class="token operator">/</span>i686<span class="token operator">/</span>libc<span class="token punctuation">.</span>so<span class="token number">.6</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 0o0<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">stat64</span><span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>tls<span class="token operator">/</span>i686<span class="token punctuation">,</span> <span class="token number">0x7ff3c360</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">openat</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token operator">/</span>usr<span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>tls<span class="token operator">/</span>libc<span class="token punctuation">.</span>so<span class="token number">.6</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 0o0<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">stat64</span><span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>tls<span class="token punctuation">,</span> <span class="token number">0x7ff3c360</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">openat</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token operator">/</span>usr<span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>i686<span class="token operator">/</span>libc<span class="token punctuation">.</span>so<span class="token number">.6</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 0o0<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">stat64</span><span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>i686<span class="token punctuation">,</span> <span class="token number">0x7ff3c360</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">openat</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token operator">/</span>usr<span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token operator">/</span>libc<span class="token punctuation">.</span>so<span class="token number">.6</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 0o0<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">stat64</span><span class="token punctuation">(</span><span class="token operator">/</span>usr<span class="token operator">/</span>lib<span class="token operator">/</span>mipsel<span class="token operator">-</span>linux<span class="token operator">-</span>gnu<span class="token punctuation">,</span> <span class="token number">0x7ff3c360</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">openat</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token operator">/</span>lib<span class="token operator">/</span>tls<span class="token operator">/</span>i686<span class="token operator">/</span>libc<span class="token punctuation">.</span>so<span class="token number">.6</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 0o0<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">stat64</span><span class="token punctuation">(</span><span class="token operator">/</span>lib<span class="token operator">/</span>tls<span class="token operator">/</span>i686<span class="token punctuation">,</span> <span class="token number">0x7ff3c360</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">openat</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token operator">/</span>lib<span class="token operator">/</span>tls<span class="token operator">/</span>libc<span class="token punctuation">.</span>so<span class="token number">.6</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 0o0<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">stat64</span><span class="token punctuation">(</span><span class="token operator">/</span>lib<span class="token operator">/</span>tls<span class="token punctuation">,</span> <span class="token number">0x7ff3c360</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">openat</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token operator">/</span>lib<span class="token operator">/</span>i686<span class="token operator">/</span>libc<span class="token punctuation">.</span>so<span class="token number">.6</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 0o0<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">stat64</span><span class="token punctuation">(</span><span class="token operator">/</span>lib<span class="token operator">/</span>i686<span class="token punctuation">,</span> <span class="token number">0x7ff3c360</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">openat</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token operator">/</span>lib<span class="token operator">/</span>libc<span class="token punctuation">.</span>so<span class="token number">.6</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> 0o0<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">3</span>
+<span class="token function">read</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">0x7ff3c4ac</span><span class="token punctuation">,</span> <span class="token number">0x200</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">512</span>
+<span class="token function">prctl</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token function">_llseek</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x208</span><span class="token punctuation">,</span> <span class="token number">0x7ff3c238</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token function">_llseek</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x208</span><span class="token punctuation">,</span> <span class="token number">0x7ff3c238</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">read</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">0x7ff3c278</span><span class="token punctuation">,</span> <span class="token number">0x24</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">36</span>
+<span class="token function">_llseek</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x33c</span><span class="token punctuation">,</span> <span class="token number">0x7ff3c210</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token function">_llseek</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x33c</span><span class="token punctuation">,</span> <span class="token number">0x7ff3c210</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token function">read</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">0x7ff3c250</span><span class="token punctuation">,</span> <span class="token number">0x20</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">32</span>
+<span class="token function">fstat64</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">0x7ff3c368</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token function">mmap2</span><span class="token punctuation">(</span><span class="token number">0x0</span><span class="token punctuation">,</span> <span class="token number">0x191030</span><span class="token punctuation">,</span> <span class="token number">0x5</span><span class="token punctuation">,</span> <span class="token number">0x2002</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0x774c1000</span>
+<span class="token function">mprotect</span><span class="token punctuation">(</span><span class="token number">0x7763a000</span><span class="token punctuation">,</span> <span class="token number">0xf000</span><span class="token punctuation">,</span> <span class="token number">0x0</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token function">mmap2</span><span class="token punctuation">(</span><span class="token number">0x77649000</span><span class="token punctuation">,</span> <span class="token number">0x7000</span><span class="token punctuation">,</span> <span class="token number">0x3</span><span class="token punctuation">,</span> <span class="token number">0x2012</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">1540096</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0x77649000</span>
+<span class="token function">mmap2</span><span class="token punctuation">(</span><span class="token number">0x77650000</span><span class="token punctuation">,</span> <span class="token number">0x2030</span><span class="token punctuation">,</span> <span class="token number">0x3</span><span class="token punctuation">,</span> <span class="token number">0x812</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0x77650000</span>
+<span class="token function">close</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token function">set_thread_area</span><span class="token punctuation">(</span><span class="token number">0x774c7230</span><span class="token punctuation">)</span>
+<span class="token function">mprotect</span><span class="token punctuation">(</span><span class="token number">0x77649000</span><span class="token punctuation">,</span> <span class="token number">0x4000</span><span class="token punctuation">,</span> <span class="token number">0x1</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token function">mprotect</span><span class="token punctuation">(</span><span class="token number">0x410000</span><span class="token punctuation">,</span> <span class="token number">0x1000</span><span class="token punctuation">,</span> <span class="token number">0x1</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token function">mprotect</span><span class="token punctuation">(</span><span class="token number">0x47ed000</span><span class="token punctuation">,</span> <span class="token number">0x1000</span><span class="token punctuation">,</span> <span class="token number">0x1</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token function">fstat64</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0x7ff3c7b0</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token function">brk</span><span class="token punctuation">(</span><span class="token number">0x0</span><span class="token punctuation">)</span>
+<span class="token function">brk</span><span class="token punctuation">(</span><span class="token number">0x435000</span><span class="token punctuation">)</span>
+<span class="token function">write</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">414150</span><span class="token punctuation">,</span><span class="token number">11</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>
+Hello <span class="token function">worldexit_group</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span></code></pre>
+<p>非常详细的系统调用</p>
+<p>接下来我们跟进到<code>Qiling</code>这个类里面</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Qiling</span><span class="token punctuation">(</span>QlCoreStructs<span class="token punctuation">,</span> QlCoreHooks<span class="token punctuation">,</span> QlCoreUtils<span class="token punctuation">)</span><span class="token punctuation">:</span>    
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>
+            self<span class="token punctuation">,</span>
+            filename<span class="token operator">=</span>None<span class="token punctuation">,</span>
+            rootfs<span class="token operator">=</span>None<span class="token punctuation">,</span>
+            env<span class="token operator">=</span>None<span class="token punctuation">,</span>
+            shellcoder<span class="token operator">=</span>None<span class="token punctuation">,</span>
+            ostype<span class="token operator">=</span>None<span class="token punctuation">,</span>
+            archtype<span class="token operator">=</span>None<span class="token punctuation">,</span>
+            bigendian<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span>
+            output<span class="token operator">=</span>None<span class="token punctuation">,</span>
+            verbose<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>
+            profile<span class="token operator">=</span>None<span class="token punctuation">,</span>
+            console<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>
+            log_dir<span class="token operator">=</span>None<span class="token punctuation">,</span>
+            log_split<span class="token operator">=</span>None<span class="token punctuation">,</span>
+            append<span class="token operator">=</span>None<span class="token punctuation">,</span>
+            libcache <span class="token operator">=</span> <span class="token boolean">False</span><span class="token punctuation">,</span>
+            stdin<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>
+            stdout<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>
+            stderr<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span class="token punctuation">:</span></code></pre>
+<p>可选的参数有很多，不过大部分情况下我们需要操作的只有<code>filename</code>、<code>rootfs</code>、<code>output</code>以及在模拟路由器中我们需要设置的<code>env</code></p>
+<p>在这个脚本里我们的文件是当前目录下的hello，库文件目录为<code>/usr/mipsel-linux-gnu</code></p>
+<p>接下来我们开启qiling的远程调试，使用gdb调试这个小程序</p>
+<p>要开启调试功能，只需要在<code>ql.run()</code>前加一个<code>ql.debugger=True</code>,这样默认绑定9999端口，或者使用<code>ql.debugger=‘:9999’</code>,这样绑定会<code>0.0.0.0:9999</code></p>
+<p>这里贴上官方的文档</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/python3</span>
+<span class="token keyword">from</span> qiling <span class="token keyword">import</span> <span class="token operator">*</span>
+
+
+<span class="token keyword">def</span> <span class="token function">mysandbox</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span>rootfs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    ql<span class="token operator">=</span>Qiling<span class="token punctuation">(</span>path<span class="token punctuation">,</span>rootfs<span class="token punctuation">,</span>output<span class="token operator">=</span><span class="token string">'default'</span><span class="token punctuation">)</span>
+    ql<span class="token punctuation">.</span>debugger <span class="token operator">=</span> <span class="token boolean">True</span>
+
+    <span class="token comment" spellcheck="true"># You can also customize address &amp; port or type of debugging server</span>
+    <span class="token comment" spellcheck="true"># ql.debugger= ":9999"  # GDB server listens to 0.0.0.0:9999</span>
+    <span class="token comment" spellcheck="true"># ql.debugger = "127.0.0.1:9999"  # GDB server listens to 127.0.0.1:9999</span>
+    <span class="token comment" spellcheck="true"># ql.debugger = "gdb:127.0.0.1:9999"  # GDB server listens to 127.0.0.1:9999</span>
+    <span class="token comment" spellcheck="true"># ql.debugger = "idapro:127.0.0.1:9999"  # IDA pro server listens to 127.0.0.1:9999</span>
+    ql<span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__<span class="token operator">==</span><span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    mysandbox<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'hello'</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token string">'/usr/mipsel-linux-gnu'</span><span class="token punctuation">)</span></code></pre>
+<p>不过个人感觉qiling的调试很慢，ni一下要等好几秒，也可能是我的操作不当，所以我一般调试还是用qemu</p>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -495,7 +654,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/LawlietLW.github.io/tags/qiling/">
+                                    <span class="chip bg-color">qiling</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -577,10 +740,9 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            qiling框架能够做到
+
+麒麟框架不仅仅是一个仿真平台或逆向工程工具。它还将“二进制插桩”和“二进制仿真”结合一起。并解决了应用程序不能在隔离环境里运行并且高度依赖于操作系统的问题。由于大量的操作系统支持，麒麟框架为二进制分析提供了无限的
                         
                     </div>
                     <div class="publish-info">
@@ -589,13 +751,25 @@
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Lock
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/LawlietLW.github.io/categories/IOT/" class="post-category">
+                                    IOT
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/LawlietLW.github.io/tags/qiling/">
+                        <span class="chip bg-color">qiling</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -783,7 +957,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">59.2k</span>&nbsp;字
+                class="white-color">60k</span>&nbsp;字
             
             
             
