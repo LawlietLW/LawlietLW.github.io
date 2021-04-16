@@ -292,11 +292,11 @@
                 
                 
                 
-                <a href="/LawlietLW.github.io/categories/CTF/" title="CTF: 24">
+                <a href="/LawlietLW.github.io/categories/CTF/" title="CTF: 29">
                     <span class="chip center-align waves-effect waves-light
                              chip-active "
                             style="background-color: #F9EBEA;">CTF
-                        <span class="tag-length">24</span>
+                        <span class="tag-length">29</span>
                     </span>
                 </a>
                 
@@ -346,6 +346,24 @@
                 </a>
                 
                 
+                <a href="/LawlietLW.github.io/categories/PWN/" title="PWN: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #82E0AA;">PWN
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/LawlietLW.github.io/categories/%E5%AD%A6%E4%B9%A0/" title="学习: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            style="background-color: #D7BDE2;">学习
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
             </div>
         </div>
     </div>
@@ -355,6 +373,261 @@
 
     <article id="articles" class="container articles">
         <div class="row tags-posts">
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2020/11/15/qi-xing-ji-hua-2/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="七星计划(2)">
+                            
+                            <span class="card-title">七星计划(2)</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                这一次来记载一些题目吧~
+先从最近的题目开始
+0x1.太湖杯-easykooc首先检查保护
+
+mips32小端序，存在RWX段，所以可以执行shellcode
+然后IDA…啊不，是ghidra分析(好想体验IDA分析mips的感觉啊，虽然g
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-15
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/PWN/">
+                            <span class="chip bg-color">PWN</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2020/11/03/qi-xing-ji-hua-1/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/bizhi/5.jpg" class="responsive-img" alt="七星计划(1)">
+                            
+                            <span class="card-title">七星计划(1)</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                一直对格式化字符串的利用不是很上手，所以决定做个总结，复现一些骚题目还有一些常规题，bss段的格式化字符串和正常的栈上的格式化字符串利用，希望通过这次总结能加深对格式化字符串利用的理解。
+0x1.ha1cyon-ctf level2除了ca
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-03
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/PWN/">
+                            <span class="chip bg-color">PWN</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2020/11/02/hu-xiang-bei/hu-xiang-bei-pwn-ti-jie/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="湖湘杯pwn题解">
+                            
+                            <span class="card-title">湖湘杯pwn题解</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                上周末打了打湖湘杯，还是太菜了
+0x1.pwn1-pwn_printf检查保护
+
+IDA分析
+
+打开的一瞬间确实有些裂开，不过仔细分析后其实不算难
+程序的初始化完成之后会循环读入16个数值，然后通过sprtinf函数往0x6000000写入
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-02
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/PWN/">
+                            <span class="chip bg-color">PWN</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2020/11/02/hu-xiang-bei-pwn-ti-jie/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="湖湘杯pwn题解">
+                            
+                            <span class="card-title">湖湘杯pwn题解</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                上周末打了打湖湘杯，还是太菜了
+0x1.pwn1-pwn_printf检查保护
+
+IDA分析
+
+打开的一瞬间确实有些裂开，不过仔细分析后其实不算难
+程序的初始化完成之后会循环读入16个数值，然后通过sprtinf函数往0x6000000写入
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-02
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/PWN/">
+                            <span class="chip bg-color">PWN</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/LawlietLW.github.io/2020/10/14/pwnable-tw-shua-ti/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="pwnable.tw 刷题">
+                            
+                            <span class="card-title">pwnable.tw 刷题</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                开始刷pwnable.tw这个高质量平台的题目了，做一下记录
+0x1.Start检查保护
+
+什么保护都没有
+载入IDA看看
+
+程序很简短，一个start一个exit
+分析汇编代码，程序首先将exit函数压入栈中，然后压入0x14字节大小的字
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-14
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/LawlietLW.github.io/tags/pwn/">
+                            <span class="chip bg-color">pwn</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
@@ -727,277 +1000,6 @@ if(isset($text)&a
                 </div>
             </div>
             
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/LawlietLW.github.io/2020/02/09/buuctf-2018-online-tool/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/bizhi/7.jpg" class="responsive-img" alt="[BUUCTF 2018]Online Tool">
-                            
-                            <span class="card-title">[BUUCTF 2018]Online Tool</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                打开环境直接给出源代码，代码审计
-
-&lt;?php
-
-if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    $_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-09
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/LawlietLW.github.io/tags/Web/">
-                            <span class="chip bg-color">Web</span>
-                        </a>
-                        
-                        <a href="/LawlietLW.github.io/tags/%E7%BB%95%E8%BF%87escapeshellarg-escapeshellcmd/">
-                            <span class="chip bg-color">绕过escapeshellarg()+escapeshellcmd()</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-secret-file/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/bizhi/5.jpg" class="responsive-img" alt="[极客大挑战 2019]Secret File">
-                            
-                            <span class="card-title">[极客大挑战 2019]Secret File</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                打开环境查看源代码，发现一个页面
-
-跳转过去点一下secret看到这个页面果断上burp得到另一个页面跳转过去得到代码
-&lt;?php
-    highlight_file(__FILE__);
-    error_reporting(0
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-09
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/LawlietLW.github.io/tags/Web/">
-                            <span class="chip bg-color">Web</span>
-                        </a>
-                        
-                        <a href="/LawlietLW.github.io/tags/burp/">
-                            <span class="chip bg-color">burp</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/LawlietLW.github.io/2020/02/09/wang-ding-bei-2018-fakebook/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="[网鼎杯 2018]Fakebook">
-                            
-                            <span class="card-title">[网鼎杯 2018]Fakebook</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                打开环境注册一个账号，登陆进去
-
-查看页面源代码有一个view.php?no=1的页面，看起来可以sql注入加个单引号测试报错那么报错注入走一波
-?no=1 and updatexml(1,concat('~',(select databa
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-09
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/LawlietLW.github.io/tags/Web/">
-                            <span class="chip bg-color">Web</span>
-                        </a>
-                        
-                        <a href="/LawlietLW.github.io/tags/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
-                            <span class="chip bg-color">PHP反序列化</span>
-                        </a>
-                        
-                        <a href="/LawlietLW.github.io/tags/%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5/">
-                            <span class="chip bg-color">报错注入</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-easysql/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="[极客大挑战 2019]EasySQL">
-                            
-                            <span class="card-title">[极客大挑战 2019]EasySQL</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                打开环境，登录框随便登陆测试一下
-
-不出意外的失败登陆框的sql语句大概就是select * from table where username='$username' and password='$password'那么万能密码先走一波构
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-09
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/LawlietLW.github.io/tags/Web/">
-                            <span class="chip bg-color">Web</span>
-                        </a>
-                        
-                        <a href="/LawlietLW.github.io/tags/sql%E4%B8%87%E8%83%BD%E5%AF%86%E7%A0%81/">
-                            <span class="chip bg-color">sql万能密码</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/LawlietLW.github.io/2020/02/09/ji-ke-da-tiao-zhan-2019-havefun/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="[极客大挑战 2019]Havefun">
-                            
-                            <span class="card-title">[极客大挑战 2019]Havefun</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                打开环境
-
-查看源代码，在最末端发现提示基础，传参cat=dog即可
-
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-      
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-09
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/LawlietLW.github.io/tags/Web/">
-                            <span class="chip bg-color">Web</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
         </div>
     </article>
 </main>
@@ -1013,7 +1015,7 @@ if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">1 / 2</div>
+            <div class="center-align b-text-gray">1 / 3</div>
         </div>
         <div class="col s6 m4 l4">
             
@@ -1040,7 +1042,7 @@ if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">60k</span>&nbsp;字
+                class="white-color">90.2k</span>&nbsp;字
             
             
             

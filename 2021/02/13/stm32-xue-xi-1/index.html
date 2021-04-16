@@ -4,11 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="嵌入式开发C语言1, Lock&#39;s blog">
-    <meta name="description" content="
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-          .forEach(el =&gt; {
-            if (!el.dataset.src) { return">
+    <meta name="keywords" content="STM32学习(1), Lock&#39;s blog">
+    <meta name="description" content="开始学习STM32，我买的开发板是正点原子的STM32F103ZET6战舰v3
+相对比51，STM32的知识量要大出许多许多，这里学一点记一点吧。
+1.STM32F103ZET6有144个引脚，7组IO口，每组IO有16个IO，一共7*16">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +15,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>嵌入式开发C语言1 | Lock&#39;s blog</title>
+    <title>STM32学习(1) | Lock&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -244,12 +243,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">嵌入式开发C语言1</h1>
+                    <h1 class="description center-align post-title">STM32学习(1)</h1>
                 </div>
             </div>
         </div>
@@ -378,28 +377,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-09-03
+                    2021-02-13
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-03
+                    2021-04-16
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    52
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    5 分
                 </div>
                 
 
@@ -415,7 +414,78 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <script>
+                <p>开始学习STM32，我买的开发板是正点原子的STM32F103ZET6战舰v3</p>
+<p>相对比51，STM32的知识量要大出许多许多，这里学一点记一点吧。</p>
+<p>1.STM32F103ZET6有144个引脚，7组IO口，每组IO有16个IO，一共7*16=112个IO</p>
+<p>IO口从GPIOA一直到GPIOG，每组内的的IO从Px1-Px15</p>
+<p>2.STM32的大部分IO除了用作GPIO的功能外，还可以复用为外设功能引脚，比如串口。</p>
+<p>3.STM32的GPIO有8种工作模式，又分为4种输入模式，4种输出模式</p>
+<p>4种输入模式为：</p>
+<ul>
+<li>输入浮空</li>
+<li>输入上拉</li>
+<li>输入下拉</li>
+<li>模拟输入</li>
+</ul>
+<p>4种输出模式为</p>
+<ul>
+<li>开漏输出</li>
+<li>开漏复用功能</li>
+<li>推挽式输出</li>
+<li>推挽式复用功能</li>
+</ul>
+<p>4.每组GPIO端口包括7个寄存器：</p>
+<p>2个32位配置寄存器(GPIOx_CRL,GPIOx_CRH)，配置一个IO需要4位，因此一个寄存器能够配置8个IO，每组GPIO内有16个IO，因此需要两个32位的寄存器；CRL寄存器控制0-7的IO,CRH寄存器控制8-15的IO，寄存器配置图如下</p>
+<p><a href="https://imgchr.com/i/ysSGvT" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/13/ysSGvT.png" alt="ysSGvT.png"></a></p>
+<p>通过MODEx[1:0]这两位来设置IO为输入或者输出，设置为00即为输入模式，设置为其他的值即为输出模式(翻转速率不一样)，当设置了IO输入或者输出后，可以设置CNFx[1:0]的值来设置具体的工作模式，即上面说的八种工作模式(注意，要设置IO为上拉或者下拉还需要设置ODR寄存器的值，当ODR寄存器相应的位为0时，即为下拉输入，为1时，即为上拉输入)。</p>
+<p>2个32位数据寄存器(GPIOx_IDR,GPIOx_ODR)</p>
+<p>GPIOx_IDR为端口输入数据寄存器，它用来读取IO口的输入(在输出模式下，这个寄存器也可以用来读取对应的IO口的输出值)，寄存器图如下</p>
+<p><a href="https://imgchr.com/i/ysSvin" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/13/ysSvin.png" alt="ysSvin.png"></a></p>
+<p>32位中只有低16位被使用，低16位的每一位都用来控制一个IO口，每一位的值就是对应IO口目前的状态；</p>
+<p>GPIOx_ODR为端口输出寄存器，寄存器图如下</p>
+<p><a href="https://imgchr.com/i/yspDoj" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/13/yspDoj.png" alt="yspDoj.png"></a></p>
+<p>和IDR寄存器一样，ODR寄存器也只有低16位被使用，每一位对应着一组IO口的一个IO，可以读取每一位的值来获取每一个IO的状态，也可以设置每一位的值来控制每一位IO的状态(通过GPIOx_BSRR来设置)。</p>
+<p>1个32位置位/复位寄存器(GPIOx_BSRR)</p>
+<p>GPIOx_BSRR是端口位设置/清除寄存器寄存器，寄存器图如下</p>
+<p><a href="https://imgchr.com/i/ys9d91" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/13/ys9d91.png" alt="ys9d91.png"></a></p>
+<p>这个寄存器一般只用低16位，也就是设置对应的ODRy位为1，将ODRy设置为0的操作则是由GPIOx_BRR寄存器来完成。</p>
+<p>1个16位复位寄存器(GPIOx_BRR)</p>
+<p>GPIOx_BRR为端口位清除寄存器，和GPIOx_BSRR相对应，GPIOx_BSRR用来设置ODRy位为1，而GPIOx_BRR设置为0，寄存器图如下</p>
+<p><a href="https://imgchr.com/i/ys9yHe" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/13/ys9yHe.png" alt="ys9yHe.png"></a></p>
+<p><a href="https://imgchr.com/i/ys9cAH" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/13/ys9cAH.png" alt="ys9cAH.png"></a></p>
+<p>GPIOx_BSRR和GPIOx_BRR这两个寄存器都只使用低16位寄存器。</p>
+<p>1个32位锁定寄存器(GPIOx_LCKR)</p>
+<p>下面记录如何点亮led</p>
+<p>在学51单片机的时候，我们只需要将led对应的IO口设为高电平即可点亮，但stm32要麻烦一些。</p>
+<p>我们知道，时钟是单片机的驱动源，单片机的外设想要工作的话必须打开其对应的时钟。在51单片机编程中我们使用一些外设并没有配置时钟，这是因为51单片机只要打开一个时钟源就能使用所有外设，而这个时钟源是默认开启的。但stm32不一样，它的所有时钟默认都是关闭的，我们要想使用某个外设都需要先使能其对应的时钟，才能进行下一步操作。</p>
+<p>因此在stm32下点亮led有以下三个步骤：</p>
+<ol>
+<li>使能对应的GPIOx</li>
+<li>初始化对应的GPIOx</li>
+<li>给GPIOx_Pin_y设置相应的值</li>
+</ol>
+<p>还得再提一手stm32的系统架构，多的不谈，挑一点记录(其实只是因为我现在只学了这么点)</p>
+<blockquote>
+<p>APB1 和 APB2 的区别， APB1 上面连接的是低速外设，包括电源接口、<br>备份接口、 CAN、 USB、 I2C1、 I2C2、 UART2、 UART3 等等， APB2 上面连接的是高速外设包<br>括 UART1、 SPI1、 Timer1、 ADC1、 ADC2、所有普通 IO 口(PA~PE)、第二功能 IO 口等。居宁<br>老师的《稀里糊涂玩 STM32》资料里面教大家的记忆方法是 2&gt;1， APB2 下面所挂的外设的时<br>钟要比 APB1 的高。  </p>
+</blockquote>
+<p>再记录一些函数</p>
+<pre><code>void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct)；
+IO口初始化库函数
+第一个参数为要初始化的IO，从GPIOA-GPIOG
+第二个参数为GPIO结构体，如下
+typedef struct
+{
+  uint16_t GPIO_Pin;             /*!&lt; Specifies the GPIO pins to be configured.
+                                      This parameter can be any value of @ref GPIO_pins_define */
+
+  GPIOSpeed_TypeDef GPIO_Speed为翻转速率，;  /*!&lt; Specifies the speed for the selected pins.
+                                      This parameter can be a value of @ref GPIOSpeed_TypeDef */
+
+  GPIOMode_TypeDef GPIO_Mode;    /*!&lt; Specifies the operating mode for the selected pins.
+                                      This parameter can be a value of @ref GPIOMode_TypeDef */
+}GPIO_InitTypeDef;
+GPIO_Pin为具体的IO，从GPIO_Pin_0-从GPIO_Pin_15;GPIO_Speed为翻转速率，GPIO_Mode为IO的工作模式</code></pre><p>未完待续。。。（不想写了，什么时候想写了再写吧）</p>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -458,7 +528,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://lawliet.ren/LawlietLW.github.io/2020/09/03/qian-ru-shi-kai-fa-c-yu-yan-1/">https://lawliet.ren/LawlietLW.github.io/2020/09/03/qian-ru-shi-kai-fa-c-yu-yan-1/</a>
+                    <a href="https://lawliet.ren/LawlietLW.github.io/2021/02/13/stm32-xue-xi-1/">https://lawliet.ren/LawlietLW.github.io/2021/02/13/stm32-xue-xi-1/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -539,7 +609,7 @@
         repo: '',
         owner: '',
         admin: null,
-        id: '2020-09-03T17-45-41',
+        id: '2021-02-13T16-46-01',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -564,27 +634,24 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/LawlietLW.github.io/2020/09/16/qian-ru-shi-kai-fa-led/">
+                <a href="/LawlietLW.github.io/2021/04/05/iot-de-yi-dian-zhi-shi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="嵌入式开发-led">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="iot的一点知识">
                         
-                        <span class="card-title">嵌入式开发-led</span>
+                        <span class="card-title">iot的一点知识</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            1.ROM、RAM、SRAM、DRAM、FLASH区别1.ROM(Read Only Memory)ROM是只读存储器，掉电时可以保存数据： 只读存储器，在单片机运行时，只能从中读取数据，不能向里面写数据。特点是掉电不丢失数据，在单片机中主
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-16
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-05
                         </span>
                         <span class="publish-author">
                             
@@ -604,53 +671,36 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/LawlietLW.github.io/2020/08/29/qiang-wang-bei-2020/">
+                <a href="/LawlietLW.github.io/2021/01/25/ida7-5-xia-de-idapython-shi-yong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="强网杯2020">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="IDA7.5下的idapython使用">
                         
-                        <span class="card-title">强网杯2020</span>
+                        <span class="card-title">IDA7.5下的idapython使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            强网杯2020的pwn题多且质量高，非常有必要复现一部分
-0x1.easypwnunsigned __int64 sub_ACE()
-{
-  unsigned __int64 v1; // [rsp+8h] [rbp-8h]
+                            开始学习IDApython的使用
+网上的教程都是基于7.0版本的IDA，自IDA7.4之后，idapython的语法就有了变化，且由py2转移到了py3，所以需要对照着Hexray官方的说明来修改，链接
+跟着这个教程一点点学习
 
-  v1 =
+IDApy
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-29
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-25
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
-                                    CTF
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Lock
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/LawlietLW.github.io/tags/PWN/">
-                        <span class="chip bg-color">PWN</span>
-                    </a>
-                    
-                    <a href="/LawlietLW.github.io/tags/%E5%BC%BA%E7%BD%91%E6%9D%AF2020/">
-                        <span class="chip bg-color">强网杯2020</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -799,7 +849,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">60k</span>&nbsp;字
+                class="white-color">90.2k</span>&nbsp;字
             
             
             

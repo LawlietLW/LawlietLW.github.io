@@ -4,11 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="嵌入式开发-led, Lock&#39;s blog">
-    <meta name="description" content="
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-          .forEach(el =&gt; {
-            if (!el.dataset.src) { return">
+    <meta name="keywords" content="IDA7.5下的idapython使用, Lock&#39;s blog">
+    <meta name="description" content="开始学习IDApython的使用
+网上的教程都是基于7.0版本的IDA，自IDA7.4之后，idapython的语法就有了变化，且由py2转移到了py3，所以需要对照着Hexray官方的说明来修改，链接
+跟着这个教程一点点学习
+
+IDApy">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>嵌入式开发-led | Lock&#39;s blog</title>
+    <title>IDA7.5下的idapython使用 | Lock&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -244,12 +245,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">嵌入式开发-led</h1>
+                    <h1 class="description center-align post-title">IDA7.5下的idapython使用</h1>
                 </div>
             </div>
         </div>
@@ -378,28 +379,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-09-16
+                    2021-01-25
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-16
+                    2021-01-25
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    52
+                    655
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -415,7 +416,85 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <script>
+                <p>开始学习IDApython的使用</p>
+<p>网上的教程都是基于7.0版本的IDA，自IDA7.4之后，idapython的语法就有了变化，且由py2转移到了py3，所以需要对照着Hexray官方的说明来修改，<a href="https://www.hex-rays.com/products/ida/support/ida74_idapython_no_bc695_porting_guide.shtml" target="_blank" rel="noopener">链接</a></p>
+<p>跟着这个<a href="https://yunyawu.com/2020/06/28/ida-python%E5%AD%A6%E4%B9%A0/" target="_blank" rel="noopener">教程</a>一点点学习</p>
+<blockquote>
+<p>IDApython由三个独立模块组成，第一个是idc，它是封装IDA的IDA函数的兼容性模块，现在已经很少使用。第二个模块是idautils，这是IDA里的一个高级实用函数。第三个模块是idaapi，它允许访问更多低级的数据，这些数据能够被类使用通过IDA。</p>
+</blockquote>
+<h2 id="0x1-基础"><a href="#0x1-基础" class="headerlink" title="0x1.基础"></a>0x1.基础</h2><blockquote>
+<p>.text:00012529  mov esi, [esp+4+arg_0]</p>
+<p>.text是段名称，地址是00012529。mov是助记符，第一个操作是esi，第二个操作是[esp+4+arg_0]</p>
+</blockquote>
+<p><strong>ea=here()/idc.get_screen_ea</strong><br>获取当前光标所在位置的地址，返回一个16进制的整型值</p>
+<pre class=" language-python"><code class="language-python">Python<span class="token operator">></span>here<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token number">0x40d478</span>
+Python<span class="token operator">></span>idc<span class="token punctuation">.</span>get_screen_ea<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token number">0x40d478</span>
+Python<span class="token operator">></span>type<span class="token punctuation">(</span>here<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token string">'int'</span><span class="token operator">></span></code></pre>
+<p><strong>ida_ida.inf_get_min_ea() 获取最小地址</strong></p>
+<p><strong>ida_ida.inf_get_max_ea() 获取最大地址</strong></p>
+<pre class=" language-python"><code class="language-python">Python<span class="token operator">></span>ida_ida<span class="token punctuation">.</span>inf_get_min_ea<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token number">0x400000</span>
+Python<span class="token operator">></span>ida_ida<span class="token punctuation">.</span>inf_get_max_ea<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token number">0x50c9fc</span>
+Python<span class="token operator">></span>type<span class="token punctuation">(</span>ida_ida<span class="token punctuation">.</span>inf_get_max_ea<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token string">'int'</span><span class="token operator">></span></code></pre>
+<p><strong>idc.get_segm_name()  获取当前段的名称</strong></p>
+<pre class=" language-python"><code class="language-python">Python<span class="token operator">></span>idc<span class="token punctuation">.</span>get_segm_name<span class="token punctuation">(</span>ea<span class="token punctuation">)</span>
+<span class="token string">'.text'</span></code></pre>
+<p><strong>idc.GetDisasm() 获取当前地址的指令</strong></p>
+<pre class=" language-python"><code class="language-python">Python<span class="token operator">></span>idc<span class="token punctuation">.</span>GetDisasm<span class="token punctuation">(</span>ea<span class="token punctuation">)</span>
+<span class="token string">'li      $gp, unk_4EC460'</span></code></pre>
+<p><strong>idc.print_insn_mnem 获取当前地址助记符</strong></p>
+<pre class=" language-python"><code class="language-python">Python<span class="token operator">></span>idc<span class="token punctuation">.</span>print_insn_mnem<span class="token punctuation">(</span>ea<span class="token punctuation">)</span>
+<span class="token string">'li'</span></code></pre>
+<p><strong>idc.print_operand 获取当前地址操作数</strong></p>
+<pre class=" language-python"><code class="language-python">Python<span class="token operator">></span>idc<span class="token punctuation">.</span>print_operand<span class="token punctuation">(</span>ea<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token string">'$gp'</span>
+Python<span class="token operator">></span>idc<span class="token punctuation">.</span>print_operand<span class="token punctuation">(</span>ea<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token string">'unk_4EC460'</span></code></pre>
+<p><strong>idaapi.BADADDR 验证地址是否存在</strong></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> idautils
+<span class="token keyword">import</span> idaapi
+ea<span class="token operator">=</span>here<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> ea<span class="token operator">!=</span>idaapi<span class="token punctuation">.</span>BADADDR<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'valid address'</span><span class="token punctuation">)</span></code></pre>
+<p><strong>遍历所有段  idautils.Segments()返回一个遍历类型对象</strong></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> idautils
+<span class="token keyword">import</span> idaapi
+<span class="token keyword">import</span> idc
+<span class="token keyword">for</span> seg <span class="token keyword">in</span> idautils<span class="token punctuation">.</span>Segments<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"%s 0x%x 0x%x"</span><span class="token operator">%</span><span class="token punctuation">(</span>idc<span class="token punctuation">.</span>get_segm_name<span class="token punctuation">(</span>seg<span class="token punctuation">)</span><span class="token punctuation">,</span>idc<span class="token punctuation">.</span>get_segm_start<span class="token punctuation">(</span>seg<span class="token punctuation">)</span><span class="token punctuation">,</span>idc<span class="token punctuation">.</span>get_segm_end<span class="token punctuation">(</span>seg<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<p><strong>遍历所有已知函数 idautils.Functions()  idautils.Functions()将返回一个已知函数列表</strong></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> idautils
+<span class="token keyword">import</span> idaapi
+<span class="token keyword">import</span> idc
+<span class="token keyword">for</span> func <span class="token keyword">in</span> idautils<span class="token punctuation">.</span>Functions<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>hex<span class="token punctuation">(</span>func<span class="token punctuation">)</span><span class="token punctuation">,</span>idc<span class="token punctuation">.</span>get_func_name<span class="token punctuation">(</span>func<span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<p><strong>idaapi.get_func() 获取当前地址的函数</strong></p>
+<p><strong>dir(class)查询python中类的有效函数</strong></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> idautils
+<span class="token keyword">import</span> idaapi
+<span class="token keyword">import</span> idc
+func<span class="token operator">=</span>idaapi<span class="token punctuation">.</span>get_func<span class="token punctuation">(</span>ea<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"start:0x%x end:0x%x"</span><span class="token operator">%</span><span class="token punctuation">(</span>func<span class="token punctuation">.</span>start_ea<span class="token punctuation">,</span>func<span class="token punctuation">.</span>end_ea<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>dir<span class="token punctuation">(</span>func<span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<p><strong>idc.get_func_attr来获取下个指令的开始和继续，直到我们到达这个函数的末尾</strong></p>
+<p><strong>idc.next_head来获取下个指令的开始和继续，直到我们到达这个函数的末尾</strong></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> idautils
+<span class="token keyword">import</span> idaapi
+<span class="token keyword">import</span> idc
+ea<span class="token operator">=</span>here<span class="token punctuation">(</span><span class="token punctuation">)</span>
+start<span class="token operator">=</span>idc<span class="token punctuation">.</span>get_func_attr<span class="token punctuation">(</span>ea<span class="token punctuation">,</span>FUNCATTR_START<span class="token punctuation">)</span>
+end<span class="token operator">=</span>idc<span class="token punctuation">.</span>get_func_attr<span class="token punctuation">(</span>ea<span class="token punctuation">,</span>FUNCATTR_END<span class="token punctuation">)</span>
+cur_addr<span class="token operator">=</span>start
+<span class="token keyword">while</span> cur_addr<span class="token operator">&lt;=</span>end<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>hex<span class="token punctuation">(</span>cur_addr<span class="token punctuation">)</span><span class="token punctuation">,</span>idc<span class="token punctuation">.</span>GetDisasm<span class="token punctuation">(</span>cur_addr<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    cur_addr<span class="token operator">=</span>idc<span class="token punctuation">.</span>next_head<span class="token punctuation">(</span>cur_addr<span class="token punctuation">,</span>end<span class="token punctuation">)</span></code></pre>
+<p><strong>idc.get_func_attr(ea, FUNCATTR_FLAGS) 收集有关于函数的信息</strong></p>
+<pre><code></code></pre><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -458,7 +537,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://lawliet.ren/LawlietLW.github.io/2020/09/16/qian-ru-shi-kai-fa-led/">https://lawliet.ren/LawlietLW.github.io/2020/09/16/qian-ru-shi-kai-fa-led/</a>
+                    <a href="https://lawliet.ren/LawlietLW.github.io/2021/01/25/ida7-5-xia-de-idapython-shi-yong/">https://lawliet.ren/LawlietLW.github.io/2021/01/25/ida7-5-xia-de-idapython-shi-yong/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -539,7 +618,7 @@
         repo: '',
         owner: '',
         admin: null,
-        id: '2020-09-16T19-10-41',
+        id: '2021-01-25T14-42-05',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -564,46 +643,34 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/LawlietLW.github.io/2020/09/19/qiling-kuang-jia-xue-xi/">
+                <a href="/LawlietLW.github.io/2021/02/13/stm32-xue-xi-1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/bizhi/8.jpg" class="responsive-img" alt="qiling框架学习">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="STM32学习(1)">
                         
-                        <span class="card-title">qiling框架学习</span>
+                        <span class="card-title">STM32学习(1)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            qiling框架能够做到
-
-麒麟框架不仅仅是一个仿真平台或逆向工程工具。它还将“二进制插桩”和“二进制仿真”结合一起。并解决了应用程序不能在隔离环境里运行并且高度依赖于操作系统的问题。由于大量的操作系统支持，麒麟框架为二进制分析提供了无限的
+                            开始学习STM32，我买的开发板是正点原子的STM32F103ZET6战舰v3
+相对比51，STM32的知识量要大出许多许多，这里学一点记一点吧。
+1.STM32F103ZET6有144个引脚，7组IO口，每组IO有16个IO，一共7*16
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-19
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-13
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/LawlietLW.github.io/categories/IOT/" class="post-category">
-                                    IOT
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Lock
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/LawlietLW.github.io/tags/qiling/">
-                        <span class="chip bg-color">qiling</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -615,35 +682,46 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/LawlietLW.github.io/2020/09/03/qian-ru-shi-kai-fa-c-yu-yan-1/">
+                <a href="/LawlietLW.github.io/2021/01/02/pwntrick/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="嵌入式开发C语言1">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="pwntrick">
                         
-                        <span class="card-title">嵌入式开发C语言1</span>
+                        <span class="card-title">pwntrick</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return
+                            记录一下pwn的一些小技巧以及一些利用方式，想到哪个写哪个吧。
+0x1.stack smashing detected的利用stack smash技术的利用基础就是栈溢出导致canary被覆盖之后的报错流程
+extern char **__
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-02
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Lock
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/LawlietLW.github.io/categories/PWN/" class="post-category">
+                                    PWN
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/LawlietLW.github.io/tags/trick/">
+                        <span class="chip bg-color">trick</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -792,7 +870,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">60k</span>&nbsp;字
+                class="white-color">90.2k</span>&nbsp;字
             
             
             
